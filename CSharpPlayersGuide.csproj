@@ -7,4 +7,18 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Challenges\TheDominionOfKings.cs" />
+    <Compile Remove="Challenges\TheFourSistersAndTheDuckbear.cs" />
+    <Compile Remove="Challenges\TheTriangleFarmer - Copy.cs" />
+    <Compile Remove="Challenges\TheTriangleFarmer.cs" />
+    <Compile Remove="Challenges\TheVariableShop.cs" />
+    <Compile Remove="Concepts\UpdatingVariables.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Challenges\" />
+    <Folder Include="Concepts\" />
+  </ItemGroup>
+
 </Project>
