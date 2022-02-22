@@ -8,11 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Challenges\TheDefenseOfConsolas.cs" />
     <Compile Remove="Challenges\TheDominionOfKings.cs" />
     <Compile Remove="Challenges\TheFourSistersAndTheDuckbear.cs" />
     <Compile Remove="Challenges\TheTriangleFarmer - Copy.cs" />
     <Compile Remove="Challenges\TheTriangleFarmer.cs" />
     <Compile Remove="Challenges\TheVariableShop.cs" />
+    <Compile Remove="Concepts\ConsoleFunctions.cs" />
+    <Compile Remove="Concepts\FormattingInterpolatedStrings.cs" />
+    <Compile Remove="Concepts\StringAlignment.cs" />
+    <Compile Remove="Concepts\StringInterpolation.cs" />
     <Compile Remove="Concepts\UpdatingVariables.cs" />
   </ItemGroup>
 
