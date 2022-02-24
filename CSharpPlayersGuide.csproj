@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Challenges\BuyingInventory.cs" />
     <Compile Remove="Challenges\RepairingTheClockTower.cs" />
     <Compile Remove="Challenges\TheDefenseOfConsolas.cs" />
     <Compile Remove="Challenges\TheDominionOfKings.cs" />
