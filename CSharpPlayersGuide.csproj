@@ -8,15 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Challenges\BuyingInventory.cs" />
-    <Compile Remove="Challenges\RepairingTheClockTower.cs" />
-    <Compile Remove="Challenges\TheDefenseOfConsolas.cs" />
-    <Compile Remove="Challenges\TheDominionOfKings.cs" />
-    <Compile Remove="Challenges\TheFourSistersAndTheDuckbear.cs" />
-    <Compile Remove="Challenges\TheTriangleFarmer - Copy.cs" />
-    <Compile Remove="Challenges\TheTriangleFarmer.cs" />
-    <Compile Remove="Challenges\TheVariableShop.cs" />
-    <Compile Remove="Challenges\Watchtower.cs" />
+    <Compile Remove="Challenges\**" />
+    <EmbeddedResource Remove="Challenges\**" />
+    <None Remove="Challenges\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Concepts\ConsoleFunctions.cs" />
     <Compile Remove="Concepts\DecisionMaking.cs" />
     <Compile Remove="Concepts\FormattingInterpolatedStrings.cs" />
@@ -26,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Challenges\" />
     <Folder Include="Concepts\" />
   </ItemGroup>
 

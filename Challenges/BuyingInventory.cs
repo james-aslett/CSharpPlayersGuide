@@ -3,15 +3,19 @@
     public static void Main()
     {
 
-        Console.WriteLine("Welcome to Tortuga's Emplorium.");
+        Console.WriteLine("Welcome to Tortuga's Emporium.");
         Console.WriteLine("The following items are available:");
-        Console.WriteLine($"1 - {GetItem(1)}");
-        Console.WriteLine($"2 - {GetItem(2)}");
-        Console.WriteLine($"3 - {GetItem(3)}");
-        Console.WriteLine($"4 - {GetItem(4)}");
-        Console.WriteLine($"5 - {GetItem(5)}");
-        Console.WriteLine($"6 - {GetItem(6)}");
-        Console.WriteLine($"7 - {GetItem(7)}");
+
+        int i = 0;
+
+        do
+        {
+            i++;
+            Console.WriteLine($"{i} - {GetItem(i)}");
+        }
+        while (i < 7);
+
+
         Console.WriteLine("What item do you want to see the price of?");
         int choice = Convert.ToInt32(Console.ReadLine());
 
