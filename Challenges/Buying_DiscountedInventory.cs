@@ -3,7 +3,8 @@
     public static void Main()
     {
 
-        Console.WriteLine("Welcome to Tortuga's Emporium.");
+        Console.WriteLine("Welcome to Tortuga's Emporium. Please enter your name.");
+        string userName = Console.ReadLine();
         Console.WriteLine("The following items are available:");
 
         int i = 0;
@@ -19,25 +20,27 @@
         Console.WriteLine("What item do you want to see the price of?");
         int choice = Convert.ToInt32(Console.ReadLine());
 
-        string response;
-
-        response = choice switch
-        {
-            1 => "10",
-            2 => "15",
-            3 => "25",
-            4 or 7 => "1",
-            5 => "20",
-            6 => "200",
-            _ => "That item wasn't on the list."
-        };
         string item = GetItem(choice);
-        Console.WriteLine($"{GetItem(choice)} {CostPluraliser(item)} {response} gold");
+
+        int price = item switch
+        {
+            "Rope" => 10,
+            "Torches " => 15,
+            "Climbing Equipment" => 25,
+            "Clean Water" or "Food Supplies" => 1,
+            "Machete" => 20,
+            "Canoe" => 200
+        };
+
+        if (userName == "James") price /= 2;
+
+
+        Console.WriteLine($"{GetItem(choice)} {CostPluraliser(item)} {price} gold");
     }
+
     public static string GetItem(int choice)
     {
-        string item;
-        item = choice switch
+        string item = choice switch
         {
             1 => "Rope",
             2 => "Torches",
@@ -46,7 +49,6 @@
             5 => "Machete",
             6 => "Canoe",
             7 => "Food Supplies",
-            _ => "That item wasn't on the list."
         };
         return item;
     }
