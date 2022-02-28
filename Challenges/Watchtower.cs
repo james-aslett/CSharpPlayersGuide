@@ -12,9 +12,6 @@
 
     public static string LocationMessage(int x, int y)
     {
-        string enemyStr = "The enemy is to the ";
-        string returnStr;
-
         string yDirection;
         if (y < 0) yDirection = "South";
         else if (y > 0) yDirection = "North";
@@ -30,8 +27,9 @@
         else if (yDirection == "" | xDirection != "") location = $"{yDirection}{xDirection.ToLower()}";
         else location = "";
 
-        if (x == 0 && y == 0) returnStr = "The enemy is here!";
-        else returnStr = $"{enemyStr}{location}";
-        return returnStr;
+        if (yDirection != "") xDirection = xDirection.ToLower();
+
+        if (x == 0 && y == 0) return "The enemy is here!";
+        return $"The enemy is to the {yDirection}{xDirection}.";
     }
 }
