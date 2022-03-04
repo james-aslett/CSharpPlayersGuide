@@ -1,12 +1,10 @@
-﻿Console.WriteLine("The enemy is upon us. Please enter your x (horizontal) coordinate.");
-int x = Convert.ToInt32(Console.ReadLine());
-Console.WriteLine("Please enter your y (vertical) coordinate.");
-int y = Convert.ToInt32(Console.ReadLine());
+﻿int x = AskForNumber("The enemy is upon us. Please enter your x (horizontal) coordinate.");
+int y = AskForNumber("Please enter your y (vertical) coordinate.");
+
 string messageToDisplay = LocationMessage(x, y);
 Console.WriteLine(messageToDisplay);
 
-
-static string LocationMessage(int x, int y)
+string LocationMessage(int x, int y)
 {
     string yDirection;
     if (y < 0) yDirection = "South";
@@ -27,4 +25,11 @@ static string LocationMessage(int x, int y)
 
     if (x == 0 && y == 0) return "The enemy is here!";
     return $"The enemy is to the {yDirection}{xDirection}.";
- 
+}
+
+int AskForNumber(string text)
+{
+    Console.WriteLine(text);
+    int number = Convert.ToInt32(Console.ReadLine());
+    return number;
+}

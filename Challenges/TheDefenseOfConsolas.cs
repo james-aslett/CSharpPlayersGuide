@@ -1,8 +1,8 @@
 ﻿Console.Title = "Defense of Consolas";
-Console.WriteLine("Enter target row");
-int row = Convert.ToInt32(Console.ReadLine());
-Console.WriteLine("Enter target column");
-int col = Convert.ToInt32(Console.ReadLine());
+
+int row = AskForNumber("Enter target row");
+int col = AskForNumber("Enter target column");
+
 Console.ForegroundColor = ConsoleColor.Cyan;
 Console.WriteLine("Deploy to :");
 
@@ -14,3 +14,10 @@ Console.WriteLine($"Row {row + 1} column {col}");
 Console.Beep(440, 500);
 Console.Beep(440, 150);
 Console.Beep(660, 1000);
+
+int AskForNumber(string text)
+{
+    Console.WriteLine(text);
+    int number = Convert.ToInt32(Console.ReadLine());
+    return number;
+}
