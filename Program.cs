@@ -1,4 +1,12 @@
-﻿ChestState currentState = ChestState.Locked;
+﻿//define enumeration  for state of chest
+//make a variable whose type is new cheststate enum
+//manipulate chest state with close/lock/open/unlock
+    //OPEN > close
+    //CLOSED > lock
+    // LOCKED > unlock
+    //CLOSED > open
+
+ChestState currentState = ChestState.Locked;
 
 
 
