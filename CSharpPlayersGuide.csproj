@@ -16,6 +16,7 @@
   <ItemGroup>
     <Compile Remove="Concepts\ConsoleFunctions.cs" />
     <Compile Remove="Concepts\DecisionMaking.cs" />
+    <Compile Remove="Concepts\Enumerations.cs" />
     <Compile Remove="Concepts\FormattingInterpolatedStrings.cs" />
     <Compile Remove="Concepts\Recursion.cs" />
     <Compile Remove="Concepts\StaticMethods.cs" />
