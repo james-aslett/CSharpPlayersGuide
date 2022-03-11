@@ -1,28 +1,20 @@
-﻿//define enumeration  for state of chest
-//make a variable whose type is new cheststate enum
-//manipulate chest state with close/lock/open/unlock
-    //OPEN > close
-    //CLOSED > lock
-    // LOCKED > unlock
-    //CLOSED > open
-
-ChestState currentState = ChestState.Locked;
-
-
-
+﻿//make a variable whose type is new ChestState enum
+ChestState currentChestState = ChestState.Locked;
 
 //infinite loop
 Console.WriteLine($"The chest is {ChestState.Locked}. What do you want to do?");
 string userResponse = Console.ReadLine();
-SetChestState(userResponse);
+SetChestState(currentChestState, userResponse); //set the chest state based on user response
+//then check state against allowed rules
 
 
-void SetChestState(string response)
+
+//method to manipulate chest 
+void ManipulateChest(ChestState currentChestState)
 {
-    if (response == "lock") currentState = ChestState.Locked;
-    else if (response == "unlock") currentState = ChestState.Unlocked;
-    else if (response == "open") currentState = ChestState.Open;
-    else currentState = ChestState.Closed;
+    //pass currentChestState in (which was set from user input in SetChestState
+
+    //if currentChestC
 }
 
 
@@ -35,8 +27,14 @@ void SetChestState(string response)
 
 
 
+//set chest state from user response
+void SetChestState(ChestState currentChestState, string response)
+{
+    if (response == "close" || response == "unlock") currentChestState = ChestState.Closed;
+    else if (response == "lock") currentChestState = ChestState.Locked;
+    else currentChestState = ChestState.Open;
+}
 
+//define enumeration for state of chest
+enum ChestState { Open, Closed, Locked }
 
-
-
-enum ChestState { Locked, Unlocked, Open, Closed }
