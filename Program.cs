@@ -1,40 +1,40 @@
-﻿//make a variable whose type is new ChestState enum
+﻿//define variable of type ChestState
 ChestState currentChestState = ChestState.Locked;
 
-//infinite loop
-Console.WriteLine($"The chest is {ChestState.Locked}. What do you want to do?");
-string userResponse = Console.ReadLine();
-SetChestState(currentChestState, userResponse); //set the chest state based on user response
-//then check state against allowed rules
+//INFINITE LOOP START
 
+Console.WriteLine($"The chest is {currentChestState}. What do you want to do?");
 
+string userInput = Console.ReadLine();
 
-//method to manipulate chest 
-void ManipulateChest(ChestState currentChestState)
+if (CheckActionAllowed(currentChestState, userInput))
 {
-    //pass currentChestState in (which was set from user input in SetChestState
+    currentChestState = SetChestState(currentChestState, userInput);
+    Console.WriteLine($"Now chest state is {currentChestState}");
+}
+else
+    //loop again
+    Console.WriteLine("Not allowed");
 
-    //if currentChestC
+
+ChestState SetChestState(ChestState currentChestState, string input)
+{
+    if (input == "close" || input == "unlock") return ChestState.Closed;
+    else if (input == "lock") return ChestState.Locked;
+    else return ChestState.Open;
 }
 
-
-
-
-
-
-
-
-
-
-
-//set chest state from user response
-void SetChestState(ChestState currentChestState, string response)
+bool CheckActionAllowed(ChestState state, string input)
 {
-    if (response == "close" || response == "unlock") currentChestState = ChestState.Closed;
-    else if (response == "lock") currentChestState = ChestState.Locked;
-    else currentChestState = ChestState.Open;
+    if (input == "close" && state == ChestState.Open
+        || input == "lock" && state == ChestState.Closed
+        || input == "open" && state == ChestState.Closed
+        || input == "unlock" && state == ChestState.Locked)
+        return true;
+    else return false;
 }
 
-//define enumeration for state of chest
+//INFINITE LOOP END
+
+//define enum for chest state
 enum ChestState { Open, Closed, Locked }
-
