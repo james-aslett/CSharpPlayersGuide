@@ -12,6 +12,36 @@ class Arrow
         _length = length;
     }
 
+    string GetArrowhead()
+    {
+        Console.WriteLine($"Choose an arrowhead. {Arrowhead.Steel}, {Arrowhead.Wool}, {Arrowhead.Obsidian}");
+        return Console.ReadLine().ToLower();
+    }
+
+    string GetFletchingType()
+    {
+        Console.WriteLine($"Choose a fletching type. {Fletching.Plastic}, {Fletching.TurkeyFeathers}, {Fletching.GooseFeathers}");
+        return Console.ReadLine().ToLower();
+    }
+
+    int GetShaftLength()
+    {
+        Console.WriteLine("Choose a shaft length between 60 - 100cm.");
+        return Convert.ToInt32(Console.ReadLine().ToLower());
+    }
+
+    string CreateArrow(string arrowhead, string fletching, int shaft)
+    {
+        Arrowhead head;
+
+        head = arrowhead switch
+        {
+            "steel" => Arrowhead.Steel,
+            "wool" => Arrowhead.Wool,
+            "obsidian" => Arrowhead.Obsidian,
+        };
+    }
+
     //allow user to choose an arrowhead, fletching type and length, then create a new Arrow instance
     Array GetUserInput()
     {

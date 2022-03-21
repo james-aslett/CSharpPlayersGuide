@@ -14,15 +14,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Concepts\Arrays.cs" />
     <Compile Remove="Concepts\Class1.cs" />
     <Compile Remove="Concepts\ConsoleFunctions.cs" />
     <Compile Remove="Concepts\DecisionMaking.cs" />
     <Compile Remove="Concepts\Enumerations.cs" />
     <Compile Remove="Concepts\FormattingInterpolatedStrings.cs" />
+    <Compile Remove="Concepts\Looping.cs" />
     <Compile Remove="Concepts\Recursion.cs" />
     <Compile Remove="Concepts\StaticMethods.cs" />
     <Compile Remove="Concepts\StringAlignment.cs" />
     <Compile Remove="Concepts\StringInterpolation.cs" />
+    <Compile Remove="Concepts\Switches.cs" />
     <Compile Remove="Concepts\Tuples.cs" />
     <Compile Remove="Concepts\UpdatingVariables.cs" />
   </ItemGroup>
