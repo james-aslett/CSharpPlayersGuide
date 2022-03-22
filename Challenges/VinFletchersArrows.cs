@@ -50,9 +50,9 @@ float GetShaftLength()
 class Arrow
 {
     //fields
-    public Arrowhead _arrowhead;
-    public Fletching _fletching;
-    public float _length;
+    private Arrowhead _arrowhead;
+    private Fletching _fletching;
+    private float _length;
 
     //constructor
     public Arrow(Arrowhead arrowhead, Fletching fletching, float length)
