@@ -1,48 +1,88 @@
-﻿//define an Arrow class with fields for arrowhead type (enum), fletching type (enum), and length
+﻿
+Arrow arrow = GetArrow();
+Console.WriteLine($"That arrows costs {arrow.GetCost()} gold.");
+
+Arrow GetArrow()
+{
+    Arrowhead arrowhead = GetArrowhead();
+    Fletching fletching = GetFletchingType();
+    float length = GetShaftLength();
+
+    return new Arrow(arrowhead, fletching, length);
+}
+
+Arrowhead GetArrowhead()
+{
+    Console.WriteLine($"Choose an arrowhead (steel | wool | obsidian)");
+    string input = Console.ReadLine().ToLower();
+    return input switch
+    {
+        "steel" => Arrowhead.Steel,
+        "wool" => Arrowhead.Wool,
+        "obsidian" => Arrowhead.Obsidian
+    };
+}
+
+Fletching GetFletchingType()
+{
+    Console.WriteLine($"Choose a fletching type (plastic | turkey feathers | goose feathers)");
+    string input = Console.ReadLine().ToLower();
+    return input switch
+    {
+        "plastic" => Fletching.Plastic,
+        "turkey feathers" => Fletching.TurkeyFeathers,
+        "goose feathers" => Fletching.GooseFeathers
+    };
+}
+
+float GetShaftLength()
+{
+    float length = 0;
+
+    while (length < 60 || length > 100)
+    {
+        Console.WriteLine("Arrow length (between 60 and 100): ");
+        length = Convert.ToSingle(Console.ReadLine());
+    }
+    return length;
+}
+
 class Arrow
 {
+    //fields
     public Arrowhead _arrowhead;
     public Fletching _fletching;
-    public int _length;
+    public float _length;
 
-    public Arrow(Arrowhead arrowhead, Fletching fletching, int length)
+    //constructor
+    public Arrow(Arrowhead arrowhead, Fletching fletching, float length)
     {
         _arrowhead = arrowhead;
         _fletching = fletching;
         _length = length;
     }
 
-    //allow user to choose an arrowhead, fletching type and length, then create a new Arrow instance
-    Array GetUserInput()
+    public float GetCost()
     {
-        Console.WriteLine("Choose an arrowhead (steel / wool / obsidian");
-        string arrow = Console.ReadLine();
-        Console.WriteLine("Choose a fletching type (plastic / turkey feathers / goose feathers)");
-        string fletching = Console.ReadLine();
-        Console.WriteLine("Choose a shaft length (between 60 - 100cm");
-        int shaft = Convert.ToInt32(Console.ReadLine());
-
-        return new (string, string, int)[1]
+        float arrowheadCost = _arrowhead switch
         {
-            (arrow, fletching, shaft)
+            Arrowhead.Steel => 10,
+            Arrowhead.Wool => 3,
+            Arrowhead.Obsidian => 5
         };
 
-    }
+        float fletchingCost = _fletching switch
+        {
+            Fletching.Plastic => 10,
+            Fletching.TurkeyFeathers => 5,
+            Fletching.GooseFeathers => 3
+        };
 
-    //add a GetCost method that returns its cost as a float based on the following numbers, and display the arrow's cost:
+        float shaftCost = 0.05f * _length;
 
-    //arrowhead (steel 10, wool 3, obsidian 5)
-    //shaft (between 60cm - 100cm) 0.05 per cm
-    //fletching (plastic 10, turkey feathers 5, goose feathers 3)
-    public string GetCost(Array userInput)
-    {
-
+        return arrowheadCost + fletchingCost + shaftCost;
     }
 }
 
 enum Arrowhead { Steel, Wool, Obsidian }
 enum Fletching { Plastic, TurkeyFeathers, GooseFeathers }
-
-
-
-

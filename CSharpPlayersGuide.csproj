@@ -16,6 +16,7 @@
   <ItemGroup>
     <Compile Remove="Concepts\Arrays.cs" />
     <Compile Remove="Concepts\Class1.cs" />
+    <Compile Remove="Concepts\Classes.cs" />
     <Compile Remove="Concepts\ConsoleFunctions.cs" />
     <Compile Remove="Concepts\DecisionMaking.cs" />
     <Compile Remove="Concepts\Enumerations.cs" />
