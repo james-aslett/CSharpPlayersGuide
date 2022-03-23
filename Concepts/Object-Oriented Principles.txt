@@ -1,0 +1,6 @@
+﻿#1 Encapsulation - Combining data (fields) and the operations on that data (methods) into a well-defined unit (like a class) - page 146
+
+#2 Information Hiding - Only the object itself should directly access its data - page 155
+
+#3 Abstraction - The outside world does not need to know each object or class's inner workings and can deal with it as an abstract concept.
+Abstraction allows the inner workings to change without affecting the outside world - page 160

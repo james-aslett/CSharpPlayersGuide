@@ -1,0 +1,5 @@
+﻿#1 Do I share the project or not?
+
+#2 Should this individual type definition be shared or not?
+
+#3 Should this member (a field or a method) be shared or not?
