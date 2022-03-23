@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Concepts\Abstraction.cs" />
     <Compile Remove="Concepts\Arrays.cs" />
     <Compile Remove="Concepts\Class1.cs" />
     <Compile Remove="Concepts\Classes.cs" />
@@ -30,6 +31,7 @@
     <Compile Remove="Concepts\Switches.cs" />
     <Compile Remove="Concepts\Tuples.cs" />
     <Compile Remove="Concepts\UpdatingVariables.cs" />
+    <Compile Remove="Program.cs" />
   </ItemGroup>
 
   <ItemGroup>

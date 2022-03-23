@@ -3,3 +3,15 @@
 #2 Should this individual type definition be shared or not?
 
 #3 Should this member (a field or a method) be shared or not?
+
+Questions to ask of a class:
+- If this thing's container were usable anywhere, how available should this specific item be?
+- If this project was avaiable to anybody, would I want them to be able to reuse this class? Or is this a secret detail that I want to reserve the right to change without
+affecting anybody?
+
+Questions to ask of a method:
+- If this class were public, would I want this method to be public, or is this something that I want to be less accessible so that I can change it more easily later?
+
+TIP: Always write out accessibility level rather than rely on the default, as it'll get you into the habit of thinking about it. If you feel you prefer using the defaults
+after a few months then you can revert to those once you fully understand the rammifications
+
