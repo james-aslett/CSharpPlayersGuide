@@ -16,7 +16,6 @@
   <ItemGroup>
     <Compile Remove="Concepts\Abstraction.cs" />
     <Compile Remove="Concepts\Arrays.cs" />
-    <Compile Remove="Concepts\Class1.cs" />
     <Compile Remove="Concepts\Classes.cs" />
     <Compile Remove="Concepts\ConsoleFunctions.cs" />
     <Compile Remove="Concepts\DecisionMaking.cs" />
@@ -24,6 +23,8 @@
     <Compile Remove="Concepts\FormattingInterpolatedStrings.cs" />
     <Compile Remove="Concepts\InformationHiding.cs" />
     <Compile Remove="Concepts\Looping.cs" />
+    <Compile Remove="Concepts\Properties.cs" />
+    <Compile Remove="Concepts\Properties2.cs" />
     <Compile Remove="Concepts\Recursion.cs" />
     <Compile Remove="Concepts\StaticMethods.cs" />
     <Compile Remove="Concepts\StringAlignment.cs" />
@@ -35,7 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Challenges\" />
+    <Compile Include="Challenges\ThePropertiesOfArrows.cs" />
   </ItemGroup>
 
 </Project>
