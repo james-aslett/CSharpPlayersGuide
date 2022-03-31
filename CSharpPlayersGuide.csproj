@@ -26,6 +26,7 @@
     <Compile Remove="Concepts\Properties.cs" />
     <Compile Remove="Concepts\Properties2.cs" />
     <Compile Remove="Concepts\Recursion.cs" />
+    <Compile Remove="Concepts\Static.cs" />
     <Compile Remove="Concepts\StaticMethods.cs" />
     <Compile Remove="Concepts\StringAlignment.cs" />
     <Compile Remove="Concepts\StringInterpolation.cs" />
@@ -36,7 +37,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Challenges\" />
+    <None Remove="Concepts\Accessibility Level Thought Process.txt" />
+    <None Remove="Concepts\Object-Oriented Principles.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Challenges\ArrowFactories.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Concepts\" />
   </ItemGroup>
 
 </Project>

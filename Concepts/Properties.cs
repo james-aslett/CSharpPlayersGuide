@@ -51,7 +51,7 @@ public class Rectangle
     //if the property is get-only with an expression body like above, we can simplify it further
     public float AreaSimple => _width * _height;
 }
-//with an immutable (or read only) property, you have complete control over when the object is created, but it cannot be changed again once created
+//with an immutable (or readonly) property, you have complete control over when the object is created, but it cannot be changed again once created
 public class Player
 {
     private readonly string _name; //immutable field
