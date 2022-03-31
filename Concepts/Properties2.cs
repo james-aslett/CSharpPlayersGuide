@@ -1,5 +1,5 @@
 ﻿//while constructors should get the object into a good starting state, some initialization is best done immediately after the object is constructed, changing the
-//values to a handful of properties right after construction. It is like making some final adjustments are the concrete is still drying.
+//values to a handful of properties right after construction. It is like making some final adjustments are the concrete is still drying
 
 //with the below Circle class, we could make a new circle and set its properties like this:
 Circle circle = new Circle();
@@ -20,3 +20,8 @@ public class Circle
     public float Y { get; init; } = 0;
     public float Radius { get; init; } = 0;
 }
+
+//you can create anonymous types that live within a single method. They have the occasional use but don't underestimate the value of just creating a small,
+//simple class instead
+var anonymous = new { Name = "James", Age = 37 };
+Console.WriteLine($"{anonymous.Name} is {anonymous.Age} years old.");

@@ -67,9 +67,5 @@ public class Player
 //constructor. But after creation, we cannot change Name from inside or outside the class. While this sounds restrictive, there are many benefits to immutability.
 //For example, with immutable properties there is no possible way for the data to become inconsistent afterward.
 
-//the getter is public, so we can always get the current value of Name and even without a setter, we can still assign a value to Name in an initializer or
-//constructor. But after creation, we cannot change Name from inside or outside the class. While this sounds restrictive, there are many benefits to immutability.
-//For example, with immutable properties there is no possible way for the data to become inconsistent afterward.
-
-//when all of a classe's fields and properties are immutable (get only properties and readonly fields) the entire object is immutable. Not every object should be made
+//when all of a class's fields and properties are immutable (get only properties and readonly fields) the entire object is immutable. Not every object should be made
 //immutable. But when they can be, they are much easier to work with because you know the object cannot change.
