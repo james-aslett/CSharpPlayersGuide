@@ -1,11 +1,31 @@
-﻿//2: Modify the program to allow users to choose one of these predefined types or a custom arrow. If they select a predefined one, produce an Arrow instance using one of
-//the new static methods. If they choose custom, use your earlier code to get their custom data about the desired arrow
+﻿Arrow arrow;
+int input = GetUserInput();
 
+arrow = input switch
+{
+    1 => Arrow.CreateBeginnerArrow(),
+    2 => Arrow.CreateMarksmanArrow(),
+    3 => Arrow.CreateEliteArrow(),
+    4 => GetArrow(),
+};
 
-Arrow Elite = Arrow.CreateEliteArrow();
+Console.WriteLine($"That arrow costs {arrow.GetCost()} gold");
 
-Arrow arrow = GetArrow();
-Console.WriteLine($"That arrows costs {arrow.GetCost()} gold.");
+int GetUserInput()
+{
+    int number;
+    do
+    {
+        Console.WriteLine("Please choose from the following arrows, or create your own!");
+        Console.WriteLine("1: Beginner");
+        Console.WriteLine("2: Marksman");
+        Console.WriteLine("3: Elite");
+        Console.WriteLine("4: Custom");
+        number = Convert.ToInt32(Console.ReadLine());
+    }
+    while (number < 1 | number > 4);
+    return number;
+}
 
 Arrow GetArrow()
 {
@@ -51,25 +71,19 @@ float GetShaftLength()
     }
     return length;
 }
-
-//1: Modify your arrow class to include static methods of each of the following arrow types, like this: public static Arrow CreateEliteArrow() { ... }
-//EliteArrow = steel/plastic/95cm
-//BeginnerArrow = wood/goose/75cm
-//MarksmanArrow = steel/goose/65cm
 class Arrow
 {
-    private Arrowhead _arrowhead;
-    private Fletching _fletching;
-    private float _length;
+    private readonly Arrowhead _arrowhead;
+    private readonly Fletching _fletching;
+    private readonly float _length;
 
     public Arrowhead GetArrowhead() => _arrowhead;
     public Fletching GetFletching() => _fletching;
     public float GetLength() => _length;
 
     public static Arrow CreateEliteArrow() => new(Arrowhead.Steel, Fletching.Plastic, 95);
-    public static Arrow CreateBeginnerArrow() => new(Arrowhead.w, Fletching.Plastic, 95);
-    public static Arrow CreateMarksmanArrow() => new(Arrowhead.Steel, Fletching.Plastic, 95);
-
+    public static Arrow CreateBeginnerArrow() => new(Arrowhead.Wool, Fletching.GooseFeathers, 75);
+    public static Arrow CreateMarksmanArrow() => new(Arrowhead.Steel, Fletching.GooseFeathers, 65);
 
     public Arrow(Arrowhead arrowhead, Fletching fletching, float length)
     {
