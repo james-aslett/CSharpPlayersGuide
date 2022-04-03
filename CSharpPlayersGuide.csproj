@@ -42,11 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Challenges\ArrowFactories.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Concepts\" />
+    <Folder Include="Challenges\" />
   </ItemGroup>
 
 </Project>
