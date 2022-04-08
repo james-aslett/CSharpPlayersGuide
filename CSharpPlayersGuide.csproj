@@ -23,6 +23,7 @@
     <Compile Remove="Concepts\FormattingInterpolatedStrings.cs" />
     <Compile Remove="Concepts\InformationHiding.cs" />
     <Compile Remove="Concepts\Looping.cs" />
+    <Compile Remove="Concepts\NullReferences.cs" />
     <Compile Remove="Concepts\Properties.cs" />
     <Compile Remove="Concepts\Properties2.cs" />
     <Compile Remove="Concepts\Recursion.cs" />
@@ -34,11 +35,6 @@
     <Compile Remove="Concepts\Tuples.cs" />
     <Compile Remove="Concepts\UpdatingVariables.cs" />
     <Compile Remove="Program.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Concepts\Accessibility Level Thought Process.txt" />
-    <None Remove="Concepts\Object-Oriented Principles.txt" />
   </ItemGroup>
 
   <ItemGroup>
