@@ -38,7 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Challenges\TheCard.cs" />
+    <Folder Include="Challenges\" />
   </ItemGroup>
 
 </Project>
