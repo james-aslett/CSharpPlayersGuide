@@ -1,6 +1,4 @@
-﻿//SimulasTest might help!
-
-//DOOR RULES:
+﻿//DOOR RULES:
 //1: An open door can be closed
 //2: A closed (but not locked) door can be opened
 //3: A closed door can be locked
@@ -11,39 +9,69 @@
 //OBJECTIVES
 
 DoorState currentDoorState = DoorState.Locked;
-
 //Make your Main method ask the user for a starting passcode, then create a new Door instance
 Console.WriteLine("Please create a four digit passcode");
 int userPasscode = Convert.ToInt32(Console.ReadLine());
+Door door = new(userPasscode);
+Console.WriteLine("Please enter your current password");
+int userPasscode2 = Convert.ToInt32(Console.ReadLine());
+door.ChangePasscode(userPasscode2);
+
 //Allow the user to attempt the four transitions (open, close, lock, unlock)
-Console.WriteLine($"The door is currently {currentDoorState}. What do you want to do?");
+Console.WriteLine($"The door is currently {currentDoorState.ToString().ToLower()}. What do you want to do?");
+string userDoorChange = Console.ReadLine();
 //and change the code by typing in text commands
 
 //Define a Door class that can keep track of whether it is locked, open or closed
 public class Door
 {
+    public int CurrentPasscode { get; set; }
 
 
-    bool CheckActionAllowed(DoorState state, string input)
+    //Build a constructor that requires the starting numeric passcode
+    public Door(int passcode)
     {
-        if (input == "close" && state == DoorState.Open
-            || input == "lock" && state == DoorState.Closed
-            || input == "open" && state == DoorState.Closed
-            || input == "unlock" && state == DoorState.Locked) //numeric password required
-            return true;
-        else return false;
+        CurrentPasscode = passcode;
     }
-    DoorState SetChestState(string input)
+
+    //Build a method that will allow you to change the passcode for an existing door by supplying the current passcode and a new passcode. Only change the passcode if
+    //the current one is correct
+
+    public bool ChangePasscode(int userInputCurrentPasscode)
+    {
+        if (userInputCurrentPasscode == CurrentPasscode)
+        {
+            Console.WriteLine("Correct. Please choose a new password");
+            CurrentPasscode = Convert.ToInt32(Console.ReadLine());
+            return true;
+        }
+        else
+        {
+            Console.WriteLine("That password didn't match.");
+            return false;
+        }
+    }
+
+    DoorState SetDoorState(string input)
     {
         if (input == "close" || input == "unlock") return DoorState.Closed;
         else if (input == "lock") return DoorState.Locked;
         else return DoorState.Open;
     }
+
+    bool CheckActionAllowed(DoorState state, string input)
+    {
+        if (input == "close" && state == DoorState.Open
+            || input == "lock" && state == DoorState.Closed
+            || input == "open" && state == DoorState.Closed)
+            return true;
+        else if (input == "unlock" && state == DoorState.Locked)
+            //call checkPassword - if okay then return true
+            return true;
+        else return false;
+    }
+
 }
 //Create methods to perform the four transitions defined above
-//Build a constructor that requires the starting numeric passcode
-//Build a method that will allow you to change the passcode for an existing door by supplying the current passcode and a new passcode. Only change the passcode is
-//the current one is correct
-
 
 enum DoorState { Open, Closed, Locked }
