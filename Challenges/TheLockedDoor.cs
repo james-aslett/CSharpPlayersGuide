@@ -7,37 +7,76 @@
 //What is the current passcode? 1234 (if matches then next time you unlock it'll change to Closed, if doesn't match then next time you unlock it'll stay on Locked)
 
 int initialPasscode = GetInt("What is the initial passcode?");
-Door door = new(initialPasscode);
+Door door = new Door(initialPasscode);
 
 while (true)
 {
     Console.Write($"The door is {door.State.ToString().ToLower()}. What do you want to do? (open, close, lock, unlock, change code) ");
-    string? command = Console.ReadLine();
+    string? command = Console.ReadLine(); //? means a nullable type
 
+    switch (command)
+    {
+        case "open":
+            door.Open();
+            break;
+        case "close":
+            door.Close();
+            break;
+        case "lock":
+            door.Lock();
+            break;
+        case "unlock":
+            int guess = GetInt("What is the passcode?");
+            door.Unlock(guess);
+            break;
+        case "change code":
+            int currentCode = GetInt("What is the current passcode?");
+            int newCode = GetInt("What do you want to change it to?");
+            door.ChangeCode(currentCode, newCode);
+            break;
+    }
 }
 
 int GetInt(string text)
 {
     Console.Write(text + " ");
     return Convert.ToInt32(Console.ReadLine());
-} 
+}
 
 public class Door
 {
-    public int _passcode;
-    public DoorState _doorstate;
+    private int _passcode;
+    public DoorState State { get; private set; }
 
-    public Door(int passcode)
+    public Door(int initialPasscode)
     {
-        _passcode = passcode;
+        _passcode = initialPasscode;
+        State = DoorState.Closed;
     }
-    public DoorState ManipulateDoor(string input)
+    public void Close()
     {
-        if (input == "close" || input == "unlock") _doorstate = DoorState.Closed;
-        else if (input == "lock") _doorstate = DoorState.Locked;
-        else _doorstate = DoorState.Open;
+        if (State == DoorState.Open) State = DoorState.Closed;
+    }
+
+    public void Open()
+    {
+        if (State == DoorState.Closed) State = DoorState.Open;
+    }
+
+    public void Lock()
+    {
+        if (State == DoorState.Closed) State = DoorState.Locked;
+    }
+
+    public void Unlock(int passcode)
+    {
+        if (State == DoorState.Locked && passcode == _passcode) State = DoorState.Closed;
+    }
+
+    public void ChangeCode(int oldPasscode, int newPasscode)
+    {
+        if (oldPasscode == _passcode) _passcode = newPasscode;
     }
 }
-
 
 public enum DoorState { Open, Closed, Locked }
