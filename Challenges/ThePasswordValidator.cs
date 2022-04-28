@@ -39,7 +39,6 @@ public class PasswordValidator
         if (Contains(password, '&')) return false;
 
         return true;
-
     }
 
     private static bool ContainsUpper(string password)
