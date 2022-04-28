@@ -1,0 +1,70 @@
+[
+  {
+    "name": "Rock-Paper-Scissors Game",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Keeps track of both player's score",
+      "Determines which player is the winner",
+      "Displays who won each round",
+      "Keeps running until window is closed",
+      "Remember how many times each player won and how many draws there were",
+      ""
+    ],
+    "collaborators": [
+      "Determine Winner",
+      "Score Tracker",
+      "Display Round Result"
+    ]
+  },
+  {
+    "name": "Determine Winner",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Determine a win/draw based on game logic"
+    ],
+    "collaborators": [
+      "Game Rules"
+    ]
+  },
+  {
+    "name": "Game Rules",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Calculates win/draw based on rules: Rock beats Scissors, Scissors beats Paper, Paper beats Rock. If both players select the same then draw"
+    ],
+    "collaborators": [
+      ""
+    ]
+  },
+  {
+    "name": "Score Tracker",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Keep track of each player's score",
+      "Keep track of number of draws"
+    ],
+    "collaborators": [
+      "Game Rules"
+    ]
+  },
+  {
+    "name": "Display Round Result",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Display which player won round"
+    ],
+    "collaborators": [
+      "Score Tracker"
+    ]
+  }
+]
