@@ -38,7 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Challenges\Rock-Paper-Scissors.cs" />
+    <Folder Include="Challenges\" />
   </ItemGroup>
 
 </Project>

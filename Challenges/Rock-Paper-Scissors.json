@@ -5,15 +5,13 @@
     "subclasses": "",
     "type": 1,
     "responsibilities": [
-      "Keep track of both player's score",
-      "Determine which player is the winner of each round/draw",
-      "Display who won each round/draw",
-      "Keep running until program is closed",
-      "Remember how many times each player won/how many draws"
+      "Keep running until window is closed"
     ],
     "collaborators": [
+      "Player",
+      "Historical Record",
       "Round",
-      "Players"
+      ""
     ]
   },
   {
@@ -22,13 +20,13 @@
     "subclasses": "",
     "type": 1,
     "responsibilities": [
+      "Track state of a single round",
       "Determine which player wins the round/draw",
-      "Display result",
-      "Keep running until window is closed"
+      "Display result"
     ],
     "collaborators": [
       "Game Rules",
-      "Players"
+      "Player"
     ]
   },
   {
@@ -37,21 +35,31 @@
     "subclasses": "",
     "type": 1,
     "responsibilities": [
-      "Calculate win/draw based on rules: Rock beats Scissors, Scissors beats Paper, Paper beats Rock. If both players select the same then draw"
+      "Calculates win/draw based on rules: Rock beats Scissors, Scissors beats Paper, Paper beats Rock. If both players select the same then draw"
     ],
     "collaborators": [
-      "Players"
+      "Player"
     ]
   },
   {
-    "name": "Players",
+    "name": "Player",
     "superclasses": "",
     "subclasses": "",
     "type": 1,
     "responsibilities": [
-      "Allow each player to pick Rock, Paper or Scissors",
-      "Keep track of each player's score",
-      "Keep track of number of draws"
+      "Get choice from user"
+    ],
+    "collaborators": [
+      ""
+    ]
+  },
+  {
+    "name": "Historical Record",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Keep track of who won each round/draw"
     ],
     "collaborators": [
       ""

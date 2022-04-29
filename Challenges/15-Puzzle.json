@@ -1,0 +1,66 @@
+[
+  {
+    "name": "15-Puzzle Game",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Display game to user"
+    ],
+    "collaborators": [
+      "Player",
+      "Generate Puzzle",
+      "Current Game State",
+      "Moves Tracker"
+    ]
+  },
+  {
+    "name": "Player",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Can manipulate board"
+    ],
+    "collaborators": [
+      ""
+    ]
+  },
+  {
+    "name": "Moves Tracker",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Track and display how many moves player has made",
+      ""
+    ],
+    "collaborators": [
+      "Player"
+    ]
+  },
+  {
+    "name": "Current Game State",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Display current game state to user"
+    ],
+    "collaborators": [
+      ""
+    ]
+  },
+  {
+    "name": "Generate Puzzle",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Generate random puzzle"
+    ],
+    "collaborators": [
+      ""
+    ]
+  }
+]
