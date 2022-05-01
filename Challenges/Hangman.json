@@ -1,0 +1,43 @@
+[
+  {
+    "name": "Hangman Game",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Keeps track of game state",
+      "Displays state of game to user",
+      "Displays outcome of game to user",
+      ""
+    ],
+    "collaborators": [
+      "Player",
+      "Random Word Generator"
+    ]
+  },
+  {
+    "name": "Player",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Takes input from user",
+      "Keeps track of number of incorrect guesses"
+    ],
+    "collaborators": [
+      ""
+    ]
+  },
+  {
+    "name": "Random Word Generator",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Generate random word from a predetermined list"
+    ],
+    "collaborators": [
+      ""
+    ]
+  }
+]

@@ -9,9 +9,8 @@
     ],
     "collaborators": [
       "Player",
-      "Generate Puzzle",
-      "Current Game State",
-      "Moves Tracker"
+      "Board Generator",
+      "Board"
     ]
   },
   {
@@ -20,44 +19,40 @@
     "subclasses": "",
     "type": 1,
     "responsibilities": [
-      "Can manipulate board"
+      "Get commands from user",
+      "Tell the player they won",
+      "Display the round count",
+      "Display the state of the board"
     ],
     "collaborators": [
-      ""
+      "Console",
+      "Board"
     ]
   },
   {
-    "name": "Moves Tracker",
+    "name": "Board Generator",
     "superclasses": "",
     "subclasses": "",
     "type": 1,
     "responsibilities": [
-      "Track and display how many moves player has made",
+      "Get user input for board size",
+      "Generate random puzzle based on chosen board size",
       ""
     ],
     "collaborators": [
-      "Player"
+      "Board"
     ]
   },
   {
-    "name": "Current Game State",
+    "name": "Board",
     "superclasses": "",
     "subclasses": "",
     "type": 1,
     "responsibilities": [
-      "Display current game state to user"
-    ],
-    "collaborators": [
-      ""
-    ]
-  },
-  {
-    "name": "Generate Puzzle",
-    "superclasses": "",
-    "subclasses": "",
-    "type": 1,
-    "responsibilities": [
-      "Generate random puzzle"
+      "Knows state of board",
+      "Slide tiles",
+      "Determine when solved",
+      "Track move count"
     ],
     "collaborators": [
       ""
