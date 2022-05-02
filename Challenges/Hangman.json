@@ -1,18 +1,32 @@
 [
   {
+    "name": "Main Method",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Starts a new game with a player and a word from the dictionary"
+    ],
+    "collaborators": [
+      "Hangman Game",
+      "Player",
+      "Dictionary"
+    ]
+  },
+  {
     "name": "Hangman Game",
     "superclasses": "",
     "subclasses": "",
     "type": 1,
     "responsibilities": [
-      "Keeps track of game state",
-      "Displays state of game to user",
-      "Displays outcome of game to user",
-      ""
+      "Knows word, remaining guesses and incorrect letters",
+      "Runs the game",
+      "Asks player for letter",
+      "Updates state with letter",
+      "Checks for winning state"
     ],
     "collaborators": [
-      "Player",
-      "Random Word Generator"
+      "Player"
     ]
   },
   {
@@ -21,20 +35,21 @@
     "subclasses": "",
     "type": 1,
     "responsibilities": [
-      "Takes input from user",
-      "Keeps track of number of incorrect guesses"
+      "Let user pick a letter",
+      "Displays state of the game to the user"
     ],
     "collaborators": [
-      ""
+      "Console",
+      "Hangman Game"
     ]
   },
   {
-    "name": "Random Word Generator",
+    "name": "Dictionary",
     "superclasses": "",
     "subclasses": "",
     "type": 1,
     "responsibilities": [
-      "Generate random word from a predetermined list"
+      "Serve up random word from a predetermined list"
     ],
     "collaborators": [
       ""
