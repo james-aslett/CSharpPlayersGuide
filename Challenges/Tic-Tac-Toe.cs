@@ -14,23 +14,39 @@
 //---|---|---
 // 0 |   | X
 
-//OBJECTIVES:
-//Build the game of Tic-Tac-Toe as described in the requirements above. Starting with CRC cards is recommended, but the goal is to make working software, not CRC cards.
-//Answer this question: How might you modify your completed program if running multiple rounds was a requirement (eg: best of 5)?
+//----------------------------------
 
 //MAIN METHOD
+//Starts game with 2 players and black board
+//new up instance of TicTacToe
 
-
+//TICTACTOE
+//Runs the game
+//Asks each player to select a position on the board
+//Update board with player's choice if square is free, else tell user to try again
+//Checks for a winner/draw and display outcome
 class TicTacToe
 {
-
+    public TicTacToe()
+    {
+        var x = new Player();
+        
+    }
 }
 
+//PLAYERS
+//Lets user select square on board
 class Player
 {
+    public Player()
+    {
+        GetUserInput();
+    }
+
     public int GetUserInput()
     {
         return Convert.ToInt32(Console.ReadLine());
     }
-}
 
+
+}
