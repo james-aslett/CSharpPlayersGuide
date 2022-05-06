@@ -24,14 +24,13 @@ int price = item switch
     "Climbing Equipment" => 25,
     "Clean Water" or "Food Supplies" => 1,
     "Machete" => 20,
-    "Canoe" => 200
+    "Canoe" => 200,
+    _ => 0
 };
 
 if (userName == "James") price /= 2;
 
-
 Console.WriteLine($"{GetItem(choice)} {CostPluraliser(item)} {price} gold");
-
 
 static string GetItem(int choice)
 {
@@ -44,6 +43,7 @@ static string GetItem(int choice)
         5 => "Machete",
         6 => "Canoe",
         7 => "Food Supplies",
+        _ => "Unknown"
     };
     return item;
 }

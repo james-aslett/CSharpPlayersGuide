@@ -13,3 +13,4 @@ int AskForNumber(string text)
 //input 1 - 0 each - 1 duckbear
 //input 2 - 0 each - 2 duckbear
 //input 3 - 0 each - 3 duckbear
+//input 6 - 1 each - 2 duckbear

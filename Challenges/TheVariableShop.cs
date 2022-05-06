@@ -41,3 +41,34 @@ Console.WriteLine("My decimal value is " + myDecimal);
 Console.WriteLine("My char value is " + myChar);
 Console.WriteLine("My string value is " + myString);
 Console.WriteLine("My boolean value is " + myBoolean);
+
+
+myInt = -111;
+myShort = -222;
+myLong = 333;
+myByte = 254;
+mySByte = -127;
+myUint = 666666666;
+myUShort = 65534;
+myULong = 18446744073709551614;
+myFloat = 1.5623f;
+myDouble = 2.5623;
+myDecimal = 4.5623m;
+myChar = 'b';
+myString = "Goodbye";
+myBoolean = true;
+
+Console.WriteLine("My int value is " + myInt);
+Console.WriteLine("My short value is " + myShort);
+Console.WriteLine("My long value is " + myLong);
+Console.WriteLine("My byte value is " + myByte);
+Console.WriteLine("My sbyte value is " + mySByte);
+Console.WriteLine("My uint value is " + myUint);
+Console.WriteLine("My ushort value is " + myUShort);
+Console.WriteLine("My ulong value is " + myULong);
+Console.WriteLine("My float value is " + myFloat);
+Console.WriteLine("My double value is " + myDouble);
+Console.WriteLine("My decimal value is " + myDecimal);
+Console.WriteLine("My char value is " + myChar);
+Console.WriteLine("My string value is " + myString);
+Console.WriteLine("My boolean value is " + myBoolean);

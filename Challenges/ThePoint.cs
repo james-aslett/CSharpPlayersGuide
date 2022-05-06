@@ -1,11 +1,12 @@
 ﻿//in Main, create a point at (2,3) and another at (-4,0) and display them in the console with the format (x, y)
-Point point1 = new(2,3);
-Point point2 = new(-4, 0);
-Point point3 = new();
+DisplayPoint(new Point(2, 3));
+DisplayPoint(new Point(-4, 0));
+DisplayPoint(new Point());
 
-Console.WriteLine($"The first point is ({point1.X},{point1.Y})");
-Console.WriteLine($"The second point is ({point2.X},{point2.Y})");
-Console.WriteLine($"The third point is ({point3.X},{point3.Y})");
+void DisplayPoint(Point p)
+{
+    Console.WriteLine($"({p.X},{p.Y})");
+}
 
 //define Point class
 public class Point
@@ -17,6 +18,7 @@ public class Point
     //constructor to create a point from a specific X/Y coordinate
     public Point(float x, float y) 
     {
+        //assign the parameters to the X/Y properties
         X = x;
         Y = y;
     }

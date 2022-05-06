@@ -1,13 +1,10 @@
-﻿int inputNumber = AskForNumber("Please enter a number");
-
-if (inputNumber % 2 == 0)
-    Console.WriteLine($"The number {inputNumber} is even. Tick!");
-else
-    Console.WriteLine($"The number {inputNumber} is odd. Tock!");
-
-int AskForNumber(string text)
+﻿Console.WriteLine("Please enter a number.");
+int number = Convert.ToInt32(Console.ReadLine());
+if (number % 2 == 0)
 {
-    Console.WriteLine(text);
-    int number = Convert.ToInt32(Console.ReadLine());
-    return number;
+    Console.WriteLine($"The number {number} is even. Tick!");
+}
+else
+{
+    Console.WriteLine($"The number {number} is odd. Tock!");
 }
