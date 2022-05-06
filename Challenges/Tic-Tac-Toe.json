@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Main Method",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Starts a new game with 2 players and a blank board"
+    ],
+    "collaborators": [
+      "Tic-Tac-Toe Game"
+    ]
+  },
+  {
+    "name": "Tic-Tac-Toe Game",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Runs the game",
+      "Asks each player to select a position on the board",
+      "Update board with player's choice if square is free, else tell user to try again",
+      "Checks for a winner/draw and display outcome"
+    ],
+    "collaborators": [
+      "Player"
+    ]
+  },
+  {
+    "name": "Players",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Lets user select square on board"
+    ],
+    "collaborators": [
+      "Console",
+      "Tic-Tac-Toe Game"
+    ]
+  }
+]
