@@ -1,4 +1,4 @@
-﻿Color babyPink = new(255, 204, 229);
+﻿Color babyPink = new Color(255, 204, 229);
 Color specificColor = Color.White;
 Console.WriteLine($"My babyPink color has the following values: R {babyPink.R} | G {babyPink.G} | B {babyPink.B}");
 Console.WriteLine($"My specific color has the following values: R {specificColor.R} | G {specificColor.G} | B {specificColor.B}");
