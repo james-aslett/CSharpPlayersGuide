@@ -38,6 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Challenges\TheLockedDoor.cs" />
     <Compile Include="Challenges\Tic-Tac-Toe.cs" />
   </ItemGroup>
 

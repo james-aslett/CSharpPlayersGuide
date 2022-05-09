@@ -5,26 +5,39 @@ while (true)
 {
     Console.Write($"The door is {door.State.ToString().ToLower()}. What do you want to do? (open, close, lock, unlock, change code) ");
     string? command = Console.ReadLine(); //? means a nullable type
-
-    switch (command)
+    bool success;
+    switch (command.ToLower())
     {
         case "open":
-            door.Open();
+            success = door.Open();
+            if (success) Console.WriteLine("That worked!");
+            else Console.WriteLine("That didn't do anything.");
             break;
         case "close":
-            door.Close();
+            success = door.Close();
+            if (success) Console.WriteLine("That worked!");
+            else Console.WriteLine("That didn't do anything.");
             break;
         case "lock":
-            door.Lock();
+            success = door.Lock();
+            if (success) Console.WriteLine("That worked!");
+            else Console.WriteLine("That didn't do anything.");
             break;
         case "unlock":
             int guess = GetInt("What is the passcode?");
-            door.Unlock(guess);
+            success = door.Unlock(guess);
+            if (success) Console.WriteLine("That worked!");
+            else Console.WriteLine("The password entered was incorrect.");
             break;
         case "change code":
             int currentCode = GetInt("What is the current passcode?");
             int newCode = GetInt("What do you want to change it to?");
-            door.ChangeCode(currentCode, newCode);
+            success = door.ChangeCode(currentCode, newCode);
+            if (success) Console.WriteLine("That worked! You changed the passcode!");
+            else Console.WriteLine("Your current passcode didn't match. Try again.");
+            break;
+        default:
+            Console.WriteLine("Unrecognised command.");
             break;
     }
 }
@@ -45,29 +58,54 @@ public class Door
         _passcode = initialPasscode;
         State = DoorState.Closed;
     }
-    public void Close()
+    public bool Close()
     {
-        if (State == DoorState.Open) State = DoorState.Closed;
+        if (State == DoorState.Open)
+        {
+            State = DoorState.Closed;
+            return true;
+        }
+        return false;
     }
 
-    public void Open()
+    public bool Open()
     {
-        if (State == DoorState.Closed) State = DoorState.Open;
+        if (State == DoorState.Closed)
+        {
+            State = DoorState.Open;
+            return true;
+        }
+        return false;
     }
 
-    public void Lock()
+    public bool Lock()
     {
-        if (State == DoorState.Closed) State = DoorState.Locked;
+        if (State == DoorState.Closed)
+        { 
+            State = DoorState.Locked;
+            return true;
+        }
+        return false;
     }
 
-    public void Unlock(int passcode)
+    public bool Unlock(int passcode)
     {
-        if (State == DoorState.Locked && passcode == _passcode) State = DoorState.Closed;
+        if (State == DoorState.Locked && passcode == _passcode)
+        {
+            State = DoorState.Closed;
+            return true;
+        }
+        return false;
     }
 
-    public void ChangeCode(int oldPasscode, int newPasscode)
+    public bool ChangeCode(int oldPasscode, int newPasscode)
     {
-        if (oldPasscode == _passcode) _passcode = newPasscode;
+        if (oldPasscode == _passcode)
+        {
+            _passcode = newPasscode;
+            return true;
+        }
+        return false;
     }
 }
 
