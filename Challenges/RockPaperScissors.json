@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Rock-Paper-Scissors Game",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Runs the game",
+      "Ask the players for a choice",
+      "Determine a winner",
+      "Display the outcome",
+      "Remember historical record"
+    ],
+    "collaborators": [
+      "Player",
+      "Historical Record"
+    ]
+  },
+  {
+    "name": "Player",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Pick Rock, Paper or Scissors"
+    ],
+    "collaborators": [
+      ""
+    ]
+  },
+  {
+    "name": "Historical Record",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Remember historical record",
+      "Allow others to change the record"
+    ],
+    "collaborators": [
+      ""
+    ]
+  },
+  {
+    "name": "Player Choice (Enum)",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Rock",
+      "Paper",
+      "Scissors"
+    ],
+    "collaborators": [
+      ""
+    ]
+  }
+]

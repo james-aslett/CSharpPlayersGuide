@@ -38,7 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Challenges\ThePasswordValidator.cs" />
+    <Compile Include="Challenges\RockPaperScissors.cs" />
   </ItemGroup>
 
 </Project>
