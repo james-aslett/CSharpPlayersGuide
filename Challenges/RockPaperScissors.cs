@@ -18,8 +18,8 @@ public class RockPaperScissorsGame
     {
         while (true)
         {
-            PlayerChoice choice1 = _player1.GetChoice();
-            PlayerChoice choice2 = _player2.GetChoice();
+            PlayerChoice choice1 = _player1.GetChoice(_player1.Name);
+            PlayerChoice choice2 = _player2.GetChoice(_player2.Name);
             int winner = DetermineWinner(choice1, choice2);
             DisplayOutcome(winner);
             UpdateHistoricalRecord(winner);
@@ -42,8 +42,13 @@ public class RockPaperScissorsGame
 
     private int DetermineWinner(PlayerChoice choice1, PlayerChoice choice2)
     {
-        //check game logic
-        //return 1 if player 1 | 2 if player 2 | 0 if draw
+        if (choice1 == PlayerChoice.Scissors && choice2 == PlayerChoice.Paper 
+            || choice1 == PlayerChoice.Rock && choice2 == PlayerChoice.Scissors
+            || choice1 == PlayerChoice.Paper && choice2 == PlayerChoice.Rock) return 1;
+        else if (choice1 == PlayerChoice.Paper && choice2 == PlayerChoice.Scissors
+            || choice1 == PlayerChoice.Scissors && choice2 == PlayerChoice.Rock
+            || choice1 == PlayerChoice.Rock && choice2 == PlayerChoice.Paper) return 2;
+        else return 0;
     }
 }
 
@@ -51,8 +56,9 @@ public class Player
 {
     public string Name { get; set; }
 
-    public PlayerChoice GetChoice()
+    public PlayerChoice GetChoice(string player)
     {
+        Console.WriteLine($"{player}, please make a choice from Rock, Paper or Scissors.");  
         PlayerChoice input = (PlayerChoice)Enum.Parse(typeof(PlayerChoice), Console.ReadLine(), true);
 
         return input switch
