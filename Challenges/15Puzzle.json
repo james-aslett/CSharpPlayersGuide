@@ -5,42 +5,18 @@
     "subclasses": "",
     "type": 1,
     "responsibilities": [
-      "Display game to user"
+      "Randomise starting state",
+      "Tracks move count",
+      "Run the game loop:",
+      "1: Ask renderer to draw",
+      "2: Asks player for next move",
+      "3: Ask board to change state",
+      "4: See if the game is over"
     ],
     "collaborators": [
-      "Player",
-      "Board Generator",
-      "Board"
-    ]
-  },
-  {
-    "name": "Player",
-    "superclasses": "",
-    "subclasses": "",
-    "type": 1,
-    "responsibilities": [
-      "Get commands from user",
-      "Tell the player they won",
-      "Display the round count",
-      "Display the state of the board"
-    ],
-    "collaborators": [
-      "Console",
-      "Board"
-    ]
-  },
-  {
-    "name": "Board Generator",
-    "superclasses": "",
-    "subclasses": "",
-    "type": 1,
-    "responsibilities": [
-      "Get user input for board size",
-      "Generate random puzzle based on chosen board size",
-      ""
-    ],
-    "collaborators": [
-      "Board"
+      "Player Input",
+      "Board",
+      "Board Renderer"
     ]
   },
   {
@@ -49,13 +25,36 @@
     "subclasses": "",
     "type": 1,
     "responsibilities": [
-      "Knows state of board",
-      "Slide tiles",
-      "Determine when solved",
-      "Track move count"
+      "Can check if the game is over",
+      "Tracks current state"
     ],
     "collaborators": [
       ""
+    ]
+  },
+  {
+    "name": "Board Renderer",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Draws state of the board by request"
+    ],
+    "collaborators": [
+      "Console",
+      "Board"
+    ]
+  },
+  {
+    "name": "Player Input",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Interact with humans to get movement choice"
+    ],
+    "collaborators": [
+      "Console"
     ]
   }
 ]
