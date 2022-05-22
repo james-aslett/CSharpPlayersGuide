@@ -10,7 +10,7 @@ public class FifteenPuzzleGame
 
         Randomize(board);
 
-        while (!board.isOver)
+        while (!board.IsOver)
         {
             renderer.Render(board);
             Direction toMove = input.GetMove();
@@ -33,10 +33,14 @@ public class BoardRenderer
 {
     public void Render(Board board)
     {
+        Console.Clear();
         for (int row = 0; row < 4; row++)
         {
             for (int column = 0; column < 4; column++)
-                Console.Write($"{board:00} ");
+                if (board.GetSquare(row, column) == 16)
+                    Console.Write("   ");
+            else
+                Console.Write($"{board.GetSquare(row, column):00} ");
 
             Console.WriteLine();
         }
@@ -67,12 +71,12 @@ public class Board
         (int row, int column) = GetOpenLocation();
 
         if (direction == Direction.Right && column > 0) Swap(row, column, row, column - 1);
-        if (direction == Direction.Left && column < 3) Swap(row, column, row, column - 1);
-        if (direction == Direction.Up && row < 3) Swap(row, column, row, column - 1);
-        if (direction == Direction.Down && row > 0) Swap(row, column, row, column - 1);
+        if (direction == Direction.Left && column < 3) Swap(row, column, row, column + 1);
+        if (direction == Direction.Up && row < 3) Swap(row, column, row, column);
+        if (direction == Direction.Down && row > 0) Swap(row, column, row, column);
     }
 
-    public bool isOver
+    public bool IsOver
     {
         get
         {
@@ -120,6 +124,7 @@ public class PlayerInput
             ConsoleKey.RightArrow => Direction.Right,
             ConsoleKey.UpArrow => Direction.Up,
             ConsoleKey.DownArrow => Direction.Down,
+            _ => Direction.Down
         };
         return choice;
     }
