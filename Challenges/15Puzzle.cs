@@ -39,9 +39,8 @@ public class BoardRenderer
             for (int column = 0; column < 4; column++)
                 if (board.GetSquare(row, column) == 16)
                     Console.Write("   ");
-            else
-                Console.Write($"{board.GetSquare(row, column):00} ");
-
+                else
+                    Console.Write($"{board.GetSquare(row, column):00} ");
             Console.WriteLine();
         }
     }
@@ -72,8 +71,8 @@ public class Board
 
         if (direction == Direction.Right && column > 0) Swap(row, column, row, column - 1);
         if (direction == Direction.Left && column < 3) Swap(row, column, row, column + 1);
-        if (direction == Direction.Up && row < 3) Swap(row, column, row, column);
-        if (direction == Direction.Down && row > 0) Swap(row, column, row, column);
+        if (direction == Direction.Up && row < 3) Swap(row + 1, column, row, column);
+        if (direction == Direction.Down && row > 0) Swap(row - 1, column, row, column);
     }
 
     public bool IsOver

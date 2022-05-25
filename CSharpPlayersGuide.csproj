@@ -38,7 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Challenges\15Puzzle.cs" />
+    <Compile Include="Challenges\Hangman.cs" />
   </ItemGroup>
 
 </Project>

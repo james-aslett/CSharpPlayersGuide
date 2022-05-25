@@ -1,55 +1,69 @@
 [
   {
-    "name": "Main Method",
-    "superclasses": "",
-    "subclasses": "",
-    "type": 1,
-    "responsibilities": [
-      "Starts a new game with a player and a word from the dictionary"
-    ],
-    "collaborators": [
-      "Hangman Game",
-      "Player",
-      "Dictionary"
-    ]
-  },
-  {
     "name": "Hangman Game",
     "superclasses": "",
     "subclasses": "",
     "type": 1,
     "responsibilities": [
-      "Knows word, remaining guesses and incorrect letters",
-      "Runs the game",
-      "Asks player for letter",
-      "Updates state with letter",
-      "Checks for winning state"
+      "Tracks game state (word to guess, remaining guess count, which letters have been revealed and which letters were wrong)",
+      "Runs the game loop until win/lose:",
+      "1: Displays the game",
+      "2: Asks user for letter",
+      "3: Updates game state"
     ],
     "collaborators": [
-      "Player"
+      "Word Dictionary",
+      "Game Renderer"
     ]
   },
   {
-    "name": "Player",
+    "name": "Program/Main",
     "superclasses": "",
     "subclasses": "",
     "type": 1,
     "responsibilities": [
-      "Let user pick a letter",
-      "Displays state of the game to the user"
+      "Gets a random word",
+      "Starts a new game"
     ],
     "collaborators": [
-      "Console",
+      "Word Dictionary",
       "Hangman Game"
     ]
   },
   {
-    "name": "Dictionary",
+    "name": "Word Dictionary",
     "superclasses": "",
     "subclasses": "",
     "type": 1,
     "responsibilities": [
-      "Serve up random word from a predetermined list"
+      "Contains a list of words",
+      "Picks a random word"
+    ],
+    "collaborators": [
+      ""
+    ]
+  },
+  {
+    "name": "Game Renderer",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Draws the game's state"
+    ],
+    "collaborators": [
+      "Hangman Game",
+      ""
+    ]
+  },
+  {
+    "name": "Player Input",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Gets a letter from the player",
+      "Remembers guessed letters"
     ],
     "collaborators": [
       ""
