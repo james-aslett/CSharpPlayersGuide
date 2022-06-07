@@ -15,7 +15,7 @@ public class GameRenderer
         Console.Write($"| Remaining: {game.RemainingGuesses} | Incorrect: ");
         foreach (char letter in game.WrongGuesses)
             Console.Write(letter);
-        Console.Write(" Guess: ");
+        Console.Write(" | Guess: ");
     }
 }
 
@@ -32,13 +32,13 @@ public class HangmanGame
     public string WordToGuess;
     public int RemainingGuesses { get; private set; } = 5;
     public bool[] HasBeenRevealed { get; private set; }
-    public char[] WrongGuesses { get; private set; }
+    public List<char> WrongGuesses { get; private set; }
     
     public HangmanGame(string wordToGuess)
     {
         WordToGuess = wordToGuess;
         HasBeenRevealed = new bool[WordToGuess.Length];
-       WrongGuesses = new char[0];
+        WrongGuesses = new List<char>();
     }
 
     public void Run()
@@ -60,7 +60,10 @@ public class HangmanGame
                 }
             }
             if (!revealedSomething)
+            {
                 RemainingGuesses--;
+                WrongGuesses.Add(guess);
+            }
         }
     }
 
