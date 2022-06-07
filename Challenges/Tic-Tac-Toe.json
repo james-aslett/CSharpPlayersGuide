@@ -1,5 +1,45 @@
 [
   {
+    "name": "Board",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Represents the current state of the board",
+      "Lets others change the state",
+      "Can tell others about the state of the board"
+    ],
+    "collaborators": [
+      ""
+    ]
+  },
+  {
+    "name": "Player",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Gets choice from the keyboard",
+      "Prevents repeat selection of a square"
+    ],
+    "collaborators": [
+      "Console",
+      "Tic-Tac-Toe Game"
+    ]
+  },
+  {
+    "name": "Location",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Represents a location on the board with a row and column"
+    ],
+    "collaborators": [
+      ""
+    ]
+  },
+  {
     "name": "Main Method",
     "superclasses": "",
     "subclasses": "",
@@ -20,23 +60,11 @@
       "Runs the game",
       "Asks each player to select a position on the board",
       "Update board with player's choice if square is free, else tell user to try again",
-      "Checks for a winner/draw and display outcome"
+      "Checks for a win/draw",
+      "Displays outcome when game is over"
     ],
     "collaborators": [
       "Player"
-    ]
-  },
-  {
-    "name": "Players",
-    "superclasses": "",
-    "subclasses": "",
-    "type": 1,
-    "responsibilities": [
-      "Lets user select square on board"
-    ],
-    "collaborators": [
-      "Console",
-      "Tic-Tac-Toe Game"
     ]
   }
 ]
