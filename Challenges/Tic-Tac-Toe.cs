@@ -4,6 +4,7 @@ board.Set(new Location(0, 2), CellType.X);
 board.Set(new Location(2, 2), CellType.X);
 board.Set(new Location(2, 1), CellType.O);
 new BoardRenderer().Render(board);
+new Player().GetChoice(board);
 
 public class Player
 {
@@ -11,25 +12,45 @@ public class Player
     {
         while (true)
         {
-            Console.Write("What square do you want to play in?");
-            int choice = Convert.ToInt32(Console.ReadLine());
+            Console.Write("What square do you want to play in? ");
+            string? choiceAsString = Console.ReadLine();
+            int choice;
 
-            Location location = choice switch
+            //will refactor this with proper error handling later
+            if (!int.TryParse(choiceAsString, out choice))
             {
-                1 => new Location(2, 0),
-                2 => new Location(2, 1),
-                3 => new Location(2, 2),
-                4 => new Location(1, 0),
-                5 => new Location(1, 1),
-                6 => new Location(1, 2),
-                7 => new Location(0, 0),
-                8 => new Location(0, 1),
-                9 => new Location(0, 2),
-            };
+                Console.WriteLine("That was not a valid choice. Try again.");
+                continue;
+            }
+
+            Location? location = ToLocation(choice);
+            if (location == null)
+            {
+                Console.WriteLine("That was not a valid choice. Try again.");
+                continue;
+            }
 
             if (board.Get(location) == CellType.Empty)
                 return location;
+            Console.WriteLine("That space is not open! Try again.");
         }
+    }
+
+    private static Location ToLocation(int choice)
+    {
+        return choice switch
+        {
+            1 => new Location(2, 0),
+            2 => new Location(2, 1),
+            3 => new Location(2, 2),
+            4 => new Location(1, 0),
+            5 => new Location(1, 1),
+            6 => new Location(1, 2),
+            7 => new Location(0, 0),
+            8 => new Location(0, 1),
+            9 => new Location(0, 2),
+            _ => null
+        };
     }
 }
 
