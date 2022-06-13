@@ -1,52 +1,91 @@
-﻿//Two players take turns entering their choice using the same keyboard.
-//The players designate which square they want to play in. Hint: you might consider using the number pad as a guide. For example, if they enter 7, they have chosen
-//the top left corner of the board.
-//The game should prevent players from choosing squares that are already occupied. If such a move is attempted, the player should be told of the problem and given another
-//chance.
-//The game must detect when a player wins or when the board is full with no winner (draw/"cat")
-//When the game is over the outcome is displayed.
-//The state of the board must be displayed to the player after each play. Hint: one possible way to show the board could be like this:
+﻿Board board = new Board();
+board.Set(new Location(0, 1), CellType.O);
+board.Set(new Location(0, 2), CellType.X);
+board.Set(new Location(2, 2), CellType.X);
+board.Set(new Location(2, 1), CellType.O);
+new BoardRenderer().Render(board);
 
-//It is X's turn.
-//   | X |
-//---|---|---
-//   | 0 | X
-//---|---|---
-// 0 |   | X
-
-//----------------------------------
-
-//MAIN METHOD
-//Starts game with 2 players and black board
-//new up instance of TicTacToe
-
-//TICTACTOE
-//Runs the game
-//Asks each player to select a position on the board
-//Update board with player's choice if square is free, else tell user to try again
-//Checks for a winner/draw and display outcome
-class TicTacToe
+public class Player
 {
-    public TicTacToe()
+    public Location GetChoice(Board board)
     {
-        var x = new Player();
-        
+        while (true)
+        {
+            Console.Write("What square do you want to play in?");
+            int choice = Convert.ToInt32(Console.ReadLine());
+
+            Location location = choice switch
+            {
+                1 => new Location(2, 0),
+                2 => new Location(2, 1),
+                3 => new Location(2, 2),
+                4 => new Location(1, 0),
+                5 => new Location(1, 1),
+                6 => new Location(1, 2),
+                7 => new Location(0, 0),
+                8 => new Location(0, 1),
+                9 => new Location(0, 2),
+            };
+
+            if (board.Get(location) == CellType.Empty)
+                return location;
+        }
     }
 }
 
-//PLAYERS
-//Lets user select square on board
-class Player
+public class BoardRenderer
 {
-    public Player()
+    public void Render(Board board)
     {
-        GetUserInput();
+        char[,] characters = new char[3, 3];
+        for (int row = 0; row < 3; row++)
+            for (int column = 0; column < 3; column++)
+                characters[row, column] = ToCharacter(board.Get(new Location(row, column)));
+
+        Console.WriteLine($" {characters[0, 0]} | {characters[0, 1]} | {characters[0, 2]} ");
+        Console.WriteLine($"---+---+---");
+        Console.WriteLine($" {characters[1, 0]} | {characters[1, 1]} | {characters[1, 2]} ");
+        Console.WriteLine($"---+---+---");
+        Console.WriteLine($" {characters[2, 0]} | {characters[2, 1]} | {characters[2, 2]} ");
     }
 
-    public int GetUserInput()
+    private char ToCharacter(CellType cellType)
     {
-        return Convert.ToInt32(Console.ReadLine());
+        return cellType switch
+        {
+            CellType.X => 'X',
+            CellType.O => 'O',
+            _ => ' '
+        };
+    }
+}
+
+public class Board
+{
+    private readonly CellType[,] _cells = new CellType[3, 3];
+
+    public void Set(Location location, CellType newType)
+    {
+        if (newType == CellType.Empty)
+            return;
+        if (_cells[location.Row, location.Column] != CellType.Empty)
+            return;
+
+        _cells[location.Row, location.Column] = newType;
     }
 
+    public CellType Get(Location location)
+    {
+        return _cells[location.Row, location.Column];
+    }
+}
 
+public enum CellType { Empty, X, O }
+
+public class Location
+{
+    public int Row { get; }
+    public int Column { get; }
+
+    public Location(int row, int column) { Row = row; Column = column; }
 }
