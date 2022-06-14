@@ -3,26 +3,35 @@
 public class WinChecker
 {
     public bool HasXWon(Board board)
-    {
-        //columns
-        if (board.Get(0, 0) == CellType.X && board.Get(0, 1) == CellType.X && board.Get(0, 2) == CellType.X) return true;
-        if (board.Get(1, 0) == CellType.X && board.Get(1, 1) == CellType.X && board.Get(1, 2) == CellType.X) return true;
-        if (board.Get(2, 0) == CellType.X && board.Get(2, 1) == CellType.X && board.Get(2, 2) == CellType.X) return true;
-
-        //rows
-        if (board.Get(0, 0) == CellType.X && board.Get(1, 0) == CellType.X && board.Get(2, 0) == CellType.X) return true;
-        if (board.Get(0, 1) == CellType.X && board.Get(1, 1) == CellType.X && board.Get(2, 1) == CellType.X) return true;
-        if (board.Get(0, 2) == CellType.X && board.Get(1, 2) == CellType.X && board.Get(2, 2) == CellType.X) return true;
-
-        //diagonals
-        if (board.Get(0, 0) == CellType.X && board.Get(1, 1) == CellType.X && board.Get(2, 2) == CellType.X) return true;
-        if (board.Get(2, 0) == CellType.X && board.Get(1, 1) == CellType.X && board.Get(0, 2) == CellType.X) return true;
-
-        return false;
+    {      
+        return HasWon(board, CellType.X);
     }
 
     public bool HasOWon(Board board)
     {
+        return HasWon(board, CellType.O);
+    }
+
+    private static bool HasWon(Board board, CellType type)
+    {
+        bool[,] match = new bool[3, 3]; //bool array - all defaulted to false
+        for (int row = 0; row < 3; row++)
+            for (int column = 0; column < 3; column++)
+                //for each item in array, check if == CellType.X. If yes, item set to true
+                match[row, column] = board.Get(row, column) == type;
+
+        //columns
+        if (match[0, 0] && match[0, 1] && match[0, 2]) return true;
+        if (match[1, 0] && match[1, 1] && match[1, 2]) return true;
+        if (match[2, 0] && match[2, 1] && match[2, 2]) return true;
+        //rows
+        if (match[0, 0] && match[1, 0] && match[2, 0]) return true;
+        if (match[0, 1] && match[1, 1] && match[2, 1]) return true;
+        if (match[0, 2] && match[1, 2] && match[2, 2]) return true;
+        //diagonals
+        if (match[0, 0] && match[1, 1] && match[2, 2]) return true;
+        if (match[2, 0] && match[1, 1] && match[0, 2]) return true;
+
         return false;
     }
 
@@ -49,13 +58,26 @@ public class TicTacToeGame
 
         while (!winchecker.HasXWon(board) && !winchecker.HasOWon(board) && !winchecker.IsBoardFull(board))
         {
+            Console.WriteLine($"It is {currentPlayer.Token}'s turn.");
+            Console.WriteLine();
             renderer.Render(board);
+            Console.WriteLine();
             Location target = currentPlayer.GetChoice(board);
             board.Set(target, currentPlayer.Token);
 
             if (currentPlayer == player1) currentPlayer = player2;
             else currentPlayer = player1;
+
+            Console.Clear();
         }
+
+        renderer.Render(board);
+        Console.WriteLine();
+        if (winchecker.HasXWon(board))
+            Console.WriteLine("X wins!");
+        else if (winchecker.HasOWon(board))
+            Console.WriteLine("O wins!");
+        else Console.WriteLine("It's a draw!");
     }
 }
 
