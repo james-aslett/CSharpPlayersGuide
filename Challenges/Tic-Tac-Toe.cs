@@ -125,7 +125,6 @@ public class Player
             7 => new Location(0, 0),
             8 => new Location(0, 1),
             9 => new Location(0, 2),
-            _ => null
         };
     }
 }
@@ -146,7 +145,7 @@ public class BoardRenderer
         Console.WriteLine($" {characters[2, 0]} | {characters[2, 1]} | {characters[2, 2]} ");
     }
 
-    private char ToCharacter(CellType cellType)
+    private static char ToCharacter(CellType cellType)
     {
         return cellType switch
         {

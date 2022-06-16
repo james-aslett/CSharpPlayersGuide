@@ -38,7 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Challenges\Tic-Tac-Toe.cs" />
+    <Folder Include="Challenges\" />
   </ItemGroup>
 
 </Project>
