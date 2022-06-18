@@ -125,5 +125,34 @@ public class Bomber : Ship { /* ... */ }
 //and derived classes must supply their own. However, we can - and must - leverage the constructors defined in the base class when making
 //new constructors in the derived class.
 
+//If a parameterless constructor exists in the base class, a constructor in a derived class will automatically call it before running its own code.
+//And remember: if a class does not define any constructor, the compiler will generate a simple, parameterless constructor. The compiler-made one will work
+//fine for our own purposes here. This is what has happened in our simple inheritance hierarchy. Neither GameObject not Asteroid specifically defined any
+//constructors. The compiler generated a parameterless constructor in both classes, and the one in Asteroid automatically called the one in GameObject.
 
+//The same thing happens if you have manually made parameterless constructors:
 
+public class GameObject
+{
+    public GameObject()
+    {
+        PositionX = 2; PositionY = 4;
+    }
+
+    //Properties and other things here
+}
+
+public class Asteroid : GameObject
+{
+    public Asteroid()
+    {
+        RoatationAngle = 1;
+    }
+
+    //Properties and other things here
+}
+
+//Here, Asteroid's parameterless constructor will automatically call GameObject's parameterless constructor. Calling 'new Asteroid()' will enter Asteroid's constructor
+//and immediately jump to GameObject's parameterless constructor to set PositionX and PositionY and then return to Asteroid's constructor to set RotationAngle.
+
+//Suppose a base class has more than one constructor or does not include a parameterless constructor (both common scenarios). In that case, 
