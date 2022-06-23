@@ -155,4 +155,35 @@ public class Asteroid : GameObject
 //Here, Asteroid's parameterless constructor will automatically call GameObject's parameterless constructor. Calling 'new Asteroid()' will enter Asteroid's constructor
 //and immediately jump to GameObject's parameterless constructor to set PositionX and PositionY and then return to Asteroid's constructor to set RotationAngle.
 
-//Suppose a base class has more than one constructor or does not include a parameterless constructor (both common scenarios). In that case, 
+//Suppose a base class has more than one constructor or does not include a parameterless constructor (both common scenarios). In that case, you will need to expressly
+//state which base class constructor to build upon for any new constructors in the derived class.
+
+//Let's suppose GameObject has only this constructor:
+public GameObject(float positionX, float positionY, float velocityX, float velocityY)
+{
+    PositionX = positionX; PositionY = positionY;
+    VelocityX = velocityX; VelocityY = velocityY;
+}
+//Since there is no parameterless constructor to call, any constructors defined in Asteroid will need to specifically indicate that it is using this other
+//constructor and supply arguments for its parameters:
+public Asteroid() : base(0, 0, 0, 0)
+{
+
+}
+//It is relatively common to pass along parameters from the current constructor down to the base class's constructor, so the following might be more common:
+public Asteroid(float positionX, float positionY,float velocityX, float velocityY) : base(positionX, positionY, velocityX, velocityY)
+{
+
+}
+
+//We saw something similar in Level 18, with just the keyword this instead of base. It works in the same way, just reaching down to the base class's constructors
+//instead of this class's constructors. You cannot use both this and base together on a constructor, but a constructor can call out another constructor in the
+//same class with this instead of using base. Since constructor calls with this cannot create a loop, eventually, something will need to pick a constructor
+//from the base class.
+
+//Those rules are a bit complicated, so let's recap. Constructors are not inherited like other members are. Constructors in the derived class must call out
+//a constructor from the base class (with base) to build upon. Alternatively, they can call out a different one in the same class (with this).
+//If a parameterless constructor exists, including one the compiler generates, you do not need to state it explicitly with base. But don't worry; the compiler
+//will help you spot any problems.
+
+
