@@ -182,8 +182,83 @@ public Asteroid(float positionX, float positionY,float velocityX, float velocity
 //from the base class.
 
 //Those rules are a bit complicated, so let's recap. Constructors are not inherited like other members are. Constructors in the derived class must call out
-//a constructor from the base class (with base) to build upon. Alternatively, they can call out a different one in the same class (with this).
-//If a parameterless constructor exists, including one the compiler generates, you do not need to state it explicitly with base. But don't worry; the compiler
-//will help you spot any problems.
+//a constructor from the base class (with 'base') to build upon. Alternatively, they can call out a different one in the same class (with 'this').
+//If a parameterless constructor exists, including one the compiler generates, you do not need to state it explicitly with 'base'. But don't worry;
+//the compiler will help you spot any problems.
+
+//CASTING AND CHECKING FOR TYPES
+
+//If you ever have a base type but need to get a derived type out of it, you have some options. Consider this situation:
+GameObject gameObject = new Asteroid();
+Asteroid asteroid = gameObject; //ERROR!#
+//the gameObject variable can only guarantee that it has a GameObject. It might reference something more specific, like an Asteroid. In the above code
+//we know that's true.
+
+//By casting, we can get the compiler to treat the object as the more specialised type:
+GameObject gameObject = new Asteroid();
+Asteroid asteroid = (Asteroid)gameObject; //Use with caution
+
+//Casting tells the compiler 'I know more about this than you do, and it will be safe to treat this as an asteroid.' The compiler will allow this code
+//to compile, but the program will crash when running if you are wrong. The above code is guaranteed to be safe, but this one is not:
+Asteroid probablyAnAsteroid = (Asteroid)CreateAGameObject();
+GameObject CreateAGameObject() {  }
+//This cast is risky. Is assumes it will get an Asteroid back, but that's not a guaranteed thing. If CreateAGameObject returns anything else,
+//this program will crash.
+
+//Casting from a base class to a derived class is called a downcast. Incidentally, that is how you should feel when doing it. You should not
+//generally do it, and usually only if you check for the correct type first. There are three ways to do this check:
+
+//The first way is with object's GetType() method and the typeof keyword:
+if (gameObject.GetType() == typeof(Asteroid)) {  }
+//For each type that your program uses, the C# runtime will create an object representing information about that type. These objects are instances
+//of the Type class, which is a type that has metadata about other types in your program. Calling GetType() returns the type object associated
+//with the instance class. If gameObject is an Asteroid, it will return the Type object representing the Asteroid class. If it is a Ship, GetType will
+//return the Type object representing the Ship class. The typeof keyword lets you access these special objects by name instead. Using code like this,
+//you can see if an object's type matches some specific class.
+
+//Using typeof and .GetType() only work if there is an extact match. If you have an Asteroid instance and do asteroid.GetType() == typeof(GameObject),
+//this evaluates to false. The Type instances that represent the Asteroid and GameObject classes are different. That can work for or against you,
+//but it is important to keep in mind.
+
+//Another way is through the 'as' keyword:
+GameObject gameObject = CreateAGameObject();
+Asteroid? asteroid = gameObject as Asteroid;
+//The 'as' keyword simultaneously does a check AND the conversion. If gameObject is an Asteroid (or something derived from Asteroid), then the
+//variable asteroid will contain the reference to the object, now known to be an Asteroid. If gameObject is a Ship or a Bullet, then Asteroid
+//will be null. That means you will want to do a null check before using the variable.
+
+//The third way is with the 'is' keyword. The 'is' keyword is powerful and is one way to use patterns, which is the topic of level 40, But it is
+//freqently used to simply check the type and assign it to a new variable. The most common way to use it is like this:
+if (gameObject is Asteroid asteroid)
+{
+    //You can use the 'asteroid' variable here
+}
+
+//If you don't need the variable that this create, you can skip the nameL
+if (gameObject is Asteroid)
+
+//THE PROTECTED ACCESS MODIFIER
+
+    //We have already encountered three access modifiers in the past: private, public and internal. The fourth accessibility modifier is the protected
+    //keyword. If something is protected, it is accessible within the class and also any derived class. For example:
+
+public class GameObject {
+    public float PositionX { get; protected set; }
+    public float PositionY { get; protected set; }
+    public float VelocityX { get; protected set; }
+    public float VelocityY { get; protected set; }
+}
+//If we make these setters protected instead of public, only GameObject and its derived classes (like Asteroid and Ship) can change those properties;
+//the outside world cannot.
+
+//SEALED CLASSES
+
+//If you want to forbid others from deriving from a specific class, you can prevent it by adding the sealed modifier to the class defenition:
+public sealed class Asteroid : GameObject
+{
+    
+}
+//In this case, nobody will be able to derive a new class based on Asteroid. It is rare to want an outright ban on deriving from a class, but it has
+//occasional uses. Sealing a class can also sometimes result in a performance boost.
 
 
