@@ -8,8 +8,10 @@ Pack pack = new Pack(10, 20, 30);
 
 while (true)
 {
+    //all data was obtained from call to Pack class
     Console.WriteLine($"Pack is currently at {pack.CurrentCount}/{pack.MaxCount} items, {pack.CurrentWeight}/{pack.MaxWeight} weight, and {pack.CurrentVolume}/{pack.MaxVolume} volume.");
 
+    //display options to user
     Console.WriteLine("What do you want to add?");
     Console.WriteLine("1 - Arrow");
     Console.WriteLine("2 - Bow");
@@ -17,8 +19,11 @@ while (true)
     Console.WriteLine("4 - Water");
     Console.WriteLine("5 - Food");
     Console.WriteLine("6 - Sword");
+
+    //get input from user
     int choice = Convert.ToInt32(Console.ReadLine());
 
+    //set newItem to be a new Arrow/Bow etc. based on user choice
     InventoryItem newItem = choice switch
     {
         1 => new Arrow(),
@@ -29,6 +34,7 @@ while (true)
         6 => new Sword()
     };
 
+    //if Add returns false (no more room in the pack), then...
     if (!pack.Add(newItem))
         Console.WriteLine("Could not add this to the pack.");
 }
@@ -55,6 +61,7 @@ public class Pack
         MaxWeight = maxWeight;
         MaxVolume = maxVolume;
 
+        //sets number of inventory items to the max passed in
         _items = new InventoryItem[maxCount];
     }
 
@@ -66,6 +73,7 @@ public class Pack
         if (CurrentVolume + item.Volume > MaxVolume) return false;
         if (CurrentWeight + item.Weight > MaxWeight) return false;
 
+        //update current values
         _items[CurrentCount] = item;
         CurrentCount++;
         CurrentVolume += item.Volume;
@@ -73,7 +81,6 @@ public class Pack
         return true;
     }
 }
-
 
 //Create an inventory item class that represents any of the different item types. This class must represent the item's weight and volume, which it needs
 //at creation time (constructor)
@@ -91,6 +98,10 @@ public class InventoryItem
 
 //Create derived classes for each of the types of items above. Each class should pass the correct weight and volume to the base class constructor but should
 //be creatable themselves with a parameterless constructor (for example, 'new Rope()' or 'new Sword()'
+
+//each class contains a single empty parameterless constructor, but because it inherits InventoryItem we pass in each item's
+//weight and volume
+
 public class Arrow : InventoryItem { public Arrow() : base(0.1f, 0.05f) { } }
 public class Bow : InventoryItem { public Bow() : base(1f, 4f) { } }
 public class Rope : InventoryItem { public Rope() : base(1f, 1.5f) { } }

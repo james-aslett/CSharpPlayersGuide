@@ -39,7 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Challenges\PackingInventory.cs" />
+    <Folder Include="Challenges\" />
   </ItemGroup>
 
 </Project>
