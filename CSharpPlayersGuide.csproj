@@ -25,6 +25,7 @@
     <Compile Remove="Concepts\Inheritance.cs" />
     <Compile Remove="Concepts\Looping.cs" />
     <Compile Remove="Concepts\NullReferences.cs" />
+    <Compile Remove="Concepts\Polymorphism.cs" />
     <Compile Remove="Concepts\Properties.cs" />
     <Compile Remove="Concepts\Properties2.cs" />
     <Compile Remove="Concepts\Recursion.cs" />
@@ -39,7 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Challenges\" />
+    <Compile Include="Challenges\TheOldRobot.cs" />
   </ItemGroup>
 
 </Project>

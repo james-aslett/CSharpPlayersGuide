@@ -4,3 +4,7 @@
 
 #3 Abstraction - The outside world does not need to know each object or class's inner workings and can deal with it as an abstract concept.
 Abstraction allows the inner workings to change without affecting the outside world - page 160
+
+#4 Inheritance - Basing one class on another, retaining the original class's functionality while extending the new class with additional capabilities
+
+#5 Polymorphism - Derived classes can override methods from the base class. The correct version is determined at runtime, so you will get different behaviour depending on the object's class
