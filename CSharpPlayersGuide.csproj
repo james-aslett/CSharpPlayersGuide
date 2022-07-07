@@ -40,7 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Challenges\TheOldRobot.cs" />
+    <Folder Include="Challenges\" />
   </ItemGroup>
 
 </Project>
