@@ -260,3 +260,67 @@ public class LineSegment
 //When a new LineSegment is created, _start and _end are initialized to all zeroes. Regardless of what constructors Point defines, they don't get called
 //here. Fortunately, a Point whose X and Y values are 0 represents a point at the origin, which is a valid point.
 
+//Built-in Type Aliases
+
+//The built-in types that are value types (all eight integer types, all three floating-point types, char, and bool) are not just value types but structs
+//themselves.
+
+//While we have used keywords (int, double, bool, char, etc.) to refer to these types, the keywords are aliases or shortcut names for their formal
+//struct names. For example, int is an alias for System.Int32. While rarely done, we could use these other names instead:
+Int32 x = new Int32();
+Int32 y = 0; // Or combined
+int z = new Int32(); //Or combined another way. It's all the same thing
+int w = new int(); //Yet another way...
+
+//The keyword version is simpler and nearly always preferred, but their aliases pop up from time to time in documentation and sometimes in VS.
+//Knowing the long names for these types can help you understand what is going on. Here is the complete list of these aliases:
+
+bool a = new System.Boolean(); //struct
+byte b = new System.Byte(); //struct
+sbyte c = new System.SByte(); //struct
+char d = new System.Char(); //struct
+decimal e = new System.Decimal(); //struct
+double f = new System.Double(); //struct
+float g = new System.Single(); //struct
+int h = new System.Int32(); //struct
+uint i = new System.UInt32(); //struct
+long j = new System.Int64(); //struct
+ulong k = new System.UInt64(); //struct
+object l = new System.Object(); //class
+short m = new System.Int16(); //struct
+ushort n = new System.UInt16(); //struct
+string o = new System.String(""); //class
+
+//Ignoring the System part, many of these are the same except for capitalization. C# keywords are all lowercase, while types are usually
+//UpperCamelCase, which explains that difference.
+
+//These names follow the same naming pattern we saw with Convert's various methods. (Convert's method names actually come from these names
+//not the other way around).
+
+//But the keyboard and the longer type name are true synomyms. The following two are identical:
+int.Parse("4");
+Int32.Parse("4");
+
+//Boxing and Unboxing
+//Classes and structs all ultimately share the same base class: object. Classes derive from object directly (unless they choose another base class),
+//while structs derive from the special System.ValueTypes class, which is derived from object. This creates an interesting situation:
+object thing = 3;
+int number = (int)thing;
+
+//Some fascinating things are going on here. The number 3 is an int value, and int-typed variables contain the value directly, rather than a reference.
+//But variables of the object type store references. It seems we have conflicting behaviours. How does the above code work?
+
+//When a struct value is assigned to a variable that stores references, like the first line above, the data is pushed out to another location on the
+//heap, in its own little container - a box. A reference to the box is then stored in the thing variable. This is called a boxing conversion. The
+//value is copied onto the heap, allowing you to grab a reference to it.
+
+//On the second line, the inverse happens. After ensuring that the type is correct, the box's contents are extracted - an unboxing conversion - and
+//copied into the number variable.
+
+//You might hear a C# programmer phrase this as "The 3 is boxed in the first line, and then unboxed on the second line." As shown above, boxing can
+//happen implicitly, while unboxing must be explicit with a cast.
+
+//The same thing happens when we use an interface type with a value type. Suppose a value type implements an interface, and you store it in a
+//variable that uses an interface type. In that case, it must box the value before storing it because interface types store references.
+ISomeInterface thing = new SomeStruct();
+SomeStruct s = (SomeStruct)thing;
