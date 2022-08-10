@@ -42,7 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Challenges\RoomCoordinates.cs" />
+    <Folder Include="Challenges\" />
   </ItemGroup>
 
 </Project>
