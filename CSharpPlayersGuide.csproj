@@ -21,6 +21,7 @@
     <Compile Remove="Concepts\DecisionMaking.cs" />
     <Compile Remove="Concepts\Enumerations.cs" />
     <Compile Remove="Concepts\FormattingInterpolatedStrings.cs" />
+    <Compile Remove="Concepts\Generics.cs" />
     <Compile Remove="Concepts\InformationHiding.cs" />
     <Compile Remove="Concepts\Inheritance.cs" />
     <Compile Remove="Concepts\Interfaces.cs" />
@@ -29,6 +30,7 @@
     <Compile Remove="Concepts\Polymorphism.cs" />
     <Compile Remove="Concepts\Properties.cs" />
     <Compile Remove="Concepts\Properties2.cs" />
+    <Compile Remove="Concepts\Records.cs" />
     <Compile Remove="Concepts\Recursion.cs" />
     <Compile Remove="Concepts\Static.cs" />
     <Compile Remove="Concepts\StaticMethods.cs" />
@@ -42,7 +44,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Challenges\" />
+    <Compile Include="Challenges\ColoredItems.cs" />
   </ItemGroup>
 
 </Project>

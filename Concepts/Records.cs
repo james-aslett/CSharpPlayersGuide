@@ -1,4 +1,4 @@
-﻿//Records are a compact alternative notation for defining a data-centrc class or struct: public record Point(float X, float Y);
+﻿//Records are a compact alternative notation for defining a data-centric class or struct: public record Point(float X, float Y);
 
 //The compiler automatically generates a constructor, properties, ToString, equality with value semantics, and deconstruction
 
@@ -11,7 +11,7 @@
 //RECORDS
 
 //C# has an ultra-compact way to define certain kinds of classes or structs. This compact notation is called a record. The typical situation where a record makes
-//makes sense is when your type is little more than a set of properties - a data-focused entity.
+//sense is when your type is little more than a set of properties - a data-focused entity.
 
 //The following shows a simple Point record, defined with an X and Y property:
 public record Point(float X, float Y); //That's all
@@ -29,7 +29,7 @@ public class Point
 }
 
 //When you define a record, you get several features for free. It starts with properties that match the names you provided in the record definition and a
-//matching constructor. Note that these properties are init properties, so the class is, by defauly, immutable. But that's only the beginning. We get several
+//matching constructor. Note that these properties are init properties, so the class is, by default, immutable. But that's only the beginning. We get several
 //other things for free: a nice string representation, value semantics, deconstructionm and creating copies with tweaks.
 
 //STRING REPRESENTATION
@@ -42,7 +42,7 @@ Point { X = 2, Y = 3 }
 
 //VALUE SEMANTICS
 //Recall that semantics are when the thing's value or data counts, not it's reference. While struct have value semantics automtically, classes have reference
-//semantic by default. However, records automatically have value semantics. In a record, the Equal's method, the == operator and the != operator are redefined
+//semantics by default. However, records automatically have value semantics. In a record, the Equal's method, the == operator and the != operator are redefined
 //to give it value semantics. For example:
 Point a = new Point(2, 3);
 Point b = new Point(2, 3);
@@ -137,5 +137,45 @@ public record struct Point(float X, float Y);
 public struct Point
 {
     public float X { get; set; }
+    public float Y { get; set; }
 
+    public Point(float x, float y)
+    {
+        X = x;
+        Y = y;
+    }
 }
+
+//Records are class-based by default, but if you want to call it out specifically, you can write it out explicitly:
+public record class Point(float X, float Y);
+
+//This definition is no different than if it were defined without the class keyword, other than drawing a bit more attention to the choice of making the record
+//class-based.
+
+//Whichever way you go, you can generally expect the same things of a record as you can of the class or struct it would become. For example, since you can make a
+//class abstract or sealed, those are also options for class-based records.
+
+//INHERITANCE
+//Class-based records can also participate in inheritance with a few limitations. Records cannot derive from normal classes, and normal classes cannot derive
+//from records.
+
+//The syntax for inheritance in a record is worth showing:
+public record Point(float X, float Y);
+public record ColoredPoint(ColoredPoint Color, float X, float Y) : Point(X, Y);
+
+//WHEN TO USE A RECORD
+//When defining a class or struct, you have the option to use the record syntax. So when should you make a record, and when should you creeate a normal class or
+//struct?
+
+//The record syntax conveys a lot of information in a very short space. If the feature set of records fits your needs, you should generally prefer the record syntax.
+//Records give you a concise way to make a type with several properties and a constructor to initialize them. They also give you a nice string representation, value
+//semantics, deconstruction, and the ability to use with statements. If that suits your needs, a record is likely the right choice. If those features get in your way
+//or are unhelpful, then a regular class or struct is the better choice.
+
+//You should also consider records as a possible alternative to tuples. I usually go with a record in these cases. You need to go to the trouble of formally defining
+//the record type, but you get actual names for the type and its members. For me, that is usually worth the small cost.
+
+//Fortunately, it isn't usually hard to swap out one of these options for another. If you change your mind, you can change the code (and your intuition will get better
+//with practice).
+
+
