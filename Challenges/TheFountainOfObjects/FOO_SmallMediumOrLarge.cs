@@ -3,47 +3,53 @@
 //Pick an appropriate location for both the Fountain Room and the Entrance room
 //Note: when combined with Amaroks, Maelstroms, or Pits challanges, you will need to adapt the game by adding those to all three sizes
 
-FountainOfObjectsGame game = CreateSmallGame();
+
+ConsoleHelper.Write("Would you like to play a small, medium or large game?", ConsoleColor.White);
+Console.ForegroundColor = ConsoleColor.Cyan;
+
+FountainOfObjectsGame game = Console.ReadLine() switch
+{
+    "small" => CreateSmallGame(),
+    "medium" => CreateMediumGame(),
+    "large" => CreateLargeGame()
+};
+
 game.Run();
 
 // -------------------------------------------------------------------------------
 //                                   Methods
 // -------------------------------------------------------------------------------
 
-
-//JAMES NOTE: refactor this class to create a small, medium or large game
-// Creates a small 4x4 game.
 FountainOfObjectsGame CreateSmallGame()
 {
-    Map map;
-    Location start;
-    Location fountain;
-    Console.WriteLine("Would you like to play a small, medium or large map?");
-
-    string mapChoice = Console.ReadLine();
-    if (mapChoice == "small")
-    {
-        map = new Map(4, 4);
-        start = new Location(0, 0);
-        fountain = new Location(0, 2);
-
-    }
-    else if (mapChoice == "medium")
-    {
-        map = new Map(6, 6);
-        start = new Location(0, 0);
-        fountain = new Location(5, 4);
-    }
-    else
-    {
-        map = new Map(8, 8);
-        start = new Location(0, 0);
-        fountain = new Location(7, 3);
-    }
-    //JAMES END
-
+    Map map = new Map(4, 4);
+    Location start = new Location(0, 0);
     map.SetRoomTypeAtLocation(start, RoomType.Entrance);
-    map.SetRoomTypeAtLocation(fountain, RoomType.Fountain);
+    map.SetRoomTypeAtLocation(new Location(0, 2), RoomType.Fountain);
+
+    Monster[] monsters = new Monster[] { };
+
+    return new FountainOfObjectsGame(map, new Player(start), monsters);
+}
+
+FountainOfObjectsGame CreateMediumGame()
+{
+    Map map = new Map(6, 6);
+    Location start = new Location(1, 0);
+    map.SetRoomTypeAtLocation(start, RoomType.Entrance);
+    map.SetRoomTypeAtLocation(new Location(5, 2), RoomType.Fountain);
+
+    Monster[] monsters = new Monster[] { };
+
+    return new FountainOfObjectsGame(map, new Player(start), monsters);
+}
+
+FountainOfObjectsGame CreateLargeGame()
+{
+    Map map = new Map(8, 8);
+    Location start = new Location(2, 0);
+    map.SetRoomTypeAtLocation(start, RoomType.Entrance);
+    map.SetRoomTypeAtLocation(new Location(7, 2), RoomType.Fountain);
 
     Monster[] monsters = new Monster[] { };
 
