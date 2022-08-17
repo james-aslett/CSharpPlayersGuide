@@ -44,7 +44,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Challenges\ColoredItems.cs" />
+    <Compile Include="Challenges\TheFountainOfObjects\FOO_SmallMediumOrLarge.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Challenges\TheFountainOfObjects\FountainOfObjectsOverview.txt" />
   </ItemGroup>
 
 </Project>

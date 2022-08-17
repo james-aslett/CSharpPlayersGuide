@@ -1,0 +1,68 @@
+﻿MAIN METHOD - news up instance and runs
+
+---------------------------------
+
+'STANDALONE'(?) METHODS - just one, that creates the game
+
+---------------------------------
+
+CLASSES
+
+FountainOfObjectsGame
+	- tracks progression of a single game round
+	- constructor that takes map, player and monsters
+	- Run() that runs game in while loop until win/lose
+	- DisplayStatus() that will display status - called inside Run()
+	- GetCommand()that gets user input (uses ICommand)
+
+Map
+	- represents the map and what each room's type is (normal/entrance/fountain/off the map)
+	- constructor that takes rows and columns
+	- Interestingly, HasNeighborWithType (determines if a neighboring room is of the given type) isn't called - perhaps used in a later challenge
+
+Player
+	- can create player
+	- can kill player
+	- knows current location/if alive or not/cause of death
+
+Monster
+	- can create monster
+	- knows current location/if alive or not
+	- if player/monster in same room then Activate called (not 100% sure what that does yet)
+
+MoveCommand - Execute() updates player's position, unless off the map
+
+EnableFountainCommand - if in fountain room then enable fountain, else do not enable
+
+LightInEntranceSense - determines whether player can see light in the entrance room or not. Implements ISense
+
+FountainSense - is fountain off then sense dripping, if on then sense rushing water. Implements ISense
+
+ConsoleHelper - collection of helper methods for changing console text color
+
+---------------------------------
+
+RECORDS
+
+Location  - takes (row/column)
+
+---------------------------------
+
+INTERFACES
+
+ICommand - each new command should implement this
+
+ISense - represents something the player can sense
+
+
+
+
+---------------------------------
+
+ENUMS
+
+Direction - North, South, West, East
+
+RoomType - Normal, Entrance, Fountain, OffTheMap
+
+---------------------------------
