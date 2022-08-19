@@ -1,8 +1,8 @@
-﻿//Pits (already includes Small, Medium and Large)
-//Add a pit room to your 4x4 world anywhere that isn't the entrance/fountain
-//Players can sense the draft blowing out of pits in adjacent rooms (in all 8 directions): "You feel a draft. There is a pit in a nearby room."
-//If a player ends their turn in a room with a pit, they lose the game
-//Note: When combined with the Small, Medium or Large challenge, add one pit to the 4x4 world, two pits to the 6x6 world and four pits to the 8x8 world, in locations of your choice.
+﻿//Maelstroms (already includes Small, Medium and Large/Pits)
+//Add one maelstrom to the small/medium games and two to the large game, in locations of your choice
+//The player can sense the maelstrom by hearing them in adjacent rooms ("You hear the growling and groaning of a maelstrom nearby.")
+//If a player enters a room with a maelstrom, the player moves one space north and two spaces east, while the maelstrom moves one space south and two spaces west. When the player is moved like this, tell them so. If this would move the player or maelstrom beyond the map's edge, enure they stay on the map. (Clamp them to the map, wrap around to the other side, or any other strategy.)
+//Note:
 
 ConsoleHelper.Write("Would you like to play a small, medium or large game?", ConsoleColor.White);
 Console.ForegroundColor = ConsoleColor.Cyan;
@@ -28,7 +28,10 @@ FountainOfObjectsGame CreateSmallGame()
     map.SetRoomTypeAtLocation(new Location(0, 2), RoomType.Fountain);
     map.SetRoomTypeAtLocation(new Location(3, 3), RoomType.Pit);
 
-    Monster[] monsters = new Monster[] { };
+    Monster[] monsters = new Monster[]
+    {
+        new Maelstrom(new Location(2, 0))
+    };
 
     return new FountainOfObjectsGame(map, new Player(start), monsters);
 }
@@ -41,7 +44,11 @@ FountainOfObjectsGame CreateMediumGame()
     map.SetRoomTypeAtLocation(new Location(5, 2), RoomType.Fountain);
     map.SetRoomTypeAtLocation(new Location(4, 3), RoomType.Pit);
 
-    Monster[] monsters = new Monster[] { };
+    Monster[] monsters = new Monster[]
+    {
+        new Maelstrom(new Location(2, 0)),
+        new Maelstrom(new Location(2, 0))
+    };
 
     return new FountainOfObjectsGame(map, new Player(start), monsters);
 }
@@ -55,8 +62,9 @@ FountainOfObjectsGame CreateLargeGame()
     map.SetRoomTypeAtLocation(new Location(7, 6), RoomType.Pit);
 
     Monster[] monsters = new Monster[] { };
+    Maelstrom[] maelstroms = new Maelstrom[] { };
 
-    return new FountainOfObjectsGame(map, new Player(start), monsters);
+    return new FountainOfObjectsGame(map, new Player(start), monsters, maelstroms);
 }
 
 // -------------------------------------------------------------------------------
@@ -76,6 +84,9 @@ public class FountainOfObjectsGame
     // The list of monsters in the game.
     public Monster[] Monsters { get; }
 
+    // The list of maelstroms in the game.
+    public Maelstrom[] Maelstroms { get; }
+
     // Whether the player has turned on the fountain yet or not. (Defaults to `false`.)
     public bool IsFountainOn { get; set; }
 
@@ -83,18 +94,20 @@ public class FountainOfObjectsGame
     private readonly ISense[] _senses;
 
     // Initializes a new game round with a specific map and player.
-    public FountainOfObjectsGame(Map map, Player player, Monster[] monsters)
+    public FountainOfObjectsGame(Map map, Player player, Monster[] monsters, Maelstrom[] maelstroms)
     {
         Map = map;
         Player = player;
         Monsters = monsters;
+        Maelstroms = maelstroms;
 
         // Each of these senses will be used during the game. Add new senses here.
         _senses = new ISense[]
         {
             new LightInEntranceSense(),
             new FountainSense(),
-            new PitDraftSense()
+            new PitDraftSense(),
+            new MaelstromSense()
         };
     }
 
@@ -261,6 +274,20 @@ public abstract class Monster
     public abstract void Activate(FountainOfObjectsGame game);
 }
 
+public class Maelstrom : Monster
+{
+    // Creates a new maelstrom at a specific starting location.
+    public 
+
+    // When activated, this moves the player two spaces east (+2 columns) and one space north (-1 row)
+    // and the maelstrom moves two spaces west (-2 columns) and one space south (+1 row). However,
+    // it ensures both player and maelstrom stay within the boundaries of the map.
+
+    // Takes a location and a map size, and produces a new location that is as much the same
+    // as possible, but guarantees it is on the map.
+
+}
+
 // An interface to represent one of many commands in the game. Each new command should
 // implement this interface.
 public interface ICommand
@@ -358,6 +385,15 @@ public class PitDraftSense : ISense
     public void DisplaySense(FountainOfObjectsGame game) => ConsoleHelper.WriteLine("You feel a draft. There is a pit in a nearby room.", ConsoleColor.Red);
 }
 
+public class MaelstromSense : ISense
+{
+    // Returns `true` if the player is in the adjacent to a maelstrom.
+    public bool CanSense(FountainOfObjectsGame game) => game.Map.HasNeighborWithType(game.Player.Location, RoomType.Maelstrom);
+
+    //Displays the appropriate message if the player can sense a maelstrom.
+    public void DisplaySense(FountainOfObjectsGame game) => ConsoleHelper.WriteLine("You hear the growling and groaning of a maelstrom nearby.", ConsoleColor.Red);
+}
+
 // A collection of helper methods for writing text to the console using specific colors.
 public static class ConsoleHelper
 {
@@ -377,4 +413,4 @@ public static class ConsoleHelper
 }
 
 // Represents one of the different types of rooms in the game.
-public enum RoomType { Normal, Entrance, Fountain, Pit, OffTheMap }
+public enum RoomType { Normal, Entrance, Fountain, Pit, Maelstrom, OffTheMap }
