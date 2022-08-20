@@ -2,7 +2,6 @@
 //Add one maelstrom to the small/medium games and two to the large game, in locations of your choice
 //The player can sense the maelstrom by hearing them in adjacent rooms ("You hear the growling and groaning of a maelstrom nearby.")
 //If a player enters a room with a maelstrom, the player moves one space north and two spaces east, while the maelstrom moves one space south and two spaces west. When the player is moved like this, tell them so. If this would move the player or maelstrom beyond the map's edge, enure they stay on the map. (Clamp them to the map, wrap around to the other side, or any other strategy.)
-//Note:
 
 ConsoleHelper.Write("Would you like to play a small, medium or large game?", ConsoleColor.White);
 Console.ForegroundColor = ConsoleColor.Cyan;
@@ -61,10 +60,13 @@ FountainOfObjectsGame CreateLargeGame()
     map.SetRoomTypeAtLocation(new Location(7, 2), RoomType.Fountain);
     map.SetRoomTypeAtLocation(new Location(7, 6), RoomType.Pit);
 
-    Monster[] monsters = new Monster[] { };
-    Maelstrom[] maelstroms = new Maelstrom[] { };
+    Monster[] monsters = new Monster[]
+    {
+        new Maelstrom(new Location(2, 0)),
+        new Maelstrom(new Location(2, 0))
+    };
 
-    return new FountainOfObjectsGame(map, new Player(start), monsters, maelstroms);
+    return new FountainOfObjectsGame(map, new Player(start), monsters);
 }
 
 // -------------------------------------------------------------------------------
@@ -94,12 +96,11 @@ public class FountainOfObjectsGame
     private readonly ISense[] _senses;
 
     // Initializes a new game round with a specific map and player.
-    public FountainOfObjectsGame(Map map, Player player, Monster[] monsters, Maelstrom[] maelstroms)
+    public FountainOfObjectsGame(Map map, Player player, Monster[] monsters)
     {
         Map = map;
         Player = player;
         Monsters = monsters;
-        Maelstroms = maelstroms;
 
         // Each of these senses will be used during the game. Add new senses here.
         _senses = new ISense[]
@@ -277,15 +278,32 @@ public abstract class Monster
 public class Maelstrom : Monster
 {
     // Creates a new maelstrom at a specific starting location.
-    public 
+    public Maelstrom(Location start) : base(start) { }
 
     // When activated, this moves the player two spaces east (+2 columns) and one space north (-1 row)
     // and the maelstrom moves two spaces west (-2 columns) and one space south (+1 row). However,
     // it ensures both player and maelstrom stay within the boundaries of the map.
+    public override void Activate(FountainOfObjectsGame game)
+    {
+        ConsoleHelper.WriteLine("You have encountered a maelstrom and have been swept away to another room!", ConsoleColor.Magenta);
+        game.Player.Location = Clamp(new Location(game.Player.Location.Row - 1, game.Player.Location.Column + 2), game.Map.Rows, game.Map.Columns);
+        Location = Clamp(new Location(Location.Row + 1, Location.Column - 2), game.Map.Rows, game.Map.Columns);
+    }
 
     // Takes a location and a map size, and produces a new location that is as much the same
     // as possible, but guarantees it is on the map.
+    private Location Clamp(Location location, int totalRows, int totalColumns)
+    {
+        int row = location.Row;
+        if (row < 0) row = 0;
+        if (row >= totalRows) row = totalRows - 1;
 
+        int column = location.Column;
+        if (column < 0) column = 0;
+        if (column >= totalColumns) column = totalColumns - 1;
+
+        return new Location(row, column);
+    }
 }
 
 // An interface to represent one of many commands in the game. Each new command should
@@ -388,7 +406,25 @@ public class PitDraftSense : ISense
 public class MaelstromSense : ISense
 {
     // Returns `true` if the player is in the adjacent to a maelstrom.
-    public bool CanSense(FountainOfObjectsGame game) => game.Map.HasNeighborWithType(game.Player.Location, RoomType.Maelstrom);
+    public bool CanSense(FountainOfObjectsGame game)
+    {
+        foreach (Monster monster in game.Monsters)
+        {
+            if (monster is Maelstrom && monster.IsAlive) // Only consider monsters that are maelstroms and only those that are alive.
+            {
+                // The absolute value will turn negative numbers into their positive counterparts,
+                // allowing us to easily check if they are within 1 space of it.
+                int rowDifference = Math.Abs(monster.Location.Row - game.Player.Location.Row);
+                int columnDifference = Math.Abs(monster.Location.Column - game.Player.Location.Column);
+
+                // If we find one close enough, return `true`.
+                if (rowDifference <= 1 && columnDifference <= 1) return true;
+            }
+        }
+
+        // If we get through them all without finding one, return `false`.
+        return false;
+    }
 
     //Displays the appropriate message if the player can sense a maelstrom.
     public void DisplaySense(FountainOfObjectsGame game) => ConsoleHelper.WriteLine("You hear the growling and groaning of a maelstrom nearby.", ConsoleColor.Red);
@@ -413,4 +449,4 @@ public static class ConsoleHelper
 }
 
 // Represents one of the different types of rooms in the game.
-public enum RoomType { Normal, Entrance, Fountain, Pit, Maelstrom, OffTheMap }
+public enum RoomType { Normal, Entrance, Fountain, Pit, OffTheMap }

@@ -44,7 +44,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Challenges\TheFountainOfObjects\FOO_Maelstroms.cs" />
+    <Compile Include="Challenges\TheFountainOfObjects\FOO_Amaroks.cs" />
   </ItemGroup>
 
   <ItemGroup>
