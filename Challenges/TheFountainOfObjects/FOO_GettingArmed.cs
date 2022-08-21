@@ -26,13 +26,15 @@ FountainOfObjectsGame CreateSmallGame()
     map.SetRoomTypeAtLocation(new Location(0, 2), RoomType.Fountain);
     map.SetRoomTypeAtLocation(new Location(3, 3), RoomType.Pit);
 
+    Arrows arrows = new Arrows();
+
     Monster[] monsters = new Monster[]
     {
         new Maelstrom(new Location(2, 0)),
         new Amarok(new Location(1, 3))
     };
 
-    return new FountainOfObjectsGame(map, new Player(start), monsters);
+    return new FountainOfObjectsGame(map, new Player(start), arrows, monsters);
 }
 
 FountainOfObjectsGame CreateMediumGame()
@@ -43,6 +45,8 @@ FountainOfObjectsGame CreateMediumGame()
     map.SetRoomTypeAtLocation(new Location(5, 2), RoomType.Fountain);
     map.SetRoomTypeAtLocation(new Location(4, 3), RoomType.Pit);
 
+    Arrows arrows = new Arrows();
+
     Monster[] monsters = new Monster[]
     {
         new Maelstrom(new Location(2, 0)),
@@ -51,7 +55,7 @@ FountainOfObjectsGame CreateMediumGame()
         new Amarok(new Location(1, 4))
     };
 
-    return new FountainOfObjectsGame(map, new Player(start), monsters);
+    return new FountainOfObjectsGame(map, new Player(start), arrows, monsters);
 }
 
 FountainOfObjectsGame CreateLargeGame()
@@ -62,6 +66,8 @@ FountainOfObjectsGame CreateLargeGame()
     map.SetRoomTypeAtLocation(new Location(7, 2), RoomType.Fountain);
     map.SetRoomTypeAtLocation(new Location(7, 6), RoomType.Pit);
 
+    Arrows arrows = new Arrows();
+
     Monster[] monsters = new Monster[]
     {
         new Maelstrom(new Location(2, 0)),
@@ -70,7 +76,7 @@ FountainOfObjectsGame CreateLargeGame()
         new Amarok(new Location(3, 7))
     };
 
-    return new FountainOfObjectsGame(map, new Player(start), monsters);
+    return new FountainOfObjectsGame(map, new Player(start), arrows, monsters);
 }
 
 // -------------------------------------------------------------------------------
@@ -106,10 +112,11 @@ public class FountainOfObjectsGame
     private readonly ISense[] _senses;
 
     // Initializes a new game round with a specific map and player.
-    public FountainOfObjectsGame(Map map, Player player, Monster[] monsters)
+    public FountainOfObjectsGame(Map map, Player player, Arrows arrows, Monster[] monsters)
     {
         Map = map;
         Player = player;
+        Arrows = arrows;
         Monsters = monsters;
 
         // Each of these senses will be used during the game. Add new senses here.
@@ -270,6 +277,11 @@ public class Player
 public class Arrows
 {
     public int RemainingArrows { get; set; }
+
+    public Arrows() 
+    {
+        RemainingArrows = 5;
+    }
 }
 
 /// <summary>
