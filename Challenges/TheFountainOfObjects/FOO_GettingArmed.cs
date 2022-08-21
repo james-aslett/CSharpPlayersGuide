@@ -1,7 +1,6 @@
-﻿//Amaroks (already includes Small, Medium and Large/Pits/Maelstroms)
-//Amarok locations are up to you. Pick a room to place an amarok apart from the entrance or fountain room. 1 in small, 2 in medium, 3 in large
-//When a player is in one of the eight spaces adjacent to an amarok, display "You can smell the rotton stench of an amarok in a nearby room."
-//When a player enters a room with an amarok, the player dies and loses the game.
+﻿//Getting Around (already includes Small, Medium and Large/Pits/Maelstroms/Amarok)
+//Add the following commands that allow a player to shoot in any of the four directiond: shoot north, shoot east, shoot south and shoot west. When the player shoots in one of the four directions, an arrow is fired into the room in that direction. If a monster is in that room, it is killed and should not affect the game any more. They can no longer sense it, and it should not affect the player.
+//The player only has five arrows and cannot shoot when they are out of arrows. Display the number of arrows the player has when displaying the game's status before asking for their action.
 
 ConsoleHelper.Write("Would you like to play a small, medium or large game?", ConsoleColor.White);
 Console.ForegroundColor = ConsoleColor.Cyan;
@@ -88,6 +87,9 @@ public class FountainOfObjectsGame
     // The player playing the game.
     public Player Player { get; }
 
+    //The player's arrows.
+    public Arrows Arrows { get; }
+
     // The list of monsters in the game.
     public Monster[] Monsters { get; }
 
@@ -155,7 +157,7 @@ public class FountainOfObjectsGame
     private void DisplayStatus()
     {
         ConsoleHelper.WriteLine("--------------------------------------------------------------------------------", ConsoleColor.Gray);
-        ConsoleHelper.WriteLine($"You are in the room at (Row={Player.Location.Row}, Column={Player.Location.Column}).", ConsoleColor.Gray);
+        ConsoleHelper.WriteLine($"You are in the room at (Row={Player.Location.Row}, Column={Player.Location.Column}). You have {Arrows.RemainingArrows} arrows", ConsoleColor.Gray);
         foreach (ISense sense in _senses)
             if (sense.CanSense(this))
                 sense.DisplaySense(this);
@@ -263,6 +265,11 @@ public class Player
         IsAlive = false;
         CauseOfDeath = cause;
     }
+}
+
+public class Arrows
+{
+    public int RemainingArrows { get; set; }
 }
 
 /// <summary>
