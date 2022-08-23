@@ -1,5 +1,5 @@
-﻿//Getting Around (already includes Small, Medium and Large/Pits/Maelstroms/Amarok)
-//Add the following commands that allow a player to shoot in any of the four directiond: shoot north, shoot east, shoot south and shoot west. When the player shoots in one of the four directions, an arrow is fired into the room in that direction. If a monster is in that room, it is killed and should not affect the game any more. They can no longer sense it, and it should not affect the player.
+﻿//Getting Armed (already includes Small, Medium and Large/Pits/Maelstroms/Amarok)
+//Add the following commands that allow a player to shoot in any of the four directions: shoot north, shoot east, shoot south and shoot west. When the player shoots in one of the four directions, an arrow is fired into the room in that direction. If a monster is in that room, it is killed and should not affect the game any more. They can no longer sense it, and it should not affect the player.
 //The player only has five arrows and cannot shoot when they are out of arrows. Display the number of arrows the player has when displaying the game's status before asking for their action.
 
 ConsoleHelper.Write("Would you like to play a small, medium or large game?", ConsoleColor.White);
@@ -186,6 +186,11 @@ public class FountainOfObjectsGame
             if (input == "move west") return new MoveCommand(Direction.West);
             if (input == "enable fountain") return new EnableFountainCommand();
             // More commands go here.
+            if (input == "shoot north") return new ShootCommand(Direction.North);
+            if (input == "shoot south") return new ShootCommand(Direction.South);
+            if (input == "shoot east") return new ShootCommand(Direction.East);
+            if (input == "shoot west") return new ShootCommand(Direction.West);
+
 
             // If none of the above were a match, we have no clue what the command was. Try again.
             ConsoleHelper.WriteLine($"I did not understand '{input}'.", ConsoleColor.Red);
@@ -278,6 +283,17 @@ public class Arrows
 {
     public int RemainingArrows { get; set; }
 
+    public void Shoot(Direction direction)
+    {
+
+
+    }
+
+    public void Fire()
+    {
+        RemainingArrows--;
+    }
+
     public Arrows() 
     {
         RemainingArrows = 5;
@@ -350,6 +366,18 @@ public class Amarok : Monster
 public interface ICommand
 {
     void Execute(FountainOfObjectsGame game);
+}
+
+public class ShootCommand : ICommand
+{
+    // The direction to move.
+    public Direction Direction { get; }
+
+    // Creates a new movement command with a specific direction to move.
+    public ShootCommand(Direction direction)
+    {
+        Direction = direction;
+    }
 }
 
 // Represents a movement command, along with a specific direction to move.
