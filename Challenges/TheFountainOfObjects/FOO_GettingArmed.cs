@@ -26,15 +26,13 @@ FountainOfObjectsGame CreateSmallGame()
     map.SetRoomTypeAtLocation(new Location(0, 2), RoomType.Fountain);
     map.SetRoomTypeAtLocation(new Location(3, 3), RoomType.Pit);
 
-    Arrows arrows = new Arrows();
-
     Monster[] monsters = new Monster[]
     {
         new Maelstrom(new Location(2, 0)),
         new Amarok(new Location(1, 3))
     };
 
-    return new FountainOfObjectsGame(map, new Player(start), arrows, monsters);
+    return new FountainOfObjectsGame(map, new Player(start), new Arrow(start), monsters);
 }
 
 FountainOfObjectsGame CreateMediumGame()
@@ -45,7 +43,7 @@ FountainOfObjectsGame CreateMediumGame()
     map.SetRoomTypeAtLocation(new Location(5, 2), RoomType.Fountain);
     map.SetRoomTypeAtLocation(new Location(4, 3), RoomType.Pit);
 
-    Arrows arrows = new Arrows();
+    Arrow arrow = new Arrow();
 
     Monster[] monsters = new Monster[]
     {
@@ -55,7 +53,7 @@ FountainOfObjectsGame CreateMediumGame()
         new Amarok(new Location(1, 4))
     };
 
-    return new FountainOfObjectsGame(map, new Player(start), arrows, monsters);
+    return new FountainOfObjectsGame(map, new Player(start), arrow, monsters);
 }
 
 FountainOfObjectsGame CreateLargeGame()
@@ -66,7 +64,7 @@ FountainOfObjectsGame CreateLargeGame()
     map.SetRoomTypeAtLocation(new Location(7, 2), RoomType.Fountain);
     map.SetRoomTypeAtLocation(new Location(7, 6), RoomType.Pit);
 
-    Arrows arrows = new Arrows();
+    Arrow arrow = new Arrow();
 
     Monster[] monsters = new Monster[]
     {
@@ -76,7 +74,7 @@ FountainOfObjectsGame CreateLargeGame()
         new Amarok(new Location(3, 7))
     };
 
-    return new FountainOfObjectsGame(map, new Player(start), arrows, monsters);
+    return new FountainOfObjectsGame(map, new Player(start), arrow, monsters);
 }
 
 // -------------------------------------------------------------------------------
@@ -94,7 +92,7 @@ public class FountainOfObjectsGame
     public Player Player { get; }
 
     //The player's arrows.
-    public Arrows Arrows { get; }
+    public Arrow Arrow { get; }
 
     // The list of monsters in the game.
     public Monster[] Monsters { get; }
@@ -112,11 +110,11 @@ public class FountainOfObjectsGame
     private readonly ISense[] _senses;
 
     // Initializes a new game round with a specific map and player.
-    public FountainOfObjectsGame(Map map, Player player, Arrows arrows, Monster[] monsters)
+    public FountainOfObjectsGame(Map map, Player player, Arrow arrow, Monster[] monsters)
     {
         Map = map;
         Player = player;
-        Arrows = arrows;
+        Arrow = arrow;
         Monsters = monsters;
 
         // Each of these senses will be used during the game. Add new senses here.
@@ -164,7 +162,7 @@ public class FountainOfObjectsGame
     private void DisplayStatus()
     {
         ConsoleHelper.WriteLine("--------------------------------------------------------------------------------", ConsoleColor.Gray);
-        ConsoleHelper.WriteLine($"You are in the room at (Row={Player.Location.Row}, Column={Player.Location.Column}). You have {Arrows.RemainingArrows} arrows", ConsoleColor.Gray);
+        ConsoleHelper.WriteLine($"You are in the room at (Row={Player.Location.Row}, Column={Player.Location.Column}). You have {Arrow.RemainingArrows} arrows", ConsoleColor.Gray);
         foreach (ISense sense in _senses)
             if (sense.CanSense(this))
                 sense.DisplaySense(this);
@@ -278,9 +276,9 @@ public class Player
     }
 }
 
-public class Arrows
+public class Arrow
 {
-    public int RemainingArrows { get; set; }
+    public int RemainingArrows { get; set; } = 5;
 
     public Location Location { get; set; }
 
@@ -290,14 +288,18 @@ public class Arrows
 
     }
 
+    // Creates a new arrow that starts at the given location.
+    public Arrow(Location start) => Location = start;
+
     public void Fire()
     {
+
         RemainingArrows--;
     }
 
-    public Arrows() 
+    public Arrow() 
     {
-        RemainingArrows = 5;
+        //RemainingArrows = 5;
     }
 }
 
@@ -384,7 +386,7 @@ public class ShootCommand : ICommand
     // but only if the destination stays on the map. Otherwise, nothing happens.
     public void Execute(FountainOfObjectsGame game)
     {
-        Location currentLocation = game.Arrows.Location;
+        Location currentLocation = game.Arrow.Location;
         Location newLocation = Direction switch
         {
             Direction.North => new Location(currentLocation.Row - 1, currentLocation.Column),
@@ -395,8 +397,9 @@ public class ShootCommand : ICommand
 
         if (game.Map.IsOnMap(newLocation))
         {
-            game.Arrows.Location = newLocation;
-            ConsoleHelper.WriteLine(game.Arrows.Location.ToString(), ConsoleColor.Red);
+            game.Arrow.Location = newLocation;
+            
+            ConsoleHelper.WriteLine(game.Arrow.Location.ToString(), ConsoleColor.Red);
         }
         else
             ConsoleHelper.WriteLine("There is a wall there.", ConsoleColor.Red);
