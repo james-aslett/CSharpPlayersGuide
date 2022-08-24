@@ -191,7 +191,6 @@ public class FountainOfObjectsGame
             if (input == "shoot east") return new ShootCommand(Direction.East);
             if (input == "shoot west") return new ShootCommand(Direction.West);
 
-
             // If none of the above were a match, we have no clue what the command was. Try again.
             ConsoleHelper.WriteLine($"I did not understand '{input}'.", ConsoleColor.Red);
         }
@@ -283,6 +282,8 @@ public class Arrows
 {
     public int RemainingArrows { get; set; }
 
+    public Location Location { get; set; }
+
     public void Shoot(Direction direction)
     {
 
@@ -373,10 +374,32 @@ public class ShootCommand : ICommand
     // The direction to move.
     public Direction Direction { get; }
 
-    // Creates a new movement command with a specific direction to move.
+    // Creates a new shoot command with a specific direction to shoot.
     public ShootCommand(Direction direction)
     {
         Direction = direction;
+    }
+
+    // Causes the arrow's position to be updated with a new position, shifted in the intended direction,
+    // but only if the destination stays on the map. Otherwise, nothing happens.
+    public void Execute(FountainOfObjectsGame game)
+    {
+        Location currentLocation = game.Arrows.Location;
+        Location newLocation = Direction switch
+        {
+            Direction.North => new Location(currentLocation.Row - 1, currentLocation.Column),
+            Direction.South => new Location(currentLocation.Row + 1, currentLocation.Column),
+            Direction.West => new Location(currentLocation.Row, currentLocation.Column - 1),
+            Direction.East => new Location(currentLocation.Row, currentLocation.Column + 1)
+        };
+
+        if (game.Map.IsOnMap(newLocation))
+        {
+            game.Arrows.Location = newLocation;
+            ConsoleHelper.WriteLine(game.Arrows.Location.ToString(), ConsoleColor.Red);
+        }
+        else
+            ConsoleHelper.WriteLine("There is a wall there.", ConsoleColor.Red);
     }
 }
 
