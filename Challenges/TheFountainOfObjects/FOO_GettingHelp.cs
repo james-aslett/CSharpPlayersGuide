@@ -1,7 +1,8 @@
-﻿//Getting Armed (already includes Small, Medium and Large/Pits/Maelstroms/Amarok)
-//Add the following commands that allow a player to shoot in any of the four directions: shoot north, shoot east, shoot south and shoot west. When the player shoots in one of the four directions, an arrow is fired into the room in that direction. If a monster is in that room, it is killed and should not affect the game any more. They can no longer sense it, and it should not affect the player.
-//The player only has five arrows and cannot shoot when they are out of arrows. Display the number of arrows the player has when displaying the game's status before asking for their action.
+﻿//Getting Help (already includes Small, Medium and Large/Pits/Maelstroms/Amarok/Getting Armed)
+//When the game starts display text that decribes the game as follows: "You enter the Cavern of Objects, a maze of rooms filled with dangerous pits in search of the Fountain of Objects. Light is visible only in the entrance, and no other light is seen anywhere in the caverns. You must navigate the caverns with your other senses. Find the Fountain of Objects, activate it, and return to the entrance. Look out for pits. You will feel a breeze if a pit is in an adjacent room. If you enter a room with a pit, you will die. Maelstroms are violent forces of sentient wind. Entering a room with one could transport you to any other location in the caverns. You will be able to hear their growling and groaning in nearby rooms. Amaroks roam the caverns. Encountering one is certain death, but you can smell their rotten stench in nearby rooms. You carry with you a bow and a quiver of arrows. You can use them to shoot monsters in the caverns but be warned: you have a limited supply."
+//When the player types the command 'help', display all available commands and a short description of what each does.
 
+IntroText.DisplayText();
 ConsoleHelper.Write("Would you like to play a small, medium or large game?", ConsoleColor.White);
 Console.ForegroundColor = ConsoleColor.Cyan;
 
@@ -545,6 +546,24 @@ public static class ConsoleHelper
     {
         Console.ForegroundColor = color;
         Console.Write(text);
+    }
+}
+
+public static class IntroText
+{
+    public static void DisplayText()
+    {
+        ConsoleHelper.Write("You enter the Cavern of Objects, a maze of rooms filled with dangerous pits in search of the ", ConsoleColor.DarkCyan);
+        ConsoleHelper.Write("Fountain of Objects. ", ConsoleColor.Green);
+        ConsoleHelper.WriteLine("Light is visible only in the entrance, and no other light is seen anywhere in the caverns. You must navigate the caverns with your other senses. Find the Fountain of Objects, activate it, and return to the entrance.", ConsoleColor.DarkCyan);
+        Console.WriteLine();
+        ConsoleHelper.WriteLine("Look out for pits. You will feel a breeze if a pit is in an adjacent room. If you enter a room with a pit, you will die.", ConsoleColor.DarkCyan);
+        ConsoleHelper.Write("Maelstroms ", ConsoleColor.Red);
+        ConsoleHelper.WriteLine("are violent forces of sentient wind. Entering a room with one could transport you to any other location in the caverns. You will be able to hear their growling and groaning in nearby rooms.", ConsoleColor.DarkCyan);
+        Console.WriteLine();
+        ConsoleHelper.Write("Amaroks ", ConsoleColor.Red);
+        ConsoleHelper.WriteLine("roam the caverns. Encountering one is certain death, but you can smell their rotten stench in nearby rooms. You carry with you a bow and a quiver of arrows. You can use them to shoot monsters in the caverns but be warned: you have a limited supply.", ConsoleColor.DarkCyan);
+        Console.WriteLine();
     }
 }
 
