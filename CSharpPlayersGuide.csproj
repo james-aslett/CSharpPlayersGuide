@@ -32,6 +32,7 @@
     <Compile Remove="Concepts\Properties2.cs" />
     <Compile Remove="Concepts\Records.cs" />
     <Compile Remove="Concepts\Recursion.cs" />
+    <Compile Remove="Concepts\SomeUsefulTypes.cs" />
     <Compile Remove="Concepts\Static.cs" />
     <Compile Remove="Concepts\StaticMethods.cs" />
     <Compile Remove="Concepts\StringAlignment.cs" />
@@ -44,7 +45,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Challenges\TheFountainOfObjects\FOO_GettingHelp.cs" />
+    <Compile Include="Challenges\TheRobotPilot.cs" />
   </ItemGroup>
 
   <ItemGroup>
