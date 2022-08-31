@@ -39,11 +39,6 @@ void DisplayIntro()
     ConsoleHelper.WriteLine("Type 'help' at any time for a list of commands.", ConsoleColor.DarkCyan);
 }
 
-TimeSpan gameLength(DateTime startTime, DateTime endTime)
-{
-    return startTime - endTime;
-}
-
 FountainOfObjectsGame CreateSmallGame()
 {
     Map map = new Map(4, 4);
@@ -128,6 +123,9 @@ public class FountainOfObjectsGame
     // A list of senses that the player can detect. Add to this collection in the constructor.
     private readonly ISense[] _senses;
 
+    //The length of time the game ran for.
+    public TimeSpan gameLength { get; set; }
+
     // Initializes a new game round with a specific map and player.
     public FountainOfObjectsGame(Map map, Player player, Monster[] monsters)
     {
@@ -149,7 +147,8 @@ public class FountainOfObjectsGame
     // Runs the game one turn at a time.
     public void Run()
     {
-        
+        DateTime startTime = DateTime.Now;
+        DateTime endTime = DateTime.Now;
 
         // This is the "game loop." Each turn runs through this `while` loop once.
         while (!HasWon && Player.IsAlive)
@@ -162,7 +161,9 @@ public class FountainOfObjectsGame
                 if (monster.Location == Player.Location && monster.IsAlive) monster.Activate(this);
 
             if (CurrentRoom == RoomType.Pit)
+            {
                 Player.Kill("You fell into the pit and died.");
+            }
         }
 
         if (HasWon)
@@ -175,6 +176,9 @@ public class FountainOfObjectsGame
             ConsoleHelper.WriteLine(Player.CauseOfDeath, ConsoleColor.Red);
             ConsoleHelper.WriteLine("You lost.", ConsoleColor.Red);
         }
+        endTime = DateTime.Now;
+        gameLength = endTime - startTime;
+        ConsoleHelper.WriteLine($"The game ran for {gameLength.Minutes} minutes {gameLength.Seconds} seconds.", ConsoleColor.Blue);
     }
 
     // Displays the status to the player, including what room they are in and asks each sense to display itself
