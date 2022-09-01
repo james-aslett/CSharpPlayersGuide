@@ -8,6 +8,7 @@
 ConsoleHelper.Write("Would you like to play a small, medium or large game?", ConsoleColor.White);
 Console.ForegroundColor = ConsoleColor.Cyan;
 
+DateTime start = DateTime.Now;
 FountainOfObjectsGame game = Console.ReadLine() switch
 {
     "small" => CreateSmallGame(),
@@ -16,8 +17,18 @@ FountainOfObjectsGame game = Console.ReadLine() switch
 };
 
 DisplayIntro();
-
 game.Run();
+DateTime end = DateTime.Now;
+TimeSpan elapsed = end - start;
+
+// This will still be accurate even if you play the game for more than one hour. TotalMinutes
+// gives you the total time, measured in minutes, but that includes fractional amounts, like 0.25
+// for 15 seconds. Casting it to an `int` sheds the fractional part while preserving the minute
+// count from full hours.
+ConsoleHelper.WriteLine($"You were in the caverns for {(int)elapsed.TotalMinutes}m {elapsed.Seconds}s.", ConsoleColor.Blue);
+
+//Or a simpler way:
+//ConsoleHelper.WriteLine($"You were in the caverns for {elapsed.Minutes}m {elapsed.Seconds}s.", ConsoleColor.Blue);
 
 // -------------------------------------------------------------------------------
 //                                   Methods
@@ -123,9 +134,6 @@ public class FountainOfObjectsGame
     // A list of senses that the player can detect. Add to this collection in the constructor.
     private readonly ISense[] _senses;
 
-    //The length of time the game ran for.
-    public TimeSpan gameLength { get; set; }
-
     // Initializes a new game round with a specific map and player.
     public FountainOfObjectsGame(Map map, Player player, Monster[] monsters)
     {
@@ -147,9 +155,6 @@ public class FountainOfObjectsGame
     // Runs the game one turn at a time.
     public void Run()
     {
-        DateTime startTime = DateTime.Now;
-        DateTime endTime = DateTime.Now;
-
         // This is the "game loop." Each turn runs through this `while` loop once.
         while (!HasWon && Player.IsAlive)
         {
@@ -176,9 +181,6 @@ public class FountainOfObjectsGame
             ConsoleHelper.WriteLine(Player.CauseOfDeath, ConsoleColor.Red);
             ConsoleHelper.WriteLine("You lost.", ConsoleColor.Red);
         }
-        endTime = DateTime.Now;
-        gameLength = endTime - startTime;
-        ConsoleHelper.WriteLine($"The game ran for {gameLength.Minutes} minutes {gameLength.Seconds} seconds.", ConsoleColor.Blue);
     }
 
     // Displays the status to the player, including what room they are in and asks each sense to display itself
