@@ -32,6 +32,13 @@
     <Compile Remove="Concepts\Properties2.cs" />
     <Compile Remove="Concepts\Records.cs" />
     <Compile Remove="Concepts\Recursion.cs" />
+    <Compile Remove="Concepts\SomeUsefulTypes\DateTime.cs" />
+    <Compile Remove="Concepts\SomeUsefulTypes\Dictionary.cs" />
+    <Compile Remove="Concepts\SomeUsefulTypes\Guid.cs" />
+    <Compile Remove="Concepts\SomeUsefulTypes\IEnumerable.cs" />
+    <Compile Remove="Concepts\SomeUsefulTypes\Lists.cs" />
+    <Compile Remove="Concepts\SomeUsefulTypes\Random.cs" />
+    <Compile Remove="Concepts\SomeUsefulTypes\TimeSpan.cs" />
     <Compile Remove="Concepts\Static.cs" />
     <Compile Remove="Concepts\StaticMethods.cs" />
     <Compile Remove="Concepts\StringAlignment.cs" />
