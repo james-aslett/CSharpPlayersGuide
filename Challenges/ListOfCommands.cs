@@ -8,10 +8,12 @@ Console.WriteLine("1: Set power status (on/off)");
 Console.WriteLine("2: Specify a direction (north/south/east/west)");
 Console.WriteLine("3: Specify another direction");
 
-for (int index = 0; index < robot.Commands.Length; index++)
+while (true)
 {
     string? input = Console.ReadLine();
-    IRobotCommand newCommand = input switch
+    if (input == "stop") break;
+
+    robot.Commands.Add(input switch
     {
         "on" => new OnCommand(),
         "off" => new OffCommand(),
@@ -19,12 +21,11 @@ for (int index = 0; index < robot.Commands.Length; index++)
         "south" => new SouthCommand(),
         "east" => new EastCommand(),
         "west" => new WestCommand(),
-    };
-    robot.Commands[index] = newCommand;
+    });
 }
 
+//execute all commands
 Console.WriteLine();
-
 robot.Run();
 
 if (robot.IsPowered == false)
@@ -36,8 +37,7 @@ public class Robot
     public int Y { get; set; }
     public bool IsPowered { get; set; }
 
-    public List<IRobotCommand>? Commands { get; } = new List<IRobotCommand>();
-    //public IRobotCommand?[] Commands { get; } = new IRobotCommand?[3];
+    public List<IRobotCommand?> Commands { get; } = new List<IRobotCommand?>();
     public void Run()
     {
         foreach (IRobotCommand? command in Commands)

@@ -208,3 +208,58 @@ if (hasApples)
 int index = words.IndexOf("apple");
 
 //The List<T> class has quite a bit more than we have discussed here, though we have covered the highlights. At some point, you will want to use Visual Studio's AutoComplete feature or look it up on docs.microsoft.com and see what else it is capable of.
+
+//THE IENUMERABLE<T> INTERFACE
+//While List<T> might be the most versatile generic type, IEnumerable<T> might be the most foundational. This simple interface essentially defines what counts as a collection in .NET.
+
+//IEnumerable<T> defines a mechanism that allows you to inspect items one at a time. This mechanism is the basis for a foreach loop. If a type implements IEnumberable<T>, you can use it in a foreach loop.
+
+//IEnumberable<T> is anything that can provide an 'enumerator', and the definition looks something like this:
+public interface IEnumberable<T>
+{
+    IEnumerator<T> GetEnumerator();
+}
+
+//But what's an enumerator? It is a thing that lets you look at items in a set, one at a time, with the ability to start over. It is defined roughly like this:
+public interface IEnumerator<T>
+{
+    T Current { get; }
+    bool MoveNext();
+    void Reset();
+}
+
+//The Current property lets you see the current item. The MoveNext method advances to the next item and returns whether there even is another item. Reset starts over from the beginning. Almost nobody uses an IEnumerator<T> directly. They let the foreach loop deal with it. Consider this code:
+List<string> fruits = new List<string> { "apple", "banana", "corn", "durian" };
+
+foreach (string fruit in fruits)
+    Console.WriteLine(fruit);
+
+//That is equivalent to:
+List<string> fruits2 = new List<string> { "apple", "banana", "corn", "durian" };
+IEnumerator<string> iterator = fruits2.GetEnumerator();
+
+while (iterator.MoveNext())
+{
+    string fruit = iterator.Current;
+    Console.WriteLine(fruit);
+}
+
+//List<T> and arrays both implement IEnumberable<T>, but dozens of other collection types also implement this interface. It is the basis for all collection types. You will see IEnumberable<T> everywhere.
+
+//THE DICTIONARY<TKEY, TVALUE> CLASS
+//Sometimes, you want to look up one object or piece of information using another. A dictionary (also called an associative array or a map in other programming languages) is a data type that makes this possible. A dictionary provides this functionality. You add new items to the dictionary by supplying a key to store the item under, and when you want to retrieve it, you provide the key again to get the item back out. The value stored and retrieved via the key is called the value.
+
+//The origin of the name - and an illustrative example - is a standard English dictionary. Dictionaries store words and their definitions. For any word, you can look up its definition in the dictionary. If we wanted to make an English dictionary in C# code, we could use the generic Dictionary<TKey, TValue> class:
+Dictionary<string, string> dictionary = new Dictionary<string, string>();
+
+//This type has two generic type parameters, one for the key type and one for the value type. Here, we used string for both.
+
+//We can add items to the dictionary using the indexing operator with the key instead of an int:
+dictionary["battleship"] = "a large warship with big guns";
+dictionary["cruiser"] = "a fast but large warship.";
+dictionary["submarine"] = "a ship capable of moving under the water's surface";
+
+//To retrieve a value, you can also use the indexing operator:
+Console.WriteLine(dictionary["battleship"]);
+
+//This will display the string "a large warship with big guns".

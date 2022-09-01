@@ -32,7 +32,6 @@
     <Compile Remove="Concepts\Properties2.cs" />
     <Compile Remove="Concepts\Records.cs" />
     <Compile Remove="Concepts\Recursion.cs" />
-    <Compile Remove="Concepts\SomeUsefulTypes.cs" />
     <Compile Remove="Concepts\Static.cs" />
     <Compile Remove="Concepts\StaticMethods.cs" />
     <Compile Remove="Concepts\StringAlignment.cs" />
@@ -42,10 +41,6 @@
     <Compile Remove="Concepts\Tuples.cs" />
     <Compile Remove="Concepts\UpdatingVariables.cs" />
     <Compile Remove="Program.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="Challenges\ListOfCommands.cs" />
   </ItemGroup>
 
   <ItemGroup>
