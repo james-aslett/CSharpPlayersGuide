@@ -69,4 +69,112 @@ Console.WriteLine(stringBuilder.ToString());
 //In most files in a project use a specific namespace, you'll have using SomeNameSpace; everywhere. As an alternative, you can include the global keyword on a using directive and it will automatically be included in all files in the project:
 global using SomeNameSpace;
 
-//A global 
+//A global using directive can be added to any file but must come before regular using directives. I recommend putting these in a place you can find them easily. For example, you could make a GlobalUsings.cs or ProjectSettings.cs file containing only your global using directives.
+
+//STATIC USING DIRECTIVES
+//You can add a using directive with the static modifier to name a single type (not a namespace) to gain access to any static members of the type without writing out the type name. For example, the Math and Console classes have many static members. We could add static using directives for them:
+using static System.Math;
+using static System.Console;
+
+//With these in place, the following code compiles:
+double x = PI; // PI from Math
+WriteLine(Single(x)); // WriteLine from Console, Sin from Math
+ReadyKey(); //ReadKey from Console
+
+//The leads to shorter code, but it does add a burden on you and other programmers to figure out where these methods are coming from. I recommend using these sparingly. More often than not, the burden of figuring out and remembering where the methods came from outweighs the few characters you save, but all tools have their uses.
+
+//NAME CONFLICTS AND ALIASES
+//Suppose you want to use two types that share the same name in a single file. For example, imagine you need to use a PhysicsEngine.Point and UserInterface.Point class. Adding using directives for those two namespaces results in a name conflict. The compiler won't know which one Point refers to.
+
+//One solution is to use fully qualified names to sidestep the conflict:
+PhysicsEngine.Point point = new PhysicsEngine.Point();
+
+//Alternatively, you can also use the using keyword to give an alias to a type:
+using Point = PhysicsEngine.Point;
+
+//The above line is sufficient for the compiler to know when it sees the type Point in a file, you're referring to PhysicsEngine.Point, not UserInterface.Point, which resolves the conflict.
+
+//An alias does not need to match the original name of the type, meaning you can do this:
+using PhysicsPoint = PhysicsEngine.Point;
+using UIPoint = UserInterface.Point;
+
+PhysicsPoint p1 = new PhysicsPoint();
+UIPoint p2 = new UIPoint();
+
+//Aliaisng a type to another name can get confusing; do so with caution.
+
+//PUTTING TYPES INTO NAMESPACES
+//Virtually all types you use but don't create yourself (Console, Math, List<T>, etc.) wlil be in one namespace or another. Anything meant to be shared and reused in other projects should be in a namespace. If you are building something that isn't being reused, namespaces are somewhat less important. Everything we've done so far is in that category, so it isn't a big deal that we haven't used namespaces before.
+
+//But putting things into namespaces isn't hard and is often worth doing, even if you don't expect the code to be used far and wide.
+
+//The most flexible way of putting types in a namespace is shown below, using the namespace keyword, a name, and a set of curly braces that hold the types you want in the namepace:
+namespace SpaceGame
+{
+    public enum Color { Red, Green, Blue, Yellow }
+
+    public class Point { /* ... */ }
+}
+
+//With this code, Color's fully qualified name is SpaceGame.Color, and Point's is SpaceGame.Point.
+
+//A slightly more complete example might look this this:4
+using SpaceGame;
+
+Color color = Color.Red;
+point point = new Point();
+
+namespace SpaceGame
+{
+    public enum Color { Red, Green, Blue, Yellow }
+    public class Point { /* ... */ }
+}
+
+//Our main method at the top isn't in the SpaceGame namespace, so it relies on the using directive at the top to use Color and Point without fully qualified names.
+
+//Namespaces can contain other namespaces:
+namespace SpaceGame
+{
+    namespace Drawing
+    {
+    }
+}
+
+//But the more common way to nest namespaces is this:
+namespace SpaceGame.Drawing
+{
+}
+
+//A namespace can span many files. Each file will simply add to the namespace's members. Aside from the file containing your main method, most files lump all of its types into the same namespace. The following version is a shortcut to say, "Everything in this file is in the SpaceGame namespace," allowing it to ditch the excessive curly braces and indentation:
+namespace SpaceGame;
+
+public enum Color { Red, Green, Blue, Yellow }
+public class Point { /* ... */ }
+
+//This version comes after any using directives but before any type definitions. Unfortunately, you cannot use this version in the file containing your main method.
+
+//NAMESPACE NAMING CONVENTION
+//Most C# programmers will make their namespace names align with their project and folder structure. If you name your project SpaceGame, you would also make your namespace be SpaceGame. If you make a folder within your SpaceGame project called Graphics, you would put things in that folder in the SpaceGame.Graphics namespace.
+
+//Since namespace names usually mirror project names, let's briefly talk about project naming conventions. Project names are typically given a short, memorable project name (for example, SpaceGame) or prefix the project name with a company name (RBTech.SpaceGame). Some large projects are made of multiple components, so you'll sometimes see a component name added to the end (SpaceGame.Client, or RBTech.SpaceGame.Graphics). The namespace used within these projects will typically match these project names in each case.
+
+//TRADITIONAL ENTRY POINTS
+//Back in Level 3, I mentioned that there are two different ways to define an entry point for your program. Placing statements in a file like Program.cs is the simplest of the two and is what we have been doing in this book. This style is called top-level statements and is the newer and easier of the two options.
+
+//The alternative, which I'll call a traditional entry point, is still worth knowing. You will inevitably encounter code that still uses it, and if you find yourself using older code, it may be your only option.
+
+//The traditional approach is to make a class (usually called Program) and give it a static void Main method with an (optional) string array parameter (usually calls args):
+using System;
+
+namespace HelloWorld
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Hello, World!");
+        }
+    }
+}
+
+//In fact, the newer top-level 
