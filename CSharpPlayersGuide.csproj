@@ -37,7 +37,9 @@
     <Compile Remove="Concepts\SomeUsefulTypes\Guid.cs" />
     <Compile Remove="Concepts\SomeUsefulTypes\IEnumerable.cs" />
     <Compile Remove="Concepts\SomeUsefulTypes\Lists.cs" />
+    <Compile Remove="Concepts\SomeUsefulTypes\Nullable.cs" />
     <Compile Remove="Concepts\SomeUsefulTypes\Random.cs" />
+    <Compile Remove="Concepts\SomeUsefulTypes\Stringbuilder.cs" />
     <Compile Remove="Concepts\SomeUsefulTypes\TimeSpan.cs" />
     <Compile Remove="Concepts\Static.cs" />
     <Compile Remove="Concepts\StaticMethods.cs" />
@@ -52,6 +54,10 @@
 
   <ItemGroup>
     <Content Include="Challenges\TheFountainOfObjects\FountainOfObjectsOverview.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Concepts\SomeUsefulTypes\" />
   </ItemGroup>
 
 </Project>
