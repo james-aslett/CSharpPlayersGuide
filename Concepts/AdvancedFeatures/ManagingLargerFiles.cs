@@ -177,4 +177,46 @@ namespace HelloWorld
     }
 }
 
-//In fact, the newer top-level 
+//In fact, the newer top-level statement style is compiled into nearly identical code. Suppose you write this code:
+Faction faction = PickFaction();
+Console.WriteLine($"You've chosen to join the {faction} faction.");
+
+Faction PickFaction()
+{
+    Console.WriteLine("What faction do you want to be?");
+    string? choice = Console.ReadLine();
+    return choice switch
+    {
+        "Federation" => Faction.Federation,
+        "Klingon" => Faction.Klingon,
+        "Romulan" => Faction.Romulan,
+    };
+}
+
+public enum Faction { Federation, Klingon, Romulan }
+
+//The compiler turns this code into the following:
+internal class Program
+{
+    static void <Main>$(string[] args)
+    {
+        Faction faction = PickFaction();
+        Console.WriteLine($"You've chosen to joint the {faction} faction.");
+        
+        Faction PickFaction()
+        {
+            Console.WriteLine("What faction do you want to be?");
+            string? choice = Console.ReadLine();
+            return choice switch
+            {
+            "Ferderation" => Faction.Federation;
+                "Klingon" => Faction.Klingon;
+                "Romulan" => Faction.Romulan;
+            };
+        }
+    }
+}
+
+public enum Faction { Federation, Klingon, Romulan }
+
+//A few notable points: (1) Instead of Main, it is called <Main>$, which is an 'unspeakable' name that your code can't refer to by name. (2) Your statements are placed in this generated main method. (3) Your methods are also put into the main method as local functions. (4 Any type you define is placed outside the main method and the Program class.

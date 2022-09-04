@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <Compile Remove="Concepts\Abstraction.cs" />
+    <Compile Remove="Concepts\AdvancedFeatures\ManagingLargerFiles.cs" />
     <Compile Remove="Concepts\Arrays.cs" />
     <Compile Remove="Concepts\Classes.cs" />
     <Compile Remove="Concepts\ConsoleFunctions.cs" />
@@ -53,10 +54,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Challenges\TheFeud.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Challenges\TheFountainOfObjects\FountainOfObjectsOverview.txt" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Concepts\AdvancedFeatures\" />
     <Folder Include="Concepts\SomeUsefulTypes\" />
   </ItemGroup>
 
