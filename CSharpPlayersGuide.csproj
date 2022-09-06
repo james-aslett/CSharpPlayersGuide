@@ -54,7 +54,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Challenges\TheFeud.cs" />
+    <Compile Include="Challenges\DuelingTraditions\FountainSense.cs" />
+    <Compile Include="Challenges\DuelingTraditions\AmarokSense.cs" />
+    <Compile Include="Challenges\DuelingTraditions\MaelstromSense.cs" />
+    <Compile Include="Challenges\DuelingTraditions\PitDraftSense.cs" />
+    <Compile Include="Challenges\DuelingTraditions\LightInEntranceSense.cs" />
+    <Compile Include="Challenges\DuelingTraditions\ShootCommand.cs" />
+    <Compile Include="Challenges\DuelingTraditions\ISense.cs" />
+    <Compile Include="Challenges\DuelingTraditions\ICommand.cs" />
+    <Compile Include="Challenges\DuelingTraditions\ConsoleHelper.cs" />
+    <Compile Include="Challenges\DuelingTraditions\Monster.cs" />
+    <Compile Include="Challenges\DuelingTraditions\Player.cs" />
+    <Compile Include="Challenges\DuelingTraditions\Map.cs" />
+    <Compile Include="Challenges\DuelingTraditions\FountainOfObjectsGame.cs" />
+    <Compile Include="Challenges\DuelingTraditions\Main.cs" />
   </ItemGroup>
 
   <ItemGroup>
