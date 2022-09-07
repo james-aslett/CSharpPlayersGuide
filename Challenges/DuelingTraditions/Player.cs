@@ -1,4 +1,6 @@
-﻿public class Player
+﻿namespace DuelingTraditions;
+
+public class Player
 {
     public Location Location { get; set; }
 

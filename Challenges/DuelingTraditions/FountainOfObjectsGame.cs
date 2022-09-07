@@ -21,7 +21,7 @@ public class FountainOfObjectsGame
         Map = map;
         Player = player;
         Monsters = monsters;
-.
+        
         _senses = new ISense[]
         {
             new LightInEntranceSense(),

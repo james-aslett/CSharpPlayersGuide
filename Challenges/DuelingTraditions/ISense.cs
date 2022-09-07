@@ -1,4 +1,6 @@
-﻿public interface ISense
+﻿namespace DuelingTraditions;
+
+public interface ISense
 {
     bool CanSense(FountainOfObjectsGame game);
 

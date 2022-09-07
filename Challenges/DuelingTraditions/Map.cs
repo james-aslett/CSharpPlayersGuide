@@ -1,4 +1,10 @@
-﻿public class Map
+﻿namespace DuelingTraditions;
+
+public enum RoomType { Normal, Entrance, Fountain, Pit, OffTheMap }
+
+public record Location(int Row, int Column);
+
+public class Map
 {
     private readonly RoomType[,] _rooms;
 

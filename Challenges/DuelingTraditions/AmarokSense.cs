@@ -1,4 +1,4 @@
-﻿using DuelingTraditions;
+﻿namespace DuelingTraditions;
 
 public class AmarokSense : ISense
 {
