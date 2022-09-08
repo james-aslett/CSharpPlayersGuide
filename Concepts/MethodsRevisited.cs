@@ -74,3 +74,64 @@ public static double Average(params int[] numbers)
 Average(2, 3);
 Average(2, 5, 8);
 Average(41, 49, 29, 2, -7, 18);
+
+//The compiler does the hard work of transforming these methods with seemingly different parameter counts into an array.
+
+//You can also call this version of Average with an array if that is more natural for the situation.
+
+//You can only have one params parameter in a given method, and it must come after all normal paraters.
+
+//COMBINATIONS
+//You can combine default arguments, named arguments, and variable arguments, though I recommend getting used to each on their own before combining them.
+
+//Default arguments and named arguments are frequently combined. Imagine a method with four parameters, where each has a reasonable default value:
+public Ship MakeShip(int health = 50, int speed = 26, int rateOfFire = 2, int siize = 4) => ...
+
+//You get a 'standard' ship by calling MakeShip() with no arguments, taking advantage of all the default values. Or you can specify a non-default value for a single, specific parameter with something like MakeShip(rateOfFire: 3). You get the custom value for the parameter you name and default values for every other parameter.
+
+//PASSING BY REFERENCE
+//As we saw in Levels 13 and 14, when calling a method, the values passed to the method are duplicated into the called method's parameters. When a value type is passed, the value is copied into the parameter. When a reference type is passed, the reference is copied into the parameter. This copying of variable contents is called passing by value. In contrast, passing by reference allows two methods to share a variable and its memory location directly. The memory address itself is handed over rather than passing copied data to a method. Passing by reference allows a method to directly affect the calling method's variables, which is powerful but risky.
+
+//The terminology here is unfortunate. The concept of value types vs. reference type and the concept of passing by value vs. passing by reference are separate. You can pass either type using either mode. But as we'll see, passing by reference has more benefits to value types than it does to reference types.
+
+//Passing by reference means you do not have to duplicate data when methods are called. If you are passing large structs around, or even small struct with great frequency, this can make your program run much faster.
+
+//To make a parameter pass by reference, put the ref keyword before it:
+void DisplayNumber(ref int x) => Console.WriteLine(x);
+
+//You must also use the ref keyword when calling the method:
+int y = 3;
+DisplayNumber(ref y);
+
+//Here, DisplayNumber's x parameter does not have its own storage. It is an alias for another variable. When DisplayNumber(ref y) is called, that other variable will be y.
+
+//The primary goal is to avoid the costs of copying large value types whenever we call a method. While it achieves that goal, it comes with a steep price: the called method has total access to the caller's variables and can change them.
+void DisplayNextNumber(ref int x)
+{
+    x++;
+    Console.WriteLine(x);
+}
+
+//If the above code used a regular (non-ref) parameter, x would be a local variable with its own memory. x++ would affect only the new memory location. With ref, the memory is supplied by the calling method, and x++ will impact the calling method.
+
+//This is typically undesirable - a cost that must be paid to get the advertised speed boosts. This risk is why you must put ref where the method is declared and where the method is called. Both sides must agree to share the variables. But sometimes, it is precisely what you want. For example, this method swaps the contents of two variables:
+void Swap(ref int a, ref int b)
+{
+    int temporary = a;
+    a = b;
+    b = temporary;
+}
+
+//Due to their nature, passing by reference can only be done with a variable - something that has a memory location. You cannot just supply an expression. You cannot do this:
+DisplayNumber(ref 3); //compiler error!
+
+//Passing by reference is primarily for value types. Reference types already get most of the would-be benefits by their very nature. But reference types can also be passed by reference.
+
+//Methods assume parameters are initialized when the method is called. You must initialize any variable that you pass by reference before calling it. The code beloe is a compiler error because y is not initialized:
+int y;
+DisplayNumber(ref y); // compiler error!
+
+//OUTPUT PARAMETERS
+
+
+
