@@ -204,6 +204,7 @@ public static class StringExtensions
         foreach (char letter in text)
         {
             result += isCapital ? char.ToUpper(letter) : char.ToLower(letter);
+            isCapital = !isCapital;
         }
 
         return result;
