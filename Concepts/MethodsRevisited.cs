@@ -16,6 +16,8 @@
 
 //OPTIONAL ARGUMENTS
 //Optional arguments let you define a default value for a parameter. If you are happy with the default, you don't need to supply an argument when you call the method. Let's say you wrote this method to simulate rolling date:
+using System.Transactions;
+
 private Random _random = new Random();
 public interface RollDie(int sides) => _random.Next(sides) + 1;
 
@@ -132,6 +134,80 @@ int y;
 DisplayNumber(ref y); // compiler error!
 
 //OUTPUT PARAMETERS
+//Output parameters are a special flavor of ref parameters. They are also passed by reference, but they are not required to be initialized in advance, and the method must initialize an output parameter before returning. Output parameters are made with the out keyword:
+void SetupNumber(bool useBigNumber, out double value)
+{
+    value = useBigNumber ? 1000000 : 1;
+}
 
+//Which is called like this:
+double x;
+SetupNumber(true, out x);
+double y;
+SetupNumber(false, out y);
 
+//Mechanically, output parameters work the same as reference parameters. But as you can see, neither x nor y was initialized beforehand. This code expects SetupNumber to initialize those variables instead.
 
+//Output parameters are sometimes used to return more than one value from a method. You will find plenty of code that does this, but also consider returning a tuple or record since these sometimes create simpler code.
+
+//When invoking a method with an output parameter, you can also declare a variable right there, instead of needing to declare it on a previous line:
+SetupNumber(true, out double x);
+SetupNumber(false, out double y);
+
+//You will also encounter scenarios where the method you're calling has an output parameter that you don't care to use. Instead of a throwaway variable like junk1 or unused2, you can use a discard to ignore it:
+SetupNumber(true, out _);
+
+//One notable usage of output parameters appears when parsing text. As we saw in Level 6, most built-in types have a Parse method: int x = int.Parse("3");. If these methods are called with bad data, they crash the program. These types also have a TryParse method, whose return value tells you if it was able to parse the data and supplies the parsed number as an output parameter:
+string? input = Console.ReadLine();
+if (int.TryParse(input, out int value))
+    Console.WriteLine($"You entered {value}");
+else
+    Console.WriteLine("That is not a number");
+
+//THERE'S MORE!
+//Passing  by reference is a powerful concept. You will find the occasional use for it. But what we have covered here is only scratching at the surface. The details are beyond this book, getting into the darkest corners of C#. But just so you have an idea of what else is out there in these deep, dark caverns, here are a few hints about how else passing by reference can be used.
+
+//Most of the time, the memory location shared when passing by reference is owned by the calling method. The called method can originate a shared memory location, but how it ensures this is not straightforward. The compiler can easily enforce that you never assign a completely new value to the supplied variable. The rest is trickier. The compiler does not magically know which properties and methods will modify the object and which won't. To ensure the called method doesn't accidentially change the in parameter, it will duplicate the value into another variable and call methods and properties on the copy instead. But bypassing those duplications was a key reason for passing by reference in the first place, which somewhat defeats the purpose. To counter that, you can mark some structs and some struct methods as readonly, which tells the compiler it is safe to call the method without making a defensive copy first.
+
+//This sharing of memory locations is also the basis for a special type called Span<T>, representing a collection that reuses some or all of another's memory.
+
+//DECONSTRUCTORS
+//With tuples, we can unpack the elements into multiple variables simultaneously:
+var tuple = (2, 3);
+(int a, int b) = tuple;
+
+//You can give your types this ability by defining a Deconstruct method with a void return type and a collection of output parameters. The following could be added to any of the various Point types we have defined:
+public void Deconstruct(out float x, out float y)
+{
+    x = X;
+    y = Y;
+}
+
+//While you can invoke the Deconstruct method directly (as though it were any other method), you can also call it with code like this:
+(float x, float y) = p;
+
+//By adding Deconstruct methods, you give any type this deconstruction ability. This is especially useful for data-centric types. (Records have this automatically).
+
+//You can define multiple Deconstruct overloads with different parameter lists.
+
+//EXTENSION METHODS
+//An extension method is a static method that can give the apperance of being attached to another type (class, enumeration, interface, etc.) as an instance method. Extension methods are useful when you want to add to a class that you do not own. They also let you add methods for things that can't or typically don't have them, such as interfaces or enumerations.
+
+//For example, the string class has the ToUpper and ToLower methods that produce uppercase and lowercase versions of the string. If we wanted a ToAlternating method that alternates between upper/lower case with each letter, we would normally be out of luck. We don't own the string class, so we can't add this method to it. But an extension method allows us to define ToAlternating as a static method elsewhere and then use it as though it were a natural part of the string class:
+public static class StringExtensions
+{
+    public static string ToAlternating(this string text)
+    {
+        string result = "";
+
+        bool isCapital = true;
+        foreach (char letter in text)
+        {
+            result += isCapital ? char.ToUpper(letter) : char.ToLower(letter);
+        }
+
+        return result;
+    }
+}
+
+//As shown above, an extension method must be static and in a static class. But the magic that turns it into an extension method is the this keyword before the method's first parameter. You can only do this on the first parameter.
