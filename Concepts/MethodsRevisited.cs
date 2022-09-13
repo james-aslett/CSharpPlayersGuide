@@ -212,3 +212,13 @@ public static class StringExtensions
 }
 
 //As shown above, an extension method must be static and in a static class. But the magic that turns it into an extension method is the this keyword before the method's first parameter. You can only do this on the first parameter.
+
+//When you define an extention method like this, you can call it as though it were an instance method of the first parameter's type:
+string message = "Hello, World!";
+Console.WriteLine(message.ToAlternating());
+
+//It is typical (but not required) to place extension methods for any given type in a class with the name [Type]Extensions. We defined an extension method for the string class, so the class was StringExtensions.
+
+//Extension methods can have other parameters after the this parameter. They are treated as normal parameters when calling the method. So ToAlternating(this string text, bool startCapitalized) could be called with text.ToAlternating(false);.
+
+//Extension methods can only define new instance methods. You cannot use them to make extension properties or extension static methods.

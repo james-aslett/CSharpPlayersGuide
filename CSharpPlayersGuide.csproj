@@ -27,6 +27,7 @@
     <Compile Remove="Concepts\Inheritance.cs" />
     <Compile Remove="Concepts\Interfaces.cs" />
     <Compile Remove="Concepts\Looping.cs" />
+    <Compile Remove="Concepts\MethodsRevisited.cs" />
     <Compile Remove="Concepts\NullReferences.cs" />
     <Compile Remove="Concepts\Polymorphism.cs" />
     <Compile Remove="Concepts\Properties.cs" />
@@ -51,6 +52,10 @@
     <Compile Remove="Concepts\Tuples.cs" />
     <Compile Remove="Concepts\UpdatingVariables.cs" />
     <Compile Remove="Program.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Challenges\BetterRandom.cs" />
   </ItemGroup>
 
   <ItemGroup>
