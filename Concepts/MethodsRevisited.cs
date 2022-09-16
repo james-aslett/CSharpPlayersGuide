@@ -219,6 +219,6 @@ Console.WriteLine(message.ToAlternating());
 
 //It is typical (but not required) to place extension methods for any given type in a class with the name [Type]Extensions. We defined an extension method for the string class, so the class was StringExtensions.
 
-//Extension methods can have other parameters after the this parameter. They are treated as normal parameters when calling the method. So ToAlternating(this string text, bool startCapitalized) could be called with text.ToAlternating(false);.
+//Extension methods can have other parameters after the this parameter. They are treated as normal parameters when calling the method. So ToAlternating(this string text, bool startCapitalized) could be called with text.ToAlternating(false);
 
 //Extension methods can only define new instance methods. You cannot use them to make extension properties or extension static methods.

@@ -55,10 +55,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Challenges\BetterRandom.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="Challenges\TheFountainOfObjects\FountainOfObjectsOverview.txt" />
   </ItemGroup>
 

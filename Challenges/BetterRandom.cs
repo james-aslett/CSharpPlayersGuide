@@ -9,7 +9,19 @@
 //add a CoinFlip method that randomly picks a bool value. It should have an optional parameter that indicates the frequency of heads coming up, which should default to 0.5, or 50% of the time
 //in your opinion, would it be better to make a derived AdvancedRandom class that adds these methods or use extension methods?
 
+Random random = new Random();
+
+Console.WriteLine(random.NextDouble(100));
+Console.WriteLine(random.NextString("Red,", "Green", "Blue"));
+Console.WriteLine(random.CoinFlip());
+Console.WriteLine(random.CoinFlip(0.25));
+
+
 public static class RandomExtensions
 {
-    public static 
+    public static double NextDouble(this Random random, double maximum) => random.NextDouble() * maximum;
+
+    public static string NextString(this Random random, params string[] options) => options[random.Next(options.Length)];
+
+    public static bool CoinFlip(this Random random, double probabilityOfHeads = 0.5) => random.NextDouble() < probabilityOfHeads;
 }
