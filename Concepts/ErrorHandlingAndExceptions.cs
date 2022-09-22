@@ -111,3 +111,53 @@ throw new Exception();
 Console.WriteLine("Name an animal.");
 string? animal = Console.ReadLine();
 if (animal == "Snake") throw new Exception(); // Why did it have to be snakes?
+
+//The Exception class represents the most generic error in existence. With this code, all we know is that something went wrong. In general, you want to throw instances of a class derived from Exception, not Exception itself. Doing so allows us to convey what went wrong more accurately and enables handlers to be more specific about if and how to handle it.
+
+//There is a mountain of existing exception types that you can pick from, which represent various situations. Here are a few of the more common ones, along with their meanings.
+
+//NotImplementedException - "The programmer hasn't written this code yet."
+//NotSupportedException - "I will never be able to do this."
+//InvalidOperationException - "I can't do this in my current state, but I might be able to in another state."
+//ArgumentOutOfRangeExcpetion - "This argument was too big (too small, etc.) for me to use."
+//ArgumentNullException - "This argument was null, and I can't work with a null value."
+//ArgumentException - "Something is wrong with one of your arguments."
+//Exception - "Something went wrong, but I don't have any real info about it."
+
+//Rather than using new Exception() earlier, we should have picked a more specific type. Perhaps NotSupportedException is a better choice:
+Console.WriteLine("Name an animal");
+string? animal = Console.ReadLine();
+if (animal == "snake") throw NotSupportedException();
+
+//Most exception types also allow you to supply a message as a parameter, and it is often helpful to include one to help programmers who encounter it later:
+if (animal == "snake") throw new NotSupportedException("I have ophidiophobia");
+
+//Depending on the exception type, you might be able (or even required) to supply additional information to the constructor.
+
+//If one of the existing exception types isn't sufficient to categorize an error, make your own by defining a new class derived from Exception or another exception class:
+public class SnakeException : Exception
+{
+    public SnakeException() { }
+    public SnakeException(string message) : base(message) { }
+}
+
+//Always use a meaningful exception type when you throw exceptions. Avoid throwing plan old Exception. Use an existing type if it makes sense. Otherwise, create a new one.
+
+//THE FINALLY BLOCK
+//A finally block is often used in conjunction with try and catch. A finally block cotains code that should run regardless of how the flow of execution leaves a try block, whether that is by typical completion of the code, throwing an exception, or an early return:
+try
+{
+    Console.WriteLine("Shall we play a game?");
+    if (Console.ReadLine() == "no") return;
+
+    Console.WriteLine("Name an animal.");
+    string? animal = Console.ReadLine();
+    if (animal == "snake") throw new SnakeException();
+}
+catch (SnakeException) { Console.WriteLine("Why did it have to be snakes?");  }
+finally
+{
+    Console.WriteLine("We're all done here.");
+}
+
+//There are three ways to exit the try block above; the finally block runs in all of them. If the early return on line 4 is encountered, the finally block executes before returning. If the end of the try block is reached through normal execution, the finally block is executed.
