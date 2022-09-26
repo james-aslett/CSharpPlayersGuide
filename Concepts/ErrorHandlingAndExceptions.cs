@@ -9,6 +9,8 @@
 //This level contains several guidelines for throwing and catch exceptions
 
 //We have been pretending nothing will ever go wrong in our programs, and it is time to face reality. What should we do when things go wrong? Consider this code that gets a number from the user between 1 and 10:
+using System.Linq.Expressions;
+
 int GetNumberFromUser()
 {
     int number = 0;
@@ -144,7 +146,7 @@ public class SnakeException : Exception
 //Always use a meaningful exception type when you throw exceptions. Avoid throwing plan old Exception. Use an existing type if it makes sense. Otherwise, create a new one.
 
 //THE FINALLY BLOCK
-//A finally block is often used in conjunction with try and catch. A finally block cotains code that should run regardless of how the flow of execution leaves a try block, whether that is by typical completion of the code, throwing an exception, or an early return:
+//A finally block is often used in conjunction with try and catch. A finally block conStains code that should run regardless of how the flow of execution leaves a try block, whether that is by typical completion of the code, throwing an exception, or an early return:
 try
 {
     Console.WriteLine("Shall we play a game?");
@@ -160,4 +162,44 @@ finally
     Console.WriteLine("We're all done here.");
 }
 
-//There are three ways to exit the try block above; the finally block runs in all of them. If the early return on line 4 is encountered, the finally block executes before returning. If the end of the try block is reached through normal execution, the finally block is executed.
+//There are three ways to exit the try block above; the finally block runs in all of them. If the early return on line 4 is encountered, the finally block executes before returning. If the end of the try block is reached through normal execution, the finally block is executed. If a SnakeException is thrown, the finally block executes after the SnakeException handler runs. If this code threw a different exception not handled here, the finally block still runs before leaving the method to find a handler.
+
+//The purpose of a finally block is to perform cleanup reliably. You know it will always run, so it is a good place to put code that ensures things are left in a good state before moving on. As such, it is not uncommon to have just a try and a finally with no catch blocks at all.
+
+//EXCEPTION GUIDELINES
+//Let's look at some guidelines for throwing and catching exceptions.
+
+//What to Handle
+//Any exception that goes unhandled will crash the program. In general, this means you should have a bias for catching exceptions instead of letting them go. But exception handling code is more complicated that than code that does not. Code understandability is also valuable.
+
+//Catching exceptions is especially important in products where failure means loss of human life or injury versus a low-stakes utility that will almost always be used correctly. In the low-stakes, low-risk programs, skipping some or all the exception handling could be an acceptable choice. Every program we have made so far could arguably fit into this category.
+
+//Still, handling exceptions allows a program to deal with strageness and surprises. Code that does this is robust. Even if nobody dies from a software crash, your users will appreciate it being robust. With exception handling knowledge, you should have a bias for doing it, not skipping it.
+
+//Only Handle What You Can Fix
+//If an exception handler cannot resolve the problem represented by the exception, the handler should not exist. Instead, the exception should be allowed to continue up the call stack, hoping that something farther up has meaningful resolution steps for the problem. This is a counterpoint to the previous item. If there is no recourse for an error, it is resonable for the program to end.
+
+//There are some allowances here. Sometimes, a handler will repair or address what it can (even just logging the problem) while still allowing the exception to continue (described later).
+
+//Use the Right Exception Type
+//An exception's type (class) is the simplest way to differentiate one error category from another. By picking the right exception type when throwing exception (making your own if needed), you make life easier when handling exceptions.
+
+//Avoid Pokemon Exception Handling
+//Sometimes, it is tempting to handle any possible error in the same way with this:
+catch (Exception) { Console.WriteLine("Something went wrong."); }
+
+//Some programmers calls this Pokemon exception handling. Using catch (Exception) catches every possible exception with no... um... exceptions. It is reminiscent of the catchphrase from the game Pokemon, "Gotta catch 'em all!"
+
+//The problem with treating everything the same is that it is often too generic. "Something went wrong" is an awful error message. Whether solved by humans or code, an error's recourse is rarely the same for all possible errors.
+
+//There are, of course, times where this is the only thing that makes sense. Some people will put a catch (Exception) block around their entire program to catch any stray unhandled exceptions as the program is dying to produce an error report or something similar. But letting the program attempt to resume is often dangerous because we have no guarantees about the program's state when the exception occured. So use Pokemon exception handling sparingly, and in general, let the program die afterward.
+
+//Avoid Eating Exceptions
+//A catch block that looks like this is usually bad:
+catch (SomeExceptionType) { }
+
+//An empty handler like this is referred to as 'eating the exception', 'swallowing the error', or 'failing silently'. Correct exception handling rarely requires doing nothing at all. Empty catch blocks nearly always represent a programmer who got lazy.
+
+//The problem is that an error occured, and no response was taken to address it. It may leave the program in a weird or inconsistent state - one in which the program should not be running.
+
+//Eating exceptions is especially bad when combined with the previous item: catch (Exception) { }. Here, every single error is caught and thrown right into the garbage chute.
