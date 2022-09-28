@@ -203,3 +203,37 @@ catch (SomeExceptionType) { }
 //The problem is that an error occured, and no response was taken to address it. It may leave the program in a weird or inconsistent state - one in which the program should not be running.
 
 //Eating exceptions is especially bad when combined with the previous item: catch (Exception) { }. Here, every single error is caught and thrown right into the garbage chute.
+
+//Avoid Throwing Exceptions When Possible
+//Exceptions are a useful tool, but you should not throw exceptions that you do not need to throw. Avoid exceptions if simple logic is sufficient. The following is trivialized but illustrative:
+try
+{
+    Console.WriteLine("Name an animal.");
+    string? animal = Console.ReadLine();
+    if (animal == "snake") throw new Exception();
+}
+catch (Exception)
+{
+    Console.WriteLine("Snakes. Why did it have to be snakes?");
+}
+
+//Instead of that, just do this:
+Console.WriteLine("Name an animal.");
+string? animal = Console.ReadLine();
+if (animal == "snake") Console.WriteLine("Snakes. Why did it have to be snakes?");
+
+//The result is the same, but with cleaner code. If you can use logic like if statements, loops, etc., those are usually better approaches.
+
+//Come Back with Your Shield or On It
+//In ancient Greece, coming back with your sheild meant winning the fight. Coming back on your sheild meant dying with honour and being carried back on your sheild. Somebody who abandons their duty would run from the battle, dropping their sheild. They'd make it home alive but without their sheild. This is a good rule for exceptions.
+
+//When a method runs, it should either do its job and run to completion or fail with honour by throwing an exception but leaving things in the state it began in. It should not abandon its job halfway through and leave things partly changed and partly unchanged.
+
+//A finally block is often your best tool for ensuring you can get back to your original state.
+
+//If you cannot put things back exactly as they were when you started, you should at least put things into a self-consistent state. To illustrate, consider this contrived scenario. You have a variable that is expected to be even but must be incremented twice and may throw an exception while changing it:
+_evenNumber++;
+MaybeThrowException();
+_evenNumber++;
+
+//If _evenNumber was a 4 and things go well, this will become a 6 afterward.
