@@ -236,4 +236,30 @@ _evenNumber++;
 MaybeThrowException();
 _evenNumber++;
 
-//If _evenNumber was a 4 and things go well, this will become a 6 afterward.
+//If _evenNumber was a 4 and things go well, this will become a 6 afterward. If an exception is thrown, then using the 'with your sheild or on it' rule (also called the strong exception guarantee), you should revert _evenNumber to a 4. In this case, it requires extra bookkeeping:
+int startingValue = _evenNumber;
+try
+{
+    _evenNumber++;
+    MaybeThrowException();
+    _evenNumber++;
+}
+finally
+{
+    if (_evenNumber % 2 != 0) _evenNumber = startingValue;
+}
+
+//If that is not possible, we should not leave _evenNumber as a 5, which is an odd number and goes against expectations. Setting _evenNumber to 0 in a finally block at least leaves the program in a 'correct' state:
+try
+{
+    _evenNumber++;
+    MaybeThrowException();
+    _evenNumber++;
+}
+finally
+{
+    if (_evenNumber % 2 != 0) _evenNumber = 0;
+}
+
+//ADVANCED EXCEPTION HANDLING
+
