@@ -262,4 +262,74 @@ finally
 }
 
 //ADVANCED EXCEPTION HANDLING
+//Each exception, once thrown, contains a stack trace. The stack trace described methods currently on the stack, from the program's entry point to the exception's origination site. Consider this simple program:
+DoStuff();
 
+void DoStuff() => DoMoreStuff();
+void DoMoreStuff() => throw new Exception("Something terrible happened.");
+
+//The main method calls DoStuff, which calls DoMoreStuff, which throws an exception. The stack trace for this exception reveals that the exception occured in DoMoreStuff, called by DoStuff, called by Main.
+
+//Each exception has a StackTrace property that you can use to see this stack trace. However, Exception has overriden ToString to include this. Doing something like Console.WriteLine(e) is an easy way to see it. To illustrate, we can wrap DoStuff in a try/catch block and use the console window to display the exception
+try { DoStuff(); }
+catch (Exception e) { Console.WriteLine(e); }
+
+//Running this displays the following:
+
+/*
+System.Exception: Something terrible has happened.
+    at Program.<<Main>$>g__DoMoreStuff|0_1() in C:\some\path\Program.cs:line 14
+    at Program.<<Main>$>g__DoStuff|0_0() in C:\some\path\Program.cs:line 12
+    at Program.<<Main>$>(String[] args) in C:\some\path\Program.cs:line 7
+*/
+
+//This gives you the exception type and message, followed by the stack trace. Each element in the stack makes an appearance, showing the method signature, the path to the file, and even the line number!
+
+//This particular stack trace is short but uglier than most. The compiler names your main method <Main>$, and local functions like DoStuff and DoMoreStuff always end up with strange final names. Most stack traces you see will not be so alien.
+
+//The stack trace can help you understand what happened and where things went wrong. Having said that, if you are running your program from Visual Studio (or another IDE), the debugger can also show this information and more. See Bonus Level C for more information.
+
+//Rethrowing Exceptions
+//After catching an exception, you sometimes realize that you cannot handle the exception after all and need it to continue up the call stack. A simple approach is just to throw it again:
+try { DoStuff(); }
+catch (Exception e)
+{
+    Console.WriteLine(e);
+    throw e;
+}
+
+//There is a catch. An exception's stack trace is updated when thrown, not when created. That means when you throw an exception, as shown above, the stack trace will change to its new location in this catch block, losing useful information. There are times where this is desirable. Most of the time, it is not. There's another option:
+try { DoStuff(); }
+catch (Exception e)
+{
+    Console.WriteLine(e);
+    throw;
+}
+
+//A bare throw; statement will rethrow the caught exception without modifying its original stack trace. This makes it easy to let a caught exception continue looking for a handler.
+
+//Perhaps the more useful case for rethrowing exceptions is to inject some logic for an exception without handling or resolving it. The code above does just that by logging (to the console window) exceptions as they occur without preventing the crash.
+
+//Inner Exceptions
+//Sometimes, when you catch an exception you want to replace it with another. This is especially common when some low-level thing is misbehaving, and you want to transform it into a set of exception types that indicate higher-level problems. You can, of course, catch the low-level exception and then throw a new exception:
+try { DoStuff(); }
+catch (FormatException e)
+{
+    throw new InvalidDataException("The data must be formatted correctly.");
+}
+catch (NullReferenceException e)
+{
+    throw new InvalidDataException("The data is missing.");
+}
+
+//Like with rethrowing exceptions, this loses information in the process. Each exception has a property called InnerException, which can store another exception that may have been the underlying cause.
+
+//Most exception classes let you create new instances with no parameters (new Exception()), with a single message parameter (new Exception("Oops")), or with a message and an inner exception (new Exception("Ooops", otherException)). This inner exception allows you to supply an underlying cause when creating a new exception, preserving the root cause. When you create new exception types, you should make similar constructors in your new class to allow the pattern to continue.
+
+//Exception Filters
+//Most of the time, you decide whether you want to handle an exception based solely on the exception's type. If you need more nuance, you can use exception filters. An exception filter is a simple bool expresion that must be true for a catch block to be selected. The filter allows you to inspect the exception object's other properties. The following uses a made-up CodedError Exception:
+try { DoStuff(); }
+catch (CodedErrorException e) when (e.ErrorCode == ErrorCodes.ConnectionFailure)
+{ ... }
+
+//This catch block will only execute for CodedErrorExceptions whose ErrorCode property is ErrorCodes.ConnectionFailure.
