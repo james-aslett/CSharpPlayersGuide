@@ -8,3 +8,30 @@
 //Put in a try/catch block to handle the exception and display the results
 //Answer this question: Did you make a custom exception type or use an existing one, and why did you choose what you did?
 //Answer this question: You could write this program without exceptions, but the requirements demanded an exception for learning purposes. If you didn't have that requirement, would you have used an exception? Why or why not?
+
+try
+{
+    int targetNumber = new Random().Next(10);
+    List<int> previousGuesses = new List<int>();
+
+    while (true)
+    {
+        int number;
+        bool previosulyGuessed;
+        do
+        {
+            Console.WriteLine("Pick a number between 0 and 9 (inclusive): ");
+            number = Convert.ToInt32(Console.ReadLine());
+            previosulyGuessed = previousGuesses.Contains(number);
+            if (previosulyGuessed) Console.WriteLine("That number has been guessed before.");
+        } while (previosulyGuessed);
+
+        if (number == targetNumber) throw new Exception();
+
+        previousGuesses.Add(number);
+    }
+}
+catch(Exception)
+{
+    Console.WriteLine("That was a bad number! You lose!");
+}
