@@ -66,3 +66,16 @@ public delegate int NumberDelegate(int number);
 
 //Variables that use delegate types can store methods. But the method must match the delegate's return type and parameter types to work. A variable whose type is NumberDelegate can store any method with an int return type and a single int parameter. Lucky for us, AddOne, SubstractOne and Double all meet these conditions. That means we can make a variable that can store a reference to any of them.
 
+//There are three parts to using a delegate: making a variable of that type, assigning it a value, and then using it.
+
+//Any variable can use a delegate for its type, just like we saw with enumerations and classes. We can make a method with a parameter whose type is NumberDelegate, which will allow callers of the method to supply a different method to invoke when the time is right:
+
+int[] ChangeArrayElements(int[] numbers, NumberDelegate operation) { ... }
+
+//To call ChangeArrayElements with the delegate, we name the method we want to use:
+
+ChangeArrayElements(new int[] { 1, 2, 3, 4, 5 }, AddOne);
+
+//Note the lack of parentheses! With parentheses, we'd be invoking the method and passing its return value. Instead, we are passing the method itself by name.
+
+//If the method is an instance method, you can name the object with its method:
