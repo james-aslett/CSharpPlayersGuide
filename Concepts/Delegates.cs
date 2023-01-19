@@ -79,3 +79,44 @@ ChangeArrayElements(new int[] { 1, 2, 3, 4, 5 }, AddOne);
 //Note the lack of parentheses! With parentheses, we'd be invoking the method and passing its return value. Instead, we are passing the method itself by name.
 
 //If the method is an instance method, you can name the object with its method:
+
+SomeClass thing = new SomeClass();
+ChangeArrayElements(new int[] { 1, 2, 3, 4, 5 }, this.DoIt);
+
+//The C# compiler is smart enough to keep track of the fact that the delegate must store a reference to this instance (thing) and know which method to call (DoIt).
+
+//On rare occassions, the compiler may struggle to understand what you are doing. In these cases, you may need to be more formal with something like this:
+
+ChangeArrayElements(new int[] { 1, 2, 3, 4, 5 }, new NumberDelegate(AddOne);
+
+//That shouldn't happen very often, though.
+
+//Let's see howw ChangeArrayElements would use this delegate-typed variable. Because a delegate holds a reference to a method, you will eventually want to invoke the method. There are two ways to do this. The first is shown here:
+
+int[] ChangeArrayElements(int[] numbers, NumberDelegate operation)
+{
+    int[] result = new int[numbers.Length];
+
+    for (int index = 0; index < result.Length; index++)
+        result[index] = operation(numbers[index]);
+
+    return result;
+}
+
+//You can invoke the method in a delegate variable by using parentheses. Invoking a method in a delegate-typed variable looks like a typical method call, except perhaps the capitalization. (Most methods in C# start with a capital letter. Most parameters do not).
+
+//The second way is to use the delegate's Invoke method:
+
+return[index] = operation.Invoke(numbers[Index]);
+
+//These are the same thing for all practical purposes, though the second option allows you to check for null with a simple operation?.Invoke(numbers[index]).
+
+//By looking at this code, you can see why delegates are called that. ChangeArrayElements know how to iterate through the array and build a new array, but it doesn't understand how to compute new values from old values. It expects somebody else to do that work, and when the time comes, it delegates that job to the delegate object.
+
+//Delegates can significantly increase the flexibility of sections of code. It can allow you to define algorithms with replaceable elements in the middle, filled in by other methods via delegates. That makes them a valuable tool to add to your C# toolbox.
+
+//The action, func and predicate delegates
+
+//In that last section, we defined a new delegate type to use in our program. That has its uses - if you want a specific name given to a method pattern - but if you play your cards right, you won't have to define new delegate types often. The Base Class Library contains a flexible and extensive collection of delegate types that cover most scenarios.
+
+//
