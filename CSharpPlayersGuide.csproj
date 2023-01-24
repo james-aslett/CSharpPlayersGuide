@@ -20,6 +20,7 @@
     <Compile Remove="Concepts\Classes.cs" />
     <Compile Remove="Concepts\ConsoleFunctions.cs" />
     <Compile Remove="Concepts\DecisionMaking.cs" />
+    <Compile Remove="Concepts\Delegates.cs" />
     <Compile Remove="Concepts\Enumerations.cs" />
     <Compile Remove="Concepts\ErrorHandlingAndExceptions.cs" />
     <Compile Remove="Concepts\FormattingInterpolatedStrings.cs" />
@@ -53,6 +54,10 @@
     <Compile Remove="Concepts\Tuples.cs" />
     <Compile Remove="Concepts\UpdatingVariables.cs" />
     <Compile Remove="Program.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Challenges\TheSieve.cs" />
   </ItemGroup>
 
   <ItemGroup>
