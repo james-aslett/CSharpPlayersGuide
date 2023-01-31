@@ -132,7 +132,40 @@
 //A slight variation on that idea is to name that method Dispose and make your objects implement IDisposable. This is a topic covered in a bit more depth in Level 47. Several C# mechanisms will automatically call such a Dispose method, but you are still on the hook to call it yourself in other situations.
 
 //EventHandler and Friends
-//Using the various Action delegates with events in common, but another common choice is EventHandler(System namespace_, which is defined approximately like this:
+//Using the various Action delegates with events is common, but another common choice is EventHandler(System namespace_, which is defined approximately like this:
 //public delegate void EventHandler(object sender, EventArgs e);
 
-//It has two arguments, sender is the source of the event. This parameter makes it easy for subscribers to hook up their handler to many source objects while still telling
+//It has two arguments. sender is the source of the event. This parameter makes it easy for subscribers to hook up their handler to many source objects while still telling which one raised the event. EventArgs provides additional data about the event. Strictly speaking, EventArgs does almost nothing. The only thing it defines beyond object is a static EventArgs.Empty object to be used when there is no meaningful additional data for the event. However, EventArgs can include other data relevant to an event.
+
+//Alternatively, EventHandler<TEventArgs> is a generic delegate that allows you to require a specific EventArgs-derived class. If you always expect a specific EventArgs-based class, this will ensure you get the types right.
+
+//To use this, start by defining your own class derived from EventArgs. For example:
+//public class ExplosionEventArgs : EventArgs
+//{
+//    public Point Location { get; }
+//    public ExplosionEventArgs(Point location) => Location = location;
+//}
+
+//Change your event to use this new class:
+//public event EventHandler<ExplosionEventArgs>? ShipExploded;
+
+//Then raise the event with the current object and an appropriate EventArgs object:
+//ShipExploded?.Invoke(this, new ExplosionEventArgs(Location));
+
+//The observer waiting for this event would subscribe with a method matching this delegate and can use both of these arguments to make decisions:
+//private void OnShipExploded(object sender, ExplosionEventArgs args)
+//{
+//  if (sender is Ship) PlaySound("Explosion", CalculateVolume(args.Location));
+//  else if (sender is Asteroid) PlaySound("Pop", CalculateVolume(args.Location));
+
+//Some C# programmers prefer Action. Others prefer EventHandler. Others tend to write new delegate types and use those. Others mix and match. Any can do the job, so choose the flavour that works best for your situation.
+
+//Custom Event Accessors
+//I said earlier that events are like auto-properties around an automatic delegate backing field. With properties, when you need more control than an auto-property provides, you can use a normal property and define your own getter and setter. The same can be done with events, though it is somewhat rare. You can define what subscribing and unsubscribing mean for any given event. The simmplest version looks like this:
+//private Action? _shipExploded; // The backing field delegate
+//
+//public event Action ShipExploded
+//{
+//  add { _shipExploded += value; }
+//  remove { _shipExploded -= value; }
+//}
