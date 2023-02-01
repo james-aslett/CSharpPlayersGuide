@@ -169,3 +169,10 @@
 //  add { _shipExploded += value; }
 //  remove { _shipExploded -= value; }
 //}
+
+//The add part defines what happens when something subscribes. The remove part defines what happens when something unsubscribes.
+
+//The above code does nothing that the automatic event doesn't do but opens the pathway to doing other things. For example, you could record when somebody subscribes or unsubscribes to an event. Or you could take the handler and attach it to several delegates.
+
+//With a custom event, you cannot raise the event directly. You must invoke the delegate behind it instead. The compiler is unwilling to guess how you expect the event to work with a custom event, so that burden lies on you.
+
