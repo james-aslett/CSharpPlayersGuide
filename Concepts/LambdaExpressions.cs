@@ -99,4 +99,31 @@
 //int threshold = 3;
 //Count(numbers, x => x < threshold);
 
-//The lambda expression has one parameter: x. However, it can use the local variables of the method that contains it. Here, it uses threshold. Lambda expressions and local functions
+//The lambda expression has one parameter: x. However, it can use the local variables of the method that contains it. Here, it uses threshold. Lambda expressions and local functions can capture variables from their environment. A method plus any captured variables from its environment is calle a closure. The ability to capture variables is a mechanism that gives lambdas more power than a traditional method.
+
+//However, it is essential to note that this captures the local variables themselves, not just their values. If those variables change over time, you may be surprised by the behaviour:
+//Action[] actionsToDo = new Action[10];
+
+//for (int index = 0; index < 10; index++)
+//    actionsToDo[index] = () => Console.WriteLine(index);
+
+//foreach (Action action in actionsToDo)
+//    action();
+
+//This stores ten Action delegates, each containing a delegate that refers to a lambda expression. Each one displays the contents of index. Like  declaring an other method, the act of declaring the lambda expression does not run it immediately. In this case, it isn't run until the foreach loop, where the delegates execute. Each delegate captured the index variable. You might expect this code to display the numbers 0 through 9. In actuality, this code displays 10 ten times. By the time the lambdas runs, index has been incremented to 10. 
+
+//You can address this by storing in a local variable that never changes and letting the lambda capture this other variable instead:
+//for (int index = 0; index < 10;  index ++)
+//{
+//  int temp = index;
+//  actionsToDo[index] = () => Console.WriteLine(temp);
+//}
+
+//Remember that temp's scope is just within the for loop. Each iteration through the loop will get its own variable, independent of the other passes through the loop.
+
+//As you can probably guess, the compiler is doing a lot of work behind the scenes to make captured variables and closures work. The compiler artificially extends the lifetime of those temp variables to allow them to stay around until the capturing delegate is cleaned up.
+
+//You can also capture variables and use closures with local functions. And remember, the methods you define with top-lavel statements, outside of any type, are local functions, which means such methods could technically use the variables in your main method.
+
+//While closures are very powerful, be careful about capturing variables that change over time. It almost always results in behavior you didn't intend. To prevent a lambda or local function from accidentially capturing local variables, you can add the static keyword to them, which causes any captured variables to become a compiler error:
+//Count(new int[] { 1, 2, 3 }, static n => { return n % 2 == 0; });

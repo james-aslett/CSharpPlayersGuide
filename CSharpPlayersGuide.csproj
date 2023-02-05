@@ -29,6 +29,7 @@
     <Compile Remove="Concepts\InformationHiding.cs" />
     <Compile Remove="Concepts\Inheritance.cs" />
     <Compile Remove="Concepts\Interfaces.cs" />
+    <Compile Remove="Concepts\LambdaExpressions.cs" />
     <Compile Remove="Concepts\Looping.cs" />
     <Compile Remove="Concepts\MethodsRevisited.cs" />
     <Compile Remove="Concepts\NullReferences.cs" />
