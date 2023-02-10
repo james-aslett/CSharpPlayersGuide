@@ -60,18 +60,18 @@
 
 //Let's look at a more complex problem: saving a collection of scores. Suppose we have this record:
 
-//public record Score(string Name, int Points, int Level);
+public record Score(string Name, int Points, int Level);
 
 //And this method for creating an initial list of scores:
 
 //List<Score> MakeDefaultScores()
 //{
-//  return new List<Score>()
+//    return new List<Score>()
 //  {
 //      new Score("R2-D2", 12420, 15);
-//      new Score("C-3P0", 8543, 9);
-//      new Score("GONK", -1, 1);
-//  };
+//    new Score("C-3P0", 8543, 9);
+//    new Score("GONK", -1, 1);
+//};
 //}
 
 //After calling this method to get our scores, how would we write all this data to a file? WriteAllText needs a string, and we have a List<Score> containing many scores.
@@ -83,3 +83,53 @@
 //C-3P0, 8543, 9
 //GONK, -1, 1
 
+//File has a WriteAllLines method that may simplify our work. It requires a collection of string instead of just one. It we can turn each score into a string, we can use WriteAllLines to get them into a file:
+//void SaveScores(List<Score> scores)
+//{
+//    List<string> scoreStrings = new List<string>();
+
+//    foreach (Score score in scores)
+//        scoreStrings.Add($"{score.name},{score.Points},{score.Level}");
+
+//    File.WriteAllLines("Scores.csv", scoreStrings);
+//}
+
+//The line inside the foreach loop combines the name, score and level into a single string, separated by commas. We do that for each score and end up with one string per score.
+
+//File.WriteAllLines can take it from there, so we hand it the file name and string collection, and the job is done.
+
+//Deserializing the file back to a list of scores is harder. There is a File.ReadAllLines method that is a good starting point. It returns a string[] where each string was one line in the file.
+//string[] scoreStrings = File.ReadAllLines("Scores.csv");
+
+//We need to take each string and chop it up to reconstitute a Score object. Since we separated data elements with commas, we can use string's Split method to chop up the lines into its parts:
+//string[] scoreString = "R2-D2, 12420, 15";
+//string[] tokens = scoreString.Split(",");
+
+//Split(",") gives us an array of string where the first item is "R2-D2", the second is "12420" and the third is "15". If we used a ; or | to separate values, we could have passed in a different argument to the Split method. Note that the delimiter - the character that marks the separation point between the elements - is not kept when you use Split in the way shown above, but there are overloads of Split that allow that to happen.
+
+//My variable is called tokens because that is a common word for a chopped-up string's most fundamental elements.
+
+//With those elements, we can create this method to load all the scores in the file:
+//List<Score> LoadHighScores()
+//{
+//    string[] scoreStrings = File.ReadAllLines("Scores.csv");
+
+//    List<Score> scores = new List<Score>();
+
+//    foreach (string scoreString in scoreStrings)
+//    {
+//        string[] tokens = scoreString.Split(",");
+//        Score score = new Score(tokens[0]),
+//            Convert.ToInt32(tokens[1]),
+//            Convert.ToInt32(tokens[2]);
+
+//        scores.Add(score);
+//    }
+
+//    return scores;
+//}
+
+//I should mention that the code above works most of the time but could be more robust. For example, imagine that a user enters their name as "Bond, James". String can contain commas, but in our CSV file, the resulting line is "Bond, James, 2000, 16". Our deserialization code will end up with four tokens and try to use "Bond" as the name and "James" as the score, which fails. We could forbid commas in player names or automatically turn commas into something else. We could also reduce the likelihood of a problem by picking a more obscure delimiter, such as [some weird character I can't type!]. Few keyboards can easily type that, but it is not impossible. (The offical CSV format lets you put double-quote marks around strings that contain commas. This addresses the issue, but parsing that is trickier).
+
+//Other String Parsing Methods
+//File.ReadAllLines and string.
