@@ -132,4 +132,53 @@ public record Score(string Name, int Points, int Level);
 //I should mention that the code above works most of the time but could be more robust. For example, imagine that a user enters their name as "Bond, James". String can contain commas, but in our CSV file, the resulting line is "Bond, James, 2000, 16". Our deserialization code will end up with four tokens and try to use "Bond" as the name and "James" as the score, which fails. We could forbid commas in player names or automatically turn commas into something else. We could also reduce the likelihood of a problem by picking a more obscure delimiter, such as [some weird character I can't type!]. Few keyboards can easily type that, but it is not impossible. (The offical CSV format lets you put double-quote marks around strings that contain commas. This addresses the issue, but parsing that is trickier).
 
 //Other String Parsing Methods
-//File.ReadAllLines and string.
+//File.ReadAllLines and string.Split are enough for the above problem, but there are other string methods that you might find helpful in similar situations. The Trim, TrimStart and TrimEnd methods allows you to slice off unnecessary characters at the beginning and end of strings. The string " Hello" has an undesirable space character before it. " Hello".Trim() will produce a string without the space. It removes all whitespace from the beginning and end of the word. TrimStart and TrimEnd only trim the named side. If you want to remove another character, you can use "$Hello".Trim('$'). Remember that these produce new strings with the requested modification. They do not change the original string. Strings are immutable.
+
+//The Replace method lets you find a bit of text within another and replace it with something else. For example, if we want to turn all commas in a name to the - character, we could do this: name = name.Replace(",", "-");. "Bond, James" becomes "Bond- James", which our parsing code can safely handle. 
+
+//The Join method combines multiple items separated by some special string or character. We could have used this when converting Score objects to strings: string.Join("|", score.Name, score.Points, score.Level);. This method uses the params keyword for its second argument.
+
+//File System Manipulation
+//Aside from reading and writing files, the File, Path, and Directory class has a handful of other methods for doing file system manipulation. Let's look at those:
+
+//File has methods for copying files, moving files, and deleting files. They are all pretty self-explanatory:
+//File.Copy("Scores.csv", "Scores-Backup.csv");
+//File.Move("Scores.csv", "Backup/Scores.csv");
+//File.Delete("Scores.csv");
+
+//The Directory Classs
+//What file does for files, Directory does for directories. (The words directory and folder are synonyms). For example, these methods move, create, and delete a directory:
+//Directory.Move("Settings", "BackupSettings");
+//Directory.CreateDirectory("Settings");
+//File.Delete("Scores.csv");
+
+//Delete requires that the directory be empty before deleting it. Otherwise, it results in an exception (System.IO.IOException). You could write code to remove every file in a directory yourself, but there is also an overload that allows you to force the deletion of everything inside it:
+//Directory.Delete("Settings2, true); //Careful!
+
+//This can be extremely dangerous. You can delete entire file systems instantly with a poorly written Directory.Delete. Use it with extreme caution!
+
+//Directory also has several methods for exploring the contents of a directory. The names of these methods depend on whether you want results in a string[] (names start with Get) or an IEnumerable<string> (names start with Enumerate). The names also depend on whether you want files (names end with Files), subdirectories (names end with Directories), or both (names end with FileSystemEntries). Two examples are shown below:
+//foreach (string directory in Directory.GetDirectories("Settings"))
+//    Console.WriteLine(directory);
+//foreach (string file in Directory.EnumerateFiles("Settings"))
+//    Console.WriteLine(file);
+
+//Some overloads allow you to supply a filter, enabling things like finding all files with an extension of .txt.
+
+//The Path Class
+//The static Path class has methods for working with file system paths, including combining paths, grabbing just the file name or extension from a file, and converting between absolute and relative paths. The code below illustrates all of these:
+//Console.WriteLine(Path.Combine("C:/Users/RB/Desktop/", "Settings", "v2.2"));
+//Console.WriteLine(Path.GetFileName("C:/Users/RB/Desktop/GrumpyCat.gif"));
+//Console.WriteLine(Path.GetFileNameWithoutExtension("C:/Users/RB/Desktop/GrumpyCat.gif"));
+
+//Console.WriteLine(Path.GetExtension("C:/Users/RB/Desktop/GrumpyCat.gif"));
+//Console.WriteLine(Path.GetFullPath("ConsoleApp1.exe"));
+//Console.WriteLine(Path.GetRelativePath(".", "C:/Users/RB/Desktop"));
+
+//When I run these on my computer, I get the following output:
+
+//C:\Users\RB\Desktop\Settings/v2.2
+//GrumpyCat.gif
+//GrumpyCat
+//.gif
+//C:\Users\RB\source\repos\ConsoleApp1\ConsoleApp1\bin\Debug\net6.0\ConsoleApp1.exe\..\..\..\..\..\..\..\Desktop
