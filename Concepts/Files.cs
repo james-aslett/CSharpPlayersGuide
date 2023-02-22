@@ -182,3 +182,35 @@ public record Score(string Name, int Points, int Level);
 //GrumpyCat
 //.gif
 //C:\Users\RB\source\repos\ConsoleApp1\ConsoleApp1\bin\Debug\net6.0\ConsoleApp1.exe\..\..\..\..\..\..\..\Desktop
+
+//There's more!
+//This is a whirlwind tour of File, Directory, and Path. Each has far more complex capabilities than we covered here, but this should give you a starting point. When you are ready, look up the documentation online or in Visual Studio's IntelliSense feature to poke around at what else these contain.
+
+//Other ways to access files
+//The basic ReadAllText, WriteAllText, ReadAllLines, and WriteAllLines methods are a good foundation - quick and easy, without having to think too hard. But they are not the only option. Two other approaches are worth a brief discussion: streams and using a library.
+
+//Streams
+//The above methods require or writing the file all at once. Some operations are better done a little at a time. For example, let's say you're extracting millions of database entries into a CSV file. With WriteAllText, you would need to bring the entire dataset into memory all at once and turn it into an extremely long string to feed to WriteAllText. That will use a lot of memory and make the garbage collector work extremely hard. A better approach would be to grab a chunk of data and write it to the file before continuing to the next chunk. But that requires a different approach.
+
+//We can solve this problem with streams. A stream is a collection of data that you typically work with a little at a time. Steams do not usually allow jumping around in the stream. They are like a conveyor belt that lets you look at each item as it goes by.
+
+//There are many different flavors of streams in the .NET world, and all of them are derived from the System.IO.Stream class. The flavor we care about here is FileStream, which reads or writes data to a file. Other stream types work with memory, the network, etc.
+
+//Streams are very low level. You can read and write bytes, and that's it. Most of the time, you want something smarter when working with a stream. This limitation is usually addressed by using another object that "wraps" the stream and provides you will a more sophisticated interface. The wrapper translates your requests to the lower level that streams require.
+
+//For example, the File class can give you a FileStream object to read or write to a file. We can then wrap a StreamReader around that to give us a better set a methods to work with than what a plain Stream or FileStream provides:
+//FileStream stream = File.Open("Settings.txt", FileMode.Open);
+//StreamReader reader = new StreamReader(stream);
+//while (!reader.EndOfStream)
+//    Console.WriteLine(reader.ReadLine());
+//reader.Close();
+
+//For writing, StreamWriter is your friend:
+//FileStream stream = File.Open("Settings.txt", FileMode.Create);
+//StreamWriter writer = new StreamWriter(stream);
+//writer.Write("IsFullScreen=");
+//writer.WriteLine(true);
+//writer.Close();
+
+
+
