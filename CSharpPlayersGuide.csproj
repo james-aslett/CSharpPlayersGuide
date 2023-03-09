@@ -24,6 +24,7 @@
     <Compile Remove="Concepts\Enumerations.cs" />
     <Compile Remove="Concepts\ErrorHandlingAndExceptions.cs" />
     <Compile Remove="Concepts\Events.cs" />
+    <Compile Remove="Concepts\Files.cs" />
     <Compile Remove="Concepts\FormattingInterpolatedStrings.cs" />
     <Compile Remove="Concepts\Generics.cs" />
     <Compile Remove="Concepts\InformationHiding.cs" />
@@ -56,6 +57,10 @@
     <Compile Remove="Concepts\Tuples.cs" />
     <Compile Remove="Concepts\UpdatingVariables.cs" />
     <Compile Remove="Program.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Challenges\TheLongGame.cs" />
   </ItemGroup>
 
   <ItemGroup>

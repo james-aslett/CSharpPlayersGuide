@@ -212,5 +212,20 @@ public record Score(string Name, int Points, int Level);
 //writer.WriteLine(true);
 //writer.Close();
 
+//Note the file mode supplied as the second parameter on each of those File.Open calls. StreamWriter's Write and WriteLine methods are almost like Console's.
+
+//With this approach, our reading and writing do not need to happen all at once. We can read and write in small chunks over time, which is the main reason for using streams over the simpler WriteAllLines and ReadAllLines. Additionally, we can pass the StreamWriter or StreamReader (or just the raw stream) to other methods or objects. This ability lets you break complex serialization and deserialization in whatever way your design needs.
+
+//The BinaryReader and BinaryWriter classes are similar but use binary representations instead of text. Binary formats are typically much more compact but are also not easy for a human to open and read. For example, you could use writer.Write(1001), which writes the int value 1001 into 4 bytes in binary, then use reader.ReadInt32(), which assumes the next four bytes are an int and decodes them as such.
+
+//Working with streams is far trickier than File.ReadAllText-type methods. For example, it is easy to accidentally leave a file open or close it too early. (Notably, all of these stream-related objects implement IDisposable, and should be disposed of when done, as described in Level 47.) I recommend using the simpler file methods when practical to avoid this complexity, especially if you are new to programming.
+
+//Find a library
+//One big problemn with everything we have talked about so far is writing all of the serialization and deserialization code. That can be tough to get right. Even something as simple as the CSV format has tricky corner cases. While you can always work through such details, finding somebody else's code that already solves the problem is often easier.
+
+//When possible, pick a widely used file format instead of inventing your own. With common file formats, it is easy to find existing code that does the serialization for you (or at least the heavy lifting.) There are libraries - reusable packages of code - out there for standard formats like XML, JSON, and YAML. Using these libraries means you do not have to figure out all the details yourself. Level 48 has more information on libraries.
+
+//Before writing voluminous, complex serialization code, consider if an existing format and library can make your life easier.
+
 
 
