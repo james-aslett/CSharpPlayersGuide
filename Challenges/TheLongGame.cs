@@ -1,19 +1,24 @@
 ﻿
 Console.WriteLine("Please enter your name.");
-String playerName = Console.ReadLine();
-int playerScore = 0;
+string? playerName = Console.ReadLine();
+int playerScore;
+
+if (File.Exists($"{playerName}.txt"))
+{
+    playerScore = int.Parse(File.ReadAllText($"{playerName}.txt"));
+    Console.WriteLine($"Your score from your previous session was {playerScore}.");
+}
+else { playerScore = 0; }
+
+Console.WriteLine("Now press any key except Enter. Your score should increase on each key press. Press Enter when you've had enough.");
 ConsoleKey key;
 
 do
 {
     key = Console.ReadKey(true).Key;
     playerScore++;
-    Console.WriteLine($"Current score is {playerScore }");
+    Console.WriteLine($"Current score is {playerScore}");
 
 } while (key != ConsoleKey.Enter);
 
-//when player presses Enter, save their score in a file, eg: [username].txt
 File.WriteAllText($"{playerName}.txt", playerScore.ToString());
-
-//when user enters name at start, start with previously saved score if they have one
-
