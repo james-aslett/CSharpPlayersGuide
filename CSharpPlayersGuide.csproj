@@ -60,10 +60,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Challenges\TheLongGame.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="Challenges\TheFountainOfObjects\FountainOfObjectsOverview.txt" />
   </ItemGroup>
 
