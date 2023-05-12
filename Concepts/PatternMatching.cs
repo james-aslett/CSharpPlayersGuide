@@ -47,3 +47,45 @@
 //}
 
 //Let's also define what a Monster is:
+//public abstract record Monster;
+
+//Monsters in a real game would likely have more than that, but it's all we need right now. Other monster types are derived from Monster:
+//public record Skeleton() : Monster;
+
+//A more complex subtype might add additional properties:
+//public record Snake(double Length) : Monster;
+
+//Anacondas are more challenging to defeat than mere garter snakes; the player deserves a larger reward for defeating them:
+
+//Here is a Dragon type that builds on two enumerations:
+//public record Dragon(DragonType Type, LifePhase LifePhase) : Monster;
+//public enum DragonType { Black, Green, Red, Blue, Gold }
+//public enum LifePhase { Wyrmling, Young, Adult, Ancient }
+
+//Each dragon has a type and a life phase. Different types of dragons and different life phases make for more formidable challenges worth more points.
+
+//And here is an orc with a sword that has properties of its own:
+//public record Orc(Sword Sword) : Monster;
+//public record Sword(SwordType Type);
+//public enum SwordType { WoodenStick, ArmingSword, Longsword }
+
+//The sword has a type: a longsword, an arming sword, or a wooden stick. It may be a stretch to call a WoodenStick a sword, but it is always worth compromising the design for stupid humor! (Please don't quote me on that.)
+
+//We could make more, but this is enough to make meaningful patterns.
+
+//THE TYPE ARE DECLARATION PATTERNS
+//The type pattern matches anything of a specific type. For example, the following code uses the type pattern to look for the Snake and Dragon types:
+//int ScoreFor(Monster monster)
+//{
+//      return monster switch
+//      {
+//          Snake s => (int)(s.Length * 2),
+//          Dragon d => 50,
+//          _ => 5
+//      };
+//}
+
+//Snake => 7 and Dragon => 50 are both type patterns. (The last is another discard pattern.) If the monster is the named type, it will be match. So this code will return 7 for snakes, 50 for dragon, and 5 otherwise. This pattern is a match even for derived types. A pattern like Monster => 2 would match every kind of monster, regardless of its specific subtype.
+
+//The declaration pattern is similar
+
