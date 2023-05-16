@@ -87,5 +87,31 @@
 
 //Snake => 7 and Dragon => 50 are both type patterns. (The last is another discard pattern.) If the monster is the named type, it will be match. So this code will return 7 for snakes, 50 for dragon, and 5 otherwise. This pattern is a match even for derived types. A pattern like Monster => 2 would match every kind of monster, regardless of its specific subtype.
 
-//The declaration pattern is similar
+//The declaration pattern is similar but additionally gives you a variable that you can use in the body afterward. So we could change this so that longer snakes are worth more points:
+//int ScoreFor(Monster monster)
+//{
+//  return monster switch
+//  {
+//      Snake s => (int)(s.Length * 2),
+//      Dragon => 50,
+//      _ => 5
+//  };
+//}
 
+//I also changed the whitespace to make all of the => elements line up. This spacing is a common practice to increase the readability of the code. It puts it into a table-like format.
+
+//CASE GUARDS
+//Switches have a feature called a guard expression or a case guard. These allow you to supply a second expression that must be evaluated before deciding if a specific arm matches. We can use this to have our snake rule apply only to long snakes:
+//int ScoreFor(Monster monster)
+//{
+//  return monster switch
+//  {
+//      Snake s when s.Length => 3 => 7,
+//      Dragon                => 50,
+//      _                     => 5
+//  };
+//}
+
+//Order matters. If you reverse the top two lines, the length-based pattern would never get a chance to match. If the compiler detects this, it will create a compiler error to flag it.
+
+//You can use case guards with any pattern.
